@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+	<title>Roblox API Reference</title>
+	{{include: 'resources/templates/resources.html'}}
+</head>
+<body>
+	<div id="ref-container">
+		<div id="ref-box">
+			<div id="header">
+				<h1>Class Hierarchy</h1>
+			</div>
+
+			<div id="box-content">
+				<ul id="hierarchy-list">
+{{= format.ClassTree(tree,5) }}
+				</ul>
+			</div>
+		</div>
+	</div>
+	{{include: 'resources/templates/footer.html' }}
+</body>
+</html>

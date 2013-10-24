@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+	<title>{{= class.Name }} Reference</title>
+	{{include: 'resources/templates/resources.html'}}
+</head>
+<body>
+	<div id="ref-container">
+		<div id="ref-box">
+			<div id="header">
+				{{= format.ClassIcon(class.Icon) }}<h1>{{= class.Name }}</h1>
+				<a id="nav-hierarchy" href="/api">Back to hierarchy{{= format.MemberIcon(3) }}</a>
+			</div>
+			<div id="box-content">
+				<div id="api-docs">
+					<div id="hierarchy">
+					{{ if #class.Superclasses > 0 then }}
+						<div id="superclasses">
+							<p><b>Inherits:</b></p>
+							<ul>
+							{{ for i = 1,#class.Superclasses do }}
+								{{ local super = class.Superclasses[i] }}
+								<li>{{= format.ClassIcon(super.Icon) }}{{= format.ClassName(super.Class) }}</li>
+							{{ end }}
+							</ul>
+						</div>
+					{{ end }}
+					{{ if #class.Subclasses > 0 then }}
+						<div id="subclasses">
+							<p><b>Inherited by:</b></p>
+							<ul>
+							{{ for i = 1,#class.Subclasses do }}
+								{{ local sub = class.Subclasses[i] }}
+								<li>{{= format.ClassIcon(sub.Icon) }}{{= format.ClassName(sub.Class) }}</li>
+							{{ end }}
+							</ul>
+						</div>
+					{{ end }}
+					</div>
+					<div id="info">
+					{{ if class.Tags.preliminary then }}
+						<p><b>Preliminary:</b> This class is preliminary.</p>
+					{{ end }}
+					{{ if class.Tags.deprecated then }}
+						<p><b>Deprecated:</b> This class is deprecated.</p>
+					{{ end }}
+					{{ if #class.TagList > 0 then }}
+						<p><b>Tags: </b>
+							{{= format.Tags(class.TagList) }}
+						</p>
+					{{ end }}
+						<div id="members">
+							<a id="sectionMembers" name="sectionMembers"></a>
+							<h2>Members</h2>
+					{{ for i = 1,#class.Members do }}
+						{{ local member = class.Members[i] }}
+						{{ if #member.List > 0 or #member.Inherited > 0 then }}
+							<div id="{{= member.Type }}-members">
+								<a id="section{{= member.TypePlural }}" name="section{{= member.TypePlural }}"></a>
+								<h3>{{= member.TypePlural }}</h3>
+							{{ if #member.List > 0 then }}
+								{{ if member.Type == 'Property' then }}
+									{{include: 'resources/templates/PropertyList.html' }}
+								{{ elseif member.Type == 'Function' then }}
+									{{include: 'resources/templates/FunctionList.html' }}
+								{{ elseif member.Type == 'YieldFunction' then }}
+									{{include: 'resources/templates/YieldFunctionList.html' }}
+								{{ elseif member.Type == 'Event' then }}
+									{{include: 'resources/templates/EventList.html' }}
+								{{ elseif member.Type == 'Callback' then }}
+									{{include: 'resources/templates/CallbackList.html' }}
+								{{ end }}
+							{{ end }}
+							{{ if #member.Inherited > 0 then }}
+								<ul>
+								{{ for i = 1,#member.Inherited do }}
+								{{ local n = member.Inherited[i].Amount }}
+								{{ if n > 0 then }}
+									<li>{{= n }} {{= (n == 1 and member.Type or member.TypePlural):lower() }} inherited from {{= format.ClassName(member.Inherited[i].Class,'section' .. member.TypePlural) }}</li>
+								{{ end }}
+								{{ end }}
+								</ul>
+							{{ end }}
+							</div>
+						{{ end }}
+					{{ end }}
+						</div>
+					{{ if #class.Enums > 0 then }}
+						<div id="enums">
+							<a id="sectionEnums" name="sectionEnums"></a>
+							<h2>Enums</h2>
+							<div class="enums-lists">
+							{{ for i = 1,#class.Enums do }}
+								{{ local enum = class.Enums[i] }}
+								<a id="type{{= enum.Name }}" name="type{{= enum.Name }}"></a>
+								<table class="Enum-list">
+									<tr>
+										<th class="col-icon">{{= format.EnumIcon() }}</th>
+										<th class="col-name" colspan="2">{{= enum.Name }}</th>
+									</tr>
+								{{ for i = 1,#enum.Items do}}
+									<tr>
+										<td class="col-icon">{{= format.EnumItemIcon() }}</td>
+										<td class="col-value">{{= format.EnumItemValue(enum.Items[i].Value) }}</td>
+										<td class="col-name">{{= format.EnumItemName(enum.Items[i].Name) }}</td>
+									</tr>
+								{{ end }}
+								</table>
+							{{ end }}
+							</div>
+						</div>
+					{{ end }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{include: 'resources/templates/footer.html'}}
+</body>
+</html>

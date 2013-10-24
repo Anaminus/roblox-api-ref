@@ -1,0 +1,155 @@
+/* Formatting of API reference pages */
+
+body {
+	background-color : rgb(232,232,232);
+	font             : 10pt/1.2 "Open Sans",Verdana,"DejaVu Sans",Geneva,sans-serif;
+}
+
+a {
+	color : rgb(110, 165, 10);
+}
+
+#footer {
+	width            : 880px;
+	margin           : 8px auto;
+	padding          : 1em 16px;
+	background-color : rgb(255,255,255);
+	color            : rgb(65,85,65);
+	text-align       : left;
+	border           : 1px solid rgb(218,218,218);
+	border-radius    : 10px;
+}
+
+#ref-container {
+	margin     : 0px auto;
+	text-align : center;
+}
+
+#ref-box {
+	display          : inline-block;
+	width            : 880px;
+	padding          : 16px;
+	background-color : rgb(255,255,255);
+	color            : rgb(65,85,65);
+	text-align       : left;
+	border           : 1px solid rgb(218,218,218);
+	border-radius    : 10px;
+}
+
+#header {
+	margin                  : -16px -16px 0px;
+	padding                 : 4px 8px;
+	background-color        : rgb(246,246,246);
+	color                   : rgb(77,100,77);
+	border-bottom           : 1px solid rgb(218,218,218);
+	border-top-right-radius : 10px;
+	border-top-left-radius  : 10px;
+}
+
+#header .api-class-icon {
+	vertical-align : baseline;
+	margin         : 0px 8px 0px 2px;
+}
+
+#nav-hierarchy,
+#search-form {
+	float  : right;
+	margin : 4px 0px 0px 8px;
+}
+
+#ref-box h1 {
+	display     : inline;
+	font-size   : 200%;
+	font-weight : bold;
+}
+
+#api-docs h2 {
+	font-size   : 150%;
+	font-weight : bold;
+}
+
+#api-docs h3 {
+	font-size   : 117%;
+	font-weight : bold;
+}
+
+#search-results > ul {
+	padding-left : 1em;
+}
+
+#nav-hierarchy .api-member-icon {
+	margin-right : 0px;
+	margin-left  : 4px;
+}
+
+table .api-class-icon,
+table .api-member-icon,
+table .api-enum-icon,
+table .api-enum-item-icon {
+	margin-right : 0px;
+}
+
+#hierarchy-list {
+	padding-left    : 1em;
+	list-style-type : disc;
+}
+
+#hierarchy-list ul {
+	list-style-type : disc;
+}
+
+#api-docs ul li {
+	padding-top : 6px;
+	font-size   : 12px;
+}
+
+#hierarchy {
+	float        : right;
+	margin       : 1em;
+	padding-left : 8px;
+	border-left  : 1px solid rgb(230,230,230);
+}
+
+#api-docs table {
+	padding          : 5px;
+	border-collapse  : separate;
+	border-spacing   : 0px;
+	empty-cells      : show;
+	background-color : rgb(246,246,246);
+	font-size        : 12px;
+	word-wrap        : break-word;
+	border           : 1px solid rgb(230,230,230);
+	border-radius    : 7px;
+}
+
+#api-docs table td,
+#api-docs table th {
+	vertical-align : top;
+	padding        : 3px;
+}
+
+table.member-list th {
+	font-size  : 110%;
+	text-align : left;
+}
+
+table.member-list .col-return-type {
+	text-align : right;
+}
+
+.enum-lists {
+	display : inline-block;
+}
+
+.Enum-list {
+	float  : left;
+	margin : 1em;
+}
+
+.Enum-list th.col-name {
+	text-align : left;
+}
+
+.api-enum-item-value:after {
+	content : ' : ';
+}
