@@ -10,9 +10,6 @@ folders               One or more folders to output generated files.
 	return
 end
 
-local http = require 'socket.http'
-local lfs = require 'lfs'
-
 -- add lua directory to path
 do
 	local c = {}

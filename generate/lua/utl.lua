@@ -1,5 +1,7 @@
 -- Contains utility operations.
 
+local lfs = require 'lfs'
+
 local utl = {}
 
 -- normalizes a path's seperators
