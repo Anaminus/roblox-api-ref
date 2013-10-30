@@ -28,7 +28,7 @@ Generates reference pages for the Roblox API.
 ## Generating
 
 1. Install [Lua][lua].
-2. Make sure your Lua installation has [LuaFileSystem][lfs] and [LuaSockets][sockets].
+2. Make sure your Lua installation has [LuaFileSystem][lfs], [LuaSockets][sockets] and [LuaZip][zip].
 3. Set your working directory to the `generate` folder.
 4. Run `lua generate.lua`. Options are the folders to output to. If the first
    option is `-c` or `--clear`, then each folder will be cleared first.
@@ -37,3 +37,4 @@ Generates reference pages for the Roblox API.
 [lua]: http://www.lua.org/
 [lfs]: http://keplerproject.github.io/luafilesystem/
 [sockets]: http://w3.impa.br/~diego/software/luasocket/
+[zip]: http://www.keplerproject.org/luazip/
