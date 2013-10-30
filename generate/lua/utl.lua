@@ -92,4 +92,27 @@ function utl.resource(res)
 	return resources
 end
 
+-- Searches for the presence of at least one flag towards the beginning of a
+-- table.
+function utl.getopt(args,...)
+	local flags = {}
+	local f = {...}
+	for i = 1,#f do
+		if #f[i] == 1 then
+			flags['-' .. f[i]] = true
+		elseif #f[i] > 1 then
+			flags['--' .. f[i]] = true
+		end
+	end
+
+	for i = 1,#args do
+		if flags[args[i]] then
+			return true
+		elseif not args[i]:match('^%-.$') and not args[i]:match('^%-%-.+$') then
+			-- arg is not a flag; any proceeding flags wont be at the beginning
+			return false
+		end
+	end
+end
+
 return utl

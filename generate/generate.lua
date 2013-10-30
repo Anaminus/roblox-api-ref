@@ -78,7 +78,7 @@ end
 
 local args = {...}
 local clearFolders = false
-if args[1] == '-c' or args[1] == '--clear' then
+if utl.getopt(args,'c','clear') then
 	table.remove(args,1)
 	clearFolders = true
 end
