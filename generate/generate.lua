@@ -26,7 +26,7 @@ local slt = require 'slt2'
 local format = require 'format'
 
 local API = require 'API'
-local APIDump = require 'APIDump'
+local APIDump,ExplorerIndex = unpack(require 'FetchAPI')
 local APIjson = require'APIToJSON'(APIDump,true)
 
 local tmplIndex = slt.loadfile('resources/templates/index.html','{{','}}')
