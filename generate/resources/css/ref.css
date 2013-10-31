@@ -52,9 +52,14 @@ a {
 }
 
 #nav-hierarchy,
-#search-form {
+#search-form,
+#searchMessage {
 	float  : right;
 	margin : 4px 0px 0px 8px;
+}
+
+#searchMessage {
+	color : rgb(156,180,156);
 }
 
 #ref-box h1 {
