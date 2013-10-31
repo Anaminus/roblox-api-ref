@@ -1,7 +1,0 @@
-{{ for i = 1,#resources do}}
-{{ if resources[i].Type == 'css' then }}
-	<link href="/api/{{= resources[i].File}}" rel="stylesheet" type="text/css" media="all">
-{{ elseif resources[i].Type == 'js' then}}
-	<script type="text/javascript" src="/api/{{= resources[i].File}}"></script>
-{{ end }}
-{{ end }}
