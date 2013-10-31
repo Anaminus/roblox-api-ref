@@ -55,14 +55,12 @@
 							{{= format.Tags(class.TagList) }}
 						</p>
 					{{ end }}
-						<div id="members">
-							<a id="sectionMembers" name="sectionMembers"></a>
+						<div id="sectionMembers">
 							<h2>Members</h2>
 					{{ for i = 1,#class.Members do }}
 						{{ local member = class.Members[i] }}
 						{{ if #member.List > 0 or #member.Inherited > 0 then }}
-							<div id="{{= member.Type }}-members">
-								<a id="section{{= member.TypePlural }}" name="section{{= member.TypePlural }}"></a>
+							<div id="section{{= member.TypePlural }}">
 								<h3>{{= member.TypePlural }}</h3>
 							{{ if #member.List > 0 then }}
 								{{ if member.Type == 'Property' then }}
@@ -92,14 +90,12 @@
 					{{ end }}
 						</div>
 					{{ if #class.Enums > 0 then }}
-						<div id="enums">
-							<a id="sectionEnums" name="sectionEnums"></a>
+						<div id="sectionEnums">
 							<h2>Enums</h2>
-							<div class="enums-lists">
+							<div class="Enum-list">
 							{{ for i = 1,#class.Enums do }}
 								{{ local enum = class.Enums[i] }}
-								<a id="type{{= enum.Name }}" name="type{{= enum.Name }}"></a>
-								<table class="Enum-list">
+								<table id="type{{= enum.Name }}" class="enum-item-list">
 									<tr>
 										<th class="col-icon">{{= format.EnumIcon() }}</th>
 										<th class="col-name" colspan="2">{{= enum.Name }}</th>

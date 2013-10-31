@@ -137,16 +137,16 @@ table.member-list .col-return-type {
 	text-align : right;
 }
 
-.enum-lists {
+.Enum-list {
 	display : inline-block;
 }
 
-.Enum-list {
+.enum-item-list {
 	float  : left;
 	margin : 1em;
 }
 
-.Enum-list th.col-name {
+.enum-item-list th.col-name {
 	text-align : left;
 }
 
