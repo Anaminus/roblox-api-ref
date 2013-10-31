@@ -1,5 +1,13 @@
 local format = {}
 
+function format.CSSLink(name)
+	return '<link href="/api/css/' .. name .. '" rel="stylesheet" type="text/css" media="all">'
+end
+
+function format.JSLink(name)
+	return '<script type="text/javascript" src="/api/js/' .. name .. '"></script>'
+end
+
 function format.Tags(tags)
 	local o = ''
 	if #tags > 0 then

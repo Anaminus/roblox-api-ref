@@ -33,6 +33,11 @@ local tmplIndex = slt.loadfile('resources/templates/index.html','{{','}}')
 local tmplClass = slt.loadfile('resources/templates/class.html','{{','}}')
 
 local function generate(base)
+	utl.makedir(base .. '/class')
+	utl.makedir(base .. '/img')
+	utl.makedir(base .. '/css')
+	utl.makedir(base .. '/js')
+
 	local resources = utl.resource({
 		{base,'image','icon-explorer.png'};
 		{base,'image','icon-objectbrowser.png'};
@@ -40,8 +45,8 @@ local function generate(base)
 		{base,'css','api.css'};
 		{base,'css','ref.css'};
 
-		{base,'js','jquery-1.10.2.min.js'};
-		{base,'js','fuse.min.js'};
+		{base,'js','jquery-1.10.2.min.js','jquery.js'};
+		{base,'js','fuse.min.js','fuse.js'};
 
 		{base,'js','search.js'};
 	})
@@ -84,7 +89,6 @@ if utl.getopt(args,'c','clear') then
 end
 for i = 1,#args do
 	local base = utl.normpath(args[i] .. '/api')
-	utl.makedir(base .. '/class')
 	if clearFolders then utl.cleardir(base) end
 	generate(base)
 	print('generated',args[i])

@@ -29,22 +29,22 @@
 }
 
 .api-class-icon {
-	background-image : url('icon-explorer.png');
+	background-image : url('/api/img/icon-explorer.png');
 }
 /* background-position sets icon offset */
 
 .api-member-icon {
-	background-image : url('icon-objectbrowser.png');
+	background-image : url('/api/img/icon-objectbrowser.png');
 }
 /* background-position sets icon offset */
 
 .api-enum-icon {
-	background-image    : url('icon-objectbrowser.png');
+	background-image    : url('/api/img/icon-objectbrowser.png');
 	background-position : -144px;
 }
 
 .api-enum-item-icon {
-	background-image    : url('icon-objectbrowser.png');
+	background-image    : url('/api/img/icon-objectbrowser.png');
 	background-position : -160px;
 }
 

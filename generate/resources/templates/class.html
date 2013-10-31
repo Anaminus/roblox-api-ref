@@ -4,7 +4,11 @@
 	<meta charset="utf-8">
 
 	<title>{{= class.Name }} Reference</title>
-	{{include: 'resources/templates/resources.html'}}
+	{{= resources['api.css'] }}
+	{{= resources['ref.css'] }}
+	{{= resources['jquery.js'] }}
+	{{= resources['fuse.js'] }}
+	{{= resources['search.js'] }}
 </head>
 <body>
 	<div id="ref-container">

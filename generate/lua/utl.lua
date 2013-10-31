@@ -1,6 +1,7 @@
 -- Contains utility operations.
 
 local lfs = require 'lfs'
+local format = require 'format'
 
 local utl = {}
 
@@ -74,19 +75,13 @@ function utl.resource(res)
 	for i = 1,#res do
 		local r = res[i]
 		if r[2] == 'image' then
-			utl.copy('resources/images/' .. r[3],r[1] .. '/' .. r[3],true)
+			utl.copy('resources/images/' .. r[3],r[1] .. '/img/' .. r[3],true)
 		elseif r[2] == 'css' then
-			utl.copy('resources/css/' .. r[3],r[1] .. '/' .. r[3])
-			resources[#resources+1] = {
-				Type = r[2];
-				File = r[3];
-			}
+			utl.copy('resources/css/' .. r[3],r[1] .. '/css/' .. r[3])
+			resources[r[4] or r[3]] = format.CSSLink(r[3])
 		elseif r[2] == 'js' then
-			utl.copy('resources/js/' .. r[3],r[1] .. '/' .. r[3])
-			resources[#resources+1] = {
-				Type = r[2];
-				File = r[3];
-			}
+			utl.copy('resources/js/' .. r[3],r[1] .. '/js/' .. r[3])
+			resources[r[4] or r[3]] = format.JSLink(r[3])
 		end
 	end
 	return resources
