@@ -1,20 +1,20 @@
-								<table id="YieldFunction-list" class="member-list">
-									<tr>
-										<th class="col-return-type">Returns</th>
-										<th class="col-icon"></th>
-										<th class="col-name">YieldFunction</th>
-									{{ if member.HasTags then }}
-										<th class="col-tags">Tags</th>
-									{{ end }}
-									</tr>
-								{{ for i = 1,#member.List do }}
-									<tr>
-										<td class="col-return-type">{{= format.Type(member.List[i].ReturnType) }}</td>
-										<td class="col-icon">{{= format.MemberIcon(member.List[i].Icon) }}</td>
-										<td class="col-name">{{= format.MemberName(member.List[i]) }} {{= format.Arguments(member.List[i].Arguments) }}</td>
-									{{ if #member.List[i].TagList > 0 then }}
-										<td class="col-tags">{{= format.Tags(member.List[i].TagList) }}</td>
-									{{ end }}
-									</tr>
-								{{ end }}
-								</table>
+<table id="YieldFunction-list" class="member-list">
+	<tr>
+		<th class="col-return-type">Returns</th>
+		<th class="col-icon"></th>
+		<th class="col-name">YieldFunction</th>
+	{{ if member.HasTags then }}
+		<th class="col-tags">Tags</th>
+	{{ end }}
+	</tr>
+{{ for i = 1,#member.List do }}
+	<tr>
+		<td class="col-return-type">{{= format.Type(member.List[i].ReturnType) }}</td>
+		<td class="col-icon">{{= format.MemberIcon(member.List[i].Icon) }}</td>
+		<td class="col-name">{{= format.MemberName(member.List[i]) }} {{= format.Arguments(member.List[i].Arguments) }}</td>
+	{{ if #member.List[i].TagList > 0 then }}
+		<td class="col-tags">{{= format.Tags(member.List[i].TagList) }}</td>
+	{{ end }}
+	</tr>
+{{ end }}
+</table>

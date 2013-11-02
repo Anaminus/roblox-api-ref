@@ -90,7 +90,7 @@ function format.EnumItemIcon()
 	return '<span class="api-enum-item-icon"></span>'
 end
 
-function format.ClassTree(tree,depth)
+function format.ClassTree(tree)
 	local o = {}
 
 	local rep = string.rep
@@ -109,7 +109,7 @@ function format.ClassTree(tree,depth)
 		end
 	end
 
-	r(tree,depth or 0)
+	r(tree,0)
 
 	return table.concat(o,'\n')
 end
