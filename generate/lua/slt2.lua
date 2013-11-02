@@ -10,7 +10,22 @@
 -- Copyright (C) 2012-2013 henix.
 --]]
 
+--[[
+Enhancements:
+    - If a tag begins a new line, the newline and any indentation will be
+      collapsed.
+    - If an expression or inclusion tag begins a new line, then the result of
+      the tag will take on the same indentation as the tag.
+
+]]
+
 local slt2 = {}
+
+-- indent each line of a string, except the first
+local function indent_string(str, indent)
+	local output = string.gsub(str, '(\r?\n)(.-)', '%1'..indent..'%2')
+	return output
+end
 
 -- a tree fold on inclusion tree
 -- @param init_func: must return a new value when called
@@ -26,6 +41,7 @@ local function include_fold(template, start_tag, end_tag, fold_func, init_func)
 	local end2 = 0
 
 	while start1 ~= nil do
+		local indent
 		if start1 > end2 + 1 then -- for beginning part of file
 			local out = string.sub(template, end2 + 1, start1 - 1)
 
@@ -34,7 +50,7 @@ local function include_fold(template, start_tag, end_tag, fold_func, init_func)
 			if ln or end2 == 0 then
 				ln = ln or 1
 				if not string.match(string.sub(out, ln + 1), '[^\t ]') then
-					out = string.sub(out, 1, ln)
+					indent = string.sub(out, ln + 1)
 				end
 			end
 
@@ -47,7 +63,11 @@ local function include_fold(template, start_tag, end_tag, fold_func, init_func)
 			assert(filename)
 			local fin = assert(io.open(filename))
 			-- TODO: detect cyclic inclusion?
-			result = fold_func(result, include_fold(fin:read('*a'), start_tag, end_tag, fold_func, init_func), filename)
+			if indent then
+				result = fold_func(result, include_fold(indent_string(fin:read('*a'), indent), start_tag, end_tag, fold_func, init_func), filename)
+			else
+				result = fold_func(result, include_fold(fin:read('*a'), start_tag, end_tag, fold_func, init_func), filename)
+			end
 			fin:close()
 		end
 		start1, end1 = string.find(template, start_tag_inc, end2 + 1, true)
@@ -122,23 +142,27 @@ function slt2.loadstring(template, start_tag, end_tag, tmpl_name)
 	local cEqual = string.byte('=', 1)
 
 	while start1 ~= nil do
+		local indent
 		if start1 > end2 + 1 then
 			-- content between previous end tag and current start tag
 			local out = string.sub(template, end2 + 1, start1 - 1)
 
 			-- if tag starts on its own line, collapse whitespace between newline and tag
-			-- does not apply to expression tags
-			if string.byte(template, end1 + 1) ~= cEqual then
-				local _,ln = string.find(out, '.*\n')
-				if ln or end2 == 0 then
-					ln = ln or 1
-					if not string.match(string.sub(out, ln + 1), '[^\t ]') then
+			local _,ln = string.find(out, '.*\n')
+			if ln or end2 == 0 then
+				ln = ln or 1
+				if not string.match(string.sub(out, ln + 1), '[^\t ]') then
+					-- do not apply to expression
+					if string.byte(template, end1 + 1) ~= cEqual then
 						if string.sub(out, ln - 1, ln - 1) == '\r' then
 							-- remove CRLF-style line
 							out = string.sub(out, 1, ln - 2)
 						else
 							out = string.sub(out, 1, ln - 1)
 						end
+					else
+						-- store the indentation; will be applied to the expression result later
+						indent = string.format('%q',string.sub(out, ln + 1))
 					end
 				end
 			end
@@ -152,7 +176,12 @@ function slt2.loadstring(template, start_tag, end_tag, tmpl_name)
 		if string.byte(template, end1 + 1) == cEqual then
 		-- if start tag is expression
 			-- output content between start and end tags as literal
-			table.insert(lua_code, output_func..'('..string.sub(template, end1 + 2, start2 - 1)..')')
+			if indent then
+				-- return indentation, which will be applied to each line of the result
+				table.insert(lua_code, output_func..'('..string.sub(template, end1 + 2, start2 - 1)..', '..indent..')')
+			else
+				table.insert(lua_code, output_func..'('..string.sub(template, end1 + 2, start2 - 1)..')')
+			end
 		else
 			-- output content between start and end tags as lua
 			table.insert(lua_code, string.sub(template, end1 + 1, start2 - 1))
@@ -205,11 +234,15 @@ function slt2.render(t, env)
 	local result = {}
 	local co = coroutine.create(slt2.render_co(t, env))
 	while coroutine.status(co) ~= 'dead' do
-		local ok, chunk = coroutine.resume(co)
+		local ok, chunk, indent = coroutine.resume(co)
 		if not ok then
 			error(chunk)
 		end
-		table.insert(result, chunk)
+		if indent then
+			table.insert(result, indent_string(chunk, indent))
+		else
+			table.insert(result, chunk)
+		end
 	end
 	return table.concat(result)
 end
