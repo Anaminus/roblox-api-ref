@@ -88,7 +88,7 @@ if utl.getopt(args,'c','clear') then
 	clearFolders = true
 end
 for i = 1,#args do
-	local base = utl.normpath(args[i] .. '/api')
+	local base = utl.path(args[i],'api')
 	if clearFolders then utl.cleardir(base) end
 	generate(base)
 	print('generated',args[i])

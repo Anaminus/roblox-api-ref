@@ -5,9 +5,14 @@ local format = require 'format'
 
 local utl = {}
 
--- normalizes a path's seperators
-function utl.normpath(path)
-	return path:gsub('[\\/]+','/')
+-- Combines arguments into a path, and normalizes
+function utl.path(...)
+	local a = {...}
+	local p = a[1] or ''
+	for i = 2,#a do
+		p = p .. '/' .. a[i]
+	end
+	return p:gsub('[\\/]+','/')
 end
 
 -- recursively clears a directory of all its contents
