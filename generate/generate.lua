@@ -33,10 +33,11 @@ local tmplIndex = slt.loadfile('resources/templates/index.html','{{','}}')
 local tmplClass = slt.loadfile('resources/templates/class.html','{{','}}')
 
 local function generate(base)
-	utl.makedir(base .. '/class')
-	utl.makedir(base .. '/img')
-	utl.makedir(base .. '/css')
-	utl.makedir(base .. '/js')
+	utl.makedir(utl.path(base,'class'))
+	utl.makedir(utl.path(base,'class','img'))
+	utl.makedir(utl.path(base,'img'))
+	utl.makedir(utl.path(base,'css'))
+	utl.makedir(utl.path(base,'js'))
 
 	local resources = utl.resource({
 		{base,'image','icon-explorer.png'};
@@ -51,10 +52,10 @@ local function generate(base)
 		{base,'js','search.js'};
 	})
 
-	utl.write(base .. '/search-db.json',APIjson)
+	utl.write(utl.path(base,'search-db.json'),APIjson)
 
 	-- index.html
-	utl.write(base .. '/index.html',
+	utl.write(utl.path(base,'index.html'),
 		slt.render(tmplIndex,{
 			format = format;
 			resources = resources;
@@ -63,7 +64,7 @@ local function generate(base)
 	)
 
 	local function writeClass(class)
-		local f = io.open(base .. '/class/' .. class .. '.html','w')
+		local f = io.open(utl.path(base,'class',class .. '.html'),'w')
 		local output = slt.render(tmplClass,{
 			format = format;
 			resources = resources;
