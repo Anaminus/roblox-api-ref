@@ -14,7 +14,7 @@ The description is placed after auto-generated data, and may go into as much
 detail as necessary.
 
 This function returns the summary and the description, both parsed into HTML.
-Returns nil if the given files does not exist.
+Returns nil if the given files does not exist, or a section is not given.
 
 ]]
 
@@ -66,8 +66,19 @@ return function(file)
 		desc_end = #source
 	end
 
+	local sum = source:sub(sum_start,sum_end)
+	local desc = source:sub(desc_start,desc_end)
+
+	if #sum == 0 and #desc == 0 then
+		return nil,nil
+	end
+
 	local markdown = require 'markdown'
-	return
-		markdown(source:sub(sum_start,sum_end)),
-		markdown(source:sub(desc_start,desc_end))
+	local summary = nil
+	local description = nil
+
+	if #sum > 0 then summary = markdown(sum) end
+	if #desc > 0 then description = markdown(desc) end
+
+	return summary,description
 end
