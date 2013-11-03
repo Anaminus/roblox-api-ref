@@ -29,6 +29,8 @@ local API = require 'API'
 local APIDump,ExplorerIndex = unpack(require 'FetchAPI')
 local APIjson = require'APIToJSON'(APIDump,true)
 
+local ParseDescription = require 'ParseDescription'
+
 local tmplIndex = slt.loadfile('resources/templates/index.html','{{','}}')
 local tmplClass = slt.loadfile('resources/templates/class.html','{{','}}')
 
@@ -63,12 +65,25 @@ local function generate(base)
 		}) --:gsub('[\r\n\t]*','')
 	)
 
+	do
+		local dir = utl.path('..','data','img')
+		for name in lfs.dir(dir) do
+			local file = utl.path(dir,name)
+			if lfs.attributes(file,'mode') == 'file' then
+				utl.copy(file,utl.path(base,'class','img',name),true)
+			end
+		end
+	end
+
 	local function writeClass(class)
 		local f = io.open(utl.path(base,'class',class .. '.html'),'w')
+		local summary,description = ParseDescription(utl.path('..','data',class .. '.md'))
 		local output = slt.render(tmplClass,{
 			format = format;
 			resources = resources;
 			class = API.ClassData(class);
+			summary = summary;
+			description = description;
 		}) --:gsub('[\r\n\t]*','')
 		f:write(output)
 		f:flush()

@@ -158,3 +158,7 @@ table.member-list .col-return-type {
 .api-enum-item-value:after {
 	content : ' : ';
 }
+
+#description img {
+	max-width: 540px;
+}

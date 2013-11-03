@@ -44,6 +44,11 @@
 					{{ end }}
 					</div>
 					<div id="info">
+					{{ if summary then }}
+						<div id="summary">
+							{{= summary }}
+						</div>
+					{{ end }}
 					{{ if class.Tags.preliminary then }}
 						<p><b>Preliminary:</b> This class is preliminary.</p>
 					{{ end }}
@@ -113,6 +118,12 @@
 						</div>
 					{{ end }}
 					</div>
+					{{ if description then }}
+					<div id="description">
+						<h2>Description</h2>
+						{{= description }}
+					</div>
+					{{ end }}
 				</div>
 			</div>
 		</div>
