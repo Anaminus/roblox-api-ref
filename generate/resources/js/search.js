@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	// Users with javascript disabled wont be able to use the search, so we'll
 	// inject the search form so that it isn't visible to them.
-	$('#header').append('<span id="search-form"><label>Search: </label></span>')
+	$('#header-items').append('<span id="search-form"><label>Search: </label></span>')
 	var searchInput = $('<input id="search-input" type="text" placeholder="Class or Member"></input>').appendTo('#search-form > label');
 
 	var boxContent = $("#box-content");

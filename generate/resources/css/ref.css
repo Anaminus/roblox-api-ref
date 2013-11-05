@@ -51,9 +51,7 @@ a {
 	margin         : 0px 8px 0px 2px;
 }
 
-#nav-hierarchy,
-#search-form,
-#searchMessage {
+#header-items > * {
 	float  : right;
 	margin : 4px 0px 0px 8px;
 }
