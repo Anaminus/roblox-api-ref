@@ -102,13 +102,13 @@
 							{{include: 'resources/templates/EnumList.html'}}
 						</div>
 					{{ end }}
+						{{ if description then }}
+						<div id="description">
+							<h2>Description</h2>
+							{{= description }}
+						</div>
+						{{ end }}
 					</div>
-					{{ if description then }}
-					<div id="description">
-						<h2>Description</h2>
-						{{= description }}
-					</div>
-					{{ end }}
 				</div>
 			</div>
 		</div>
