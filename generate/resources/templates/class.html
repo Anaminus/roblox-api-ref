@@ -97,24 +97,7 @@
 					{{ if #class.Enums > 0 then }}
 						<div id="sectionEnums">
 							<h2>Enums</h2>
-							<div class="Enum-list">
-							{{ for i = 1,#class.Enums do }}
-								{{ local enum = class.Enums[i] }}
-								<table id="type{{= enum.Name }}" class="enum-item-list">
-									<tr>
-										<th class="col-icon">{{= format.EnumIcon() }}</th>
-										<th class="col-name" colspan="2">{{= enum.Name }}</th>
-									</tr>
-								{{ for i = 1,#enum.Items do}}
-									<tr>
-										<td class="col-icon">{{= format.EnumItemIcon() }}</td>
-										<td class="col-value">{{= format.EnumItemValue(enum.Items[i].Value) }}</td>
-										<td class="col-name">{{= format.EnumItemName(enum.Items[i].Name) }}</td>
-									</tr>
-								{{ end }}
-								</table>
-							{{ end }}
-							</div>
+							{{include: 'resources/templates/EnumList.html'}}
 						</div>
 					{{ end }}
 					</div>

@@ -1,0 +1,18 @@
+<div class="enum-list">
+{{ for i = 1,#class.Enums do }}
+	{{ local enum = class.Enums[i] }}
+	<table id="type{{= enum.Name }}" class="enum-item-list">
+		<tr>
+			<th class="col-icon">{{= format.EnumIcon() }}</th>
+			<th class="col-name" colspan="2">{{= enum.Name }}</th>
+		</tr>
+	{{ for i = 1,#enum.Items do}}
+		<tr>
+			<td class="col-icon">{{= format.EnumItemIcon() }}</td>
+			<td class="col-value">{{= format.EnumItemValue(enum.Items[i].Value) }}</td>
+			<td class="col-name">{{= format.EnumItemName(enum.Items[i].Name) }}</td>
+		</tr>
+	{{ end }}
+	</table>
+{{ end }}
+</div>
