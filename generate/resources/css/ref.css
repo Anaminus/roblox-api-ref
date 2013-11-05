@@ -9,15 +9,43 @@ a {
 	color : rgb(110, 165, 10);
 }
 
-#footer {
-	width            : 880px;
-	margin           : 8px auto;
-	padding          : 1em 16px;
-	background-color : rgb(255,255,255);
-	color            : rgb(65,85,65);
-	text-align       : left;
-	border           : 1px solid rgb(218,218,218);
-	border-radius    : 10px;
+h1 {
+	display     : inline;
+	font-size   : 200%;
+	font-weight : bold;
+}
+
+h2 {
+	font-size   : 150%;
+	font-weight : bold;
+}
+
+h3 {
+	font-size   : 117%;
+	font-weight : bold;
+}
+
+ul li {
+	padding-top : 6px;
+	font-size   : 12px;
+}
+
+table {
+	padding          : 5px;
+	border-collapse  : separate;
+	border-spacing   : 0px;
+	empty-cells      : show;
+	background-color : rgb(246,246,246);
+	font-size        : 12px;
+	word-wrap        : break-word;
+	border           : 1px solid rgb(230,230,230);
+	border-radius    : 7px;
+}
+
+table td,
+table th {
+	vertical-align : top;
+	padding        : 3px;
 }
 
 #ref-container {
@@ -56,33 +84,28 @@ a {
 	margin : 4px 0px 0px 8px;
 }
 
+#return-link .api-member-icon {
+	margin-right : 0px;
+	margin-left  : 4px;
+}
+
+#footer {
+	width            : 880px;
+	margin           : 8px auto;
+	padding          : 1em 16px;
+	background-color : rgb(255,255,255);
+	color            : rgb(65,85,65);
+	text-align       : left;
+	border           : 1px solid rgb(218,218,218);
+	border-radius    : 10px;
+}
+
 #searchMessage {
 	color : rgb(156,180,156);
 }
 
-#ref-box h1 {
-	display     : inline;
-	font-size   : 200%;
-	font-weight : bold;
-}
-
-#api-docs h2 {
-	font-size   : 150%;
-	font-weight : bold;
-}
-
-#api-docs h3 {
-	font-size   : 117%;
-	font-weight : bold;
-}
-
 #search-results > ul {
 	padding-left : 1em;
-}
-
-#nav-hierarchy .api-member-icon {
-	margin-right : 0px;
-	margin-left  : 4px;
 }
 
 table .api-class-icon,
@@ -101,34 +124,11 @@ table .api-enum-item-icon {
 	list-style-type : disc;
 }
 
-#api-docs ul li {
-	padding-top : 6px;
-	font-size   : 12px;
-}
-
 #hierarchy-nav {
 	float        : right;
 	margin       : 1em;
 	padding-left : 8px;
 	border-left  : 1px solid rgb(230,230,230);
-}
-
-#api-docs table {
-	padding          : 5px;
-	border-collapse  : separate;
-	border-spacing   : 0px;
-	empty-cells      : show;
-	background-color : rgb(246,246,246);
-	font-size        : 12px;
-	word-wrap        : break-word;
-	border           : 1px solid rgb(230,230,230);
-	border-radius    : 7px;
-}
-
-#api-docs table td,
-#api-docs table th {
-	vertical-align : top;
-	padding        : 3px;
 }
 
 table.member-list th {
@@ -140,7 +140,7 @@ table.member-list .col-return-type {
 	text-align : right;
 }
 
-.Enum-list {
+.enum-list {
 	display : inline-block;
 }
 
@@ -158,5 +158,5 @@ table.member-list .col-return-type {
 }
 
 #description img {
-	max-width: 540px;
+	max-width : 540px;
 }
