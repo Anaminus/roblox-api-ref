@@ -20,95 +20,93 @@
 				</span>
 			</div>
 			<div id="box-content">
-				<div id="api-docs">
-					<div id="hierarchy-nav">
-					{{ if #class.Superclasses > 0 then }}
-						<div id="superclasses">
-							<p><b>Inherits:</b></p>
+				<div id="hierarchy-nav">
+				{{ if #class.Superclasses > 0 then }}
+					<div id="superclasses">
+						<p><b>Inherits:</b></p>
+						<ul>
+						{{ for i = 1,#class.Superclasses do }}
+							{{ local super = class.Superclasses[i] }}
+							<li>{{= format.ClassIcon(super.Icon) }}{{= format.ClassName(super.Class) }}</li>
+						{{ end }}
+						</ul>
+					</div>
+				{{ end }}
+				{{ if #class.Subclasses > 0 then }}
+					<div id="subclasses">
+						<p><b>Inherited by:</b></p>
+						<ul>
+						{{ for i = 1,#class.Subclasses do }}
+							{{ local sub = class.Subclasses[i] }}
+							<li>{{= format.ClassIcon(sub.Icon) }}{{= format.ClassName(sub.Class) }}</li>
+						{{ end }}
+						</ul>
+					</div>
+				{{ end }}
+				</div>
+				<div id="info">
+				{{ if summary then }}
+					<div id="summary">
+						{{= summary }}
+					</div>
+				{{ end }}
+				{{ if class.Tags.preliminary then }}
+					<p><b>Preliminary:</b> This class is preliminary.</p>
+				{{ end }}
+				{{ if class.Tags.deprecated then }}
+					<p><b>Deprecated:</b> This class is deprecated.</p>
+				{{ end }}
+				{{ if #class.TagList > 0 then }}
+					<p><b>Tags: </b>
+						{{= format.Tags(class.TagList) }}
+					</p>
+				{{ end }}
+					<div id="members">
+						<h2>Members</h2>
+				{{ for i = 1,#class.Members do }}
+					{{ local member = class.Members[i] }}
+					{{ if #member.List > 0 or #member.Inherited > 0 then }}
+						<div id="section{{= member.TypePlural }}">
+							<h3>{{= member.TypePlural }}</h3>
+					{{ if #member.List > 0 then }}
+						{{ if member.Type == 'Property' then }}
+							{{include: 'resources/templates/PropertyList.html' }}
+						{{ elseif member.Type == 'Function' then }}
+							{{include: 'resources/templates/FunctionList.html' }}
+						{{ elseif member.Type == 'YieldFunction' then }}
+							{{include: 'resources/templates/YieldFunctionList.html' }}
+						{{ elseif member.Type == 'Event' then }}
+							{{include: 'resources/templates/EventList.html' }}
+						{{ elseif member.Type == 'Callback' then }}
+							{{include: 'resources/templates/CallbackList.html' }}
+						{{ end }}
+					{{ end }}
+						{{ if #member.Inherited > 0 then }}
 							<ul>
-							{{ for i = 1,#class.Superclasses do }}
-								{{ local super = class.Superclasses[i] }}
-								<li>{{= format.ClassIcon(super.Icon) }}{{= format.ClassName(super.Class) }}</li>
+							{{ for i = 1,#member.Inherited do }}
+							{{ local n = member.Inherited[i].Amount }}
+							{{ if n > 0 then }}
+								<li>{{= n }} {{= (n == 1 and member.Type or member.TypePlural):lower() }} inherited from {{= format.ClassName(member.Inherited[i].Class,'section' .. member.TypePlural) }}</li>
+							{{ end }}
 							{{ end }}
 							</ul>
+						{{ end }}
 						</div>
 					{{ end }}
-					{{ if #class.Subclasses > 0 then }}
-						<div id="subclasses">
-							<p><b>Inherited by:</b></p>
-							<ul>
-							{{ for i = 1,#class.Subclasses do }}
-								{{ local sub = class.Subclasses[i] }}
-								<li>{{= format.ClassIcon(sub.Icon) }}{{= format.ClassName(sub.Class) }}</li>
-							{{ end }}
-							</ul>
-						</div>
-					{{ end }}
+				{{ end }}
 					</div>
-					<div id="info">
-					{{ if summary then }}
-						<div id="summary">
-							{{= summary }}
-						</div>
-					{{ end }}
-					{{ if class.Tags.preliminary then }}
-						<p><b>Preliminary:</b> This class is preliminary.</p>
-					{{ end }}
-					{{ if class.Tags.deprecated then }}
-						<p><b>Deprecated:</b> This class is deprecated.</p>
-					{{ end }}
-					{{ if #class.TagList > 0 then }}
-						<p><b>Tags: </b>
-							{{= format.Tags(class.TagList) }}
-						</p>
-					{{ end }}
-						<div id="members">
-							<h2>Members</h2>
-					{{ for i = 1,#class.Members do }}
-						{{ local member = class.Members[i] }}
-						{{ if #member.List > 0 or #member.Inherited > 0 then }}
-							<div id="section{{= member.TypePlural }}">
-								<h3>{{= member.TypePlural }}</h3>
-						{{ if #member.List > 0 then }}
-							{{ if member.Type == 'Property' then }}
-								{{include: 'resources/templates/PropertyList.html' }}
-							{{ elseif member.Type == 'Function' then }}
-								{{include: 'resources/templates/FunctionList.html' }}
-							{{ elseif member.Type == 'YieldFunction' then }}
-								{{include: 'resources/templates/YieldFunctionList.html' }}
-							{{ elseif member.Type == 'Event' then }}
-								{{include: 'resources/templates/EventList.html' }}
-							{{ elseif member.Type == 'Callback' then }}
-								{{include: 'resources/templates/CallbackList.html' }}
-							{{ end }}
-						{{ end }}
-							{{ if #member.Inherited > 0 then }}
-								<ul>
-								{{ for i = 1,#member.Inherited do }}
-								{{ local n = member.Inherited[i].Amount }}
-								{{ if n > 0 then }}
-									<li>{{= n }} {{= (n == 1 and member.Type or member.TypePlural):lower() }} inherited from {{= format.ClassName(member.Inherited[i].Class,'section' .. member.TypePlural) }}</li>
-								{{ end }}
-								{{ end }}
-								</ul>
-							{{ end }}
-							</div>
-						{{ end }}
-					{{ end }}
-						</div>
-					{{ if #class.Enums > 0 then }}
-						<div id="sectionEnums">
-							<h2>Enums</h2>
-							{{include: 'resources/templates/EnumList.html'}}
-						</div>
-					{{ end }}
-						{{ if description then }}
-						<div id="description">
-							<h2>Description</h2>
-							{{= description }}
-						</div>
-						{{ end }}
+				{{ if #class.Enums > 0 then }}
+					<div id="sectionEnums">
+						<h2>Enums</h2>
+						{{include: 'resources/templates/EnumList.html'}}
 					</div>
+				{{ end }}
+					{{ if description then }}
+					<div id="description">
+						<h2>Description</h2>
+						{{= description }}
+					</div>
+					{{ end }}
 				</div>
 			</div>
 		</div>
