@@ -1,0 +1,59 @@
+Static IDs:
+
+#ref-container              Used to center #ref-box.
+#ref-box                    Box that contains all the content.
+#header                     Displays at the top of the #ref-box.
+#header-items               Right-aligned elements that appear inline with the header.
+#return-link                A link back to the main page.
+#search-message             A message displayed when JS is disabled.
+#search-form                A search form with a label and input. Injected into #header-items with JS.
+#search-input               A search input field. Injected into #search-form with JS.
+#search-results             Displays search results. Injected into #ref-box with JS.
+#box-content                Content to be swapped with #search-results when searching.
+#hierarchy-nav              Side panel that allows navigation within the class hierarchy.
+#superclasses               List of the superclasses of the class.
+#subclasses                 List of the subclasses of the class.
+#info                       Contains all informational content.
+#summary                    Simple description of the class.
+#members                    Contains lists of the members of the class.
+#description                A detailed description of the class.
+#footer                     Displays below the #ref-box.
+
+Dynamic ID Prefixes:
+
+section                     A member type section. Value is the plural form of a member type. May also be enums.
+member                      A specific member in a member list. Value is the name of the member.
+type                        A value type. Value is the name of the type.
+desc                        A description section of a member. Value is the name of the member.
+
+Reference Classes:
+
+.member-list                Contains a list of members of a certain member type.
+.col-return-type            A table column containing the return type of a function, yieldfunction, or callback.
+.col-value-type             A table column containing the value type of a property.
+.col-icon                   A table column containing an icon representing a member or enum item.
+.col-name                   A table column containing the name of a member or enum item.
+.col-tags                   A table column containing the tags of a member.
+.enum-list                  Contains one or more .enum-item-list tables.
+.enum-item-list             Contains a list of the items of an enum.
+.col-value                  A table column containing the value of an enum.
+
+API classes:
+
+.api-argument               A single argument or parameter.
+.api-argument-name          The name of a single argument or parameter.
+.api-arguments              A () enclosed comma-separated list of arguments or parameters.
+.api-class-icon             A class icon. Displayed icon is modified by background-position.
+.api-class-name             The name of a class.
+.api-deprecated             Indicates that an item is deprecated.
+.api-enum-icon              An enum icon.
+.api-enum-item-icon         An enum item icon.
+.api-enum-item-name         The name of an enum item.
+.api-enum-item-value        The value of an enum item.
+.api-enum-name              The name of an enum.
+.api-member-icon            A member icon. Displayed icon is modified by background-position.
+.api-member-name            The name of a member.
+.api-preliminary            Indicates that an item is preliminary.
+.api-tag                    A single item tag.
+.api-value                  A literal value.
+.api-value-type             A value type.
