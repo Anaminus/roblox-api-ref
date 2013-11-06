@@ -53,6 +53,15 @@ Generates reference pages for the Roblox API.
 
 	Images may be used by including them in the `img` sub-folder.
 
+	When creating links, consider that the context of the description will be
+	inside a generated class page. Here are some ways to link to various
+	things:
+
+	- Class pages: `[text](<class-name>.html)`.
+	- Members on the same page: `[text](#member<member-name>)`.
+	- Members on other pages: `[text](<class-name>.html#member<member-name>)`.
+	- Images in the `img` subfolder: `![text](img/<image-name>)`
+
 
 ## Generating
 
