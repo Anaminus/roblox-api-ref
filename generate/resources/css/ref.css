@@ -157,6 +157,8 @@ table.member-list .col-return-type {
 	content : ' : ';
 }
 
-#description img {
+#summary img,
+#details img,
+#member-descriptions img {
 	max-width : 540px;
 }

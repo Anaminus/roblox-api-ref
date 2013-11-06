@@ -45,9 +45,9 @@
 				{{ end }}
 				</div>
 				<div id="info">
-				{{ if summary then }}
+				{{ if description.summary then }}
 					<div id="summary">
-						{{= summary }}
+						{{= description.summary }}
 					</div>
 				{{ end }}
 				{{ if class.Tags.preliminary then }}
@@ -101,12 +101,50 @@
 						{{include: 'resources/templates/EnumList.html'}}
 					</div>
 				{{ end }}
-					{{ if description then }}
-					<div id="description">
-						<h2>Description</h2>
-						{{= description }}
+				{{ if description.details then }}
+					<div id="details">
+						<h2>Detailed Description</h2>
+						{{= description.details }}
 					</div>
+				{{ end }}
+					<div id="member-descriptions">
+				{{ for i = 1,#class.Members do }}
+					{{ local members = class.Members[i] }}
+					{{ if #members.List > 0 then }}
+						<h2>{{= members.Type }} Descriptions</h2>
+					{{ for i = 1,#members.List do}}
+						{{ local member = members.List[i] }}
+						<div id="member{{= member.Name }}">
+						{{ if member.Type == 'Property' then }}
+							<h3>{{= format.MemberIcon(member.Icon) }}{{= format.Type(member.ValueType) }} {{= member.Class }}.{{= member.Name }}</h3>
+						{{ elseif member.Type == 'Function' then }}
+							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
+						{{ elseif member.Type == 'YieldFunction' then }}
+							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
+						{{ elseif member.Type == 'Event' then }}
+							<h3>{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Parameters) }}</h3>
+						{{ elseif member.Type == 'Callback' then }}
+							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Parameters) }}</h3>
+						{{ end }}
+						{{ if member.Tags.preliminary then }}
+							<p><b>Preliminary:</b> This member is preliminary.</p>
+						{{ end }}
+						{{ if member.Tags.deprecated then }}
+							<p><b>Deprecated:</b> This member is deprecated.</p>
+						{{ end }}
+						{{ if #member.TagList > 0 then }}
+							<p><b>Tags: </b>
+								{{= format.Tags(member.TagList) }}
+							</p>
+						{{ end }}
+						{{ if member.Description then}}
+							{{= member.Description}}
+						{{ end }}
+						</div>
 					{{ end }}
+					{{ end }}
+				{{ end }}
+					</div>
 				</div>
 			</div>
 		</div>

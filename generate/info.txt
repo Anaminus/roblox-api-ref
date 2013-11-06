@@ -16,15 +16,15 @@ Static IDs:
 #info                       Contains all informational content.
 #summary                    Simple description of the class.
 #members                    Contains lists of the members of the class.
-#description                A detailed description of the class.
+#details                    A detailed description of the class.
+#member-descriptions        Contains descriptions of the members of the class.
 #footer                     Displays below the #ref-box.
 
 Dynamic ID Prefixes:
 
 section                     A member type section. Value is the plural form of a member type. May also be enums.
-member                      A specific member in a member list. Value is the name of the member.
+member                      A description section of a member. Value is the name of the member.
 type                        A value type. Value is the name of the type.
-desc                        A description section of a member. Value is the name of the member.
 
 Reference Classes:
 

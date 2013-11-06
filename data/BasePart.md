@@ -1,10 +1,10 @@
-## Summary
+# Summary
 
 The **BasePart** is a structural class that represents a physical object. When
 it is in the [Workspace](Workspace.html), it will move and interact with other
 BaseParts.
 
-## Description
+# Details
 
 BaseParts are the basic building blocks of any Roblox place. Commonly known as
 "bricks", you'll see these the most often of any other instance, as almost

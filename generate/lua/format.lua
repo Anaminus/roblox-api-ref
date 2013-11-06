@@ -35,7 +35,7 @@ function format.MemberName(member)
 	local status = (member.Tags.preliminary and ' api-preliminary' or '')
 	.. (member.Tags.deprecated and ' api-deprecated' or '')
 
-	return '<a class="api-member-name' .. status .. '" id="member' .. member.Name .. '">' .. member.Name .. '</a>'
+	return '<a class="api-member-name' .. status .. '" href="#member' .. member.Name .. '">' .. member.Name .. '</a>'
 end
 
 function format.ClassName(class,fragment)

@@ -9,14 +9,15 @@ API.ClassData ( className )
 
 	// The entire data structure needed by the class template.
 	type Class struct {
-		Name         string          // name of the class
-		Icon         ClassIcon       // class's icon index
-		Superclasses []ClassIconPair // list of classes that the class inherits from
-		Subclasses   []ClassIconPair // sorted by ClassIconPair.Class
-		Tags         map[string]bool // Tags given to the class
-		TagList      []string        // sorted; excludes preliminary and deprecated tags
-		Members      []MemberType    // List of members per member type
-		Enums        []Enum          // sorted by Enum.Name
+		Name         string                 // name of the class
+		Icon         ClassIcon              // class's icon index
+		Superclasses []ClassIconPair        // list of classes that the class inherits from
+		Subclasses   []ClassIconPair        // sorted by ClassIconPair.Class
+		Tags         map[string]bool        // Tags given to the class
+		TagList      []string               // sorted; excludes preliminary and deprecated tags
+		Members      []MemberType           // List of members per member type
+		MemberSet    map[string]interface{} // Member names paired with Property, Function, YieldFunction, Event, or Callback
+		Enums        []Enum                 // sorted by Enum.Name
 	}
 
 	// Represents the index of an icon on the explorer icon sheet.
@@ -198,6 +199,7 @@ local API = {}
 
 function API.ClassData(className)
 	local classLookup = {}
+	local memberSet = {}
 	local memberTypeLookup = {}
 	local enumLookup = {}
 
@@ -252,6 +254,10 @@ function API.ClassData(className)
 				memberType.HasTags = true
 			end
 			table.insert(memberType.List,new)
+
+			if item.Class == className then
+				memberSet[item.Name] = new
+			end
 		elseif item.type == 'Enum' then
 			enumLookup[item.Name] = {}
 		elseif item.type == 'EnumItem' then
@@ -270,6 +276,7 @@ function API.ClassData(className)
 		Tags = classLookup[className].Tags;
 		TagList = classLookup[className].TagList;
 		Members = {};
+		MemberSet = memberSet;
 		Enums = {};
 	}
 

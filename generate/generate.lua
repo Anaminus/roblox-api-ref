@@ -77,12 +77,26 @@ local function generate(base)
 
 	local function writeClass(class)
 		local f = io.open(utl.path(base,'class',class .. '.html'),'w')
-		local summary,description = ParseDescription(utl.path('..','data',class .. '.md'))
+
+		local classData = API.ClassData(class)
+		local description = ParseDescription(utl.path('..','data',class .. '.md'))
+		local memberDesc = description.members
+		if memberDesc then
+			for i = 1,#classData.Members do
+				local list = classData.Members[i].List
+				for i = 1,#list do
+					local desc = memberDesc[list[i].Name]
+					if desc then
+						list[i].Description = desc
+					end
+				end
+			end
+		end
+
 		local output = slt.render(tmplClass,{
 			format = format;
 			resources = resources;
-			class = API.ClassData(class);
-			summary = summary;
+			class = classData;
 			description = description;
 		}) --:gsub('[\r\n\t]*','')
 		f:write(output)
