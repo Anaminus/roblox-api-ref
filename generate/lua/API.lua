@@ -208,7 +208,7 @@ function API.ClassData(className)
 		local tagList = {}
 		for tag in pairs(item.tags) do
 			tags[tag] = true
-			if tag ~= 'preliminary' and tag ~='deprecated' or item.type ~= 'Class' then
+			if tag ~= 'preliminary' and tag ~='deprecated' then
 				tagList[#tagList+1] = tag
 			end
 		end
