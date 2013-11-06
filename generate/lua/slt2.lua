@@ -134,7 +134,6 @@ function slt2.loadstring(template, start_tag, end_tag, tmpl_name)
 
 	template = slt2.precompile(template, start_tag, end_tag)
 
-	-- find first start tag
 	local start1, end1 = string.find(template, start_tag, 1, true)
 	local start2 = nil
 	local end2 = 0
@@ -167,15 +166,11 @@ function slt2.loadstring(template, start_tag, end_tag, tmpl_name)
 				end
 			end
 
-			-- output content as literal
 			table.insert(lua_code, output_func..'('..string.format("%q", out)..')')
 		end
-		-- find end tag
 		start2, end2 = string.find(template, end_tag, end1 + 1, true)
 		assert(start2, 'end_tag "'..end_tag..'" missing')
 		if string.byte(template, end1 + 1) == cEqual then
-		-- if start tag is expression
-			-- output content between start and end tags as literal
 			if indent then
 				-- return indentation, which will be applied to each line of the result
 				table.insert(lua_code, output_func..'('..string.sub(template, end1 + 2, start2 - 1)..', '..indent..')')
@@ -183,13 +178,10 @@ function slt2.loadstring(template, start_tag, end_tag, tmpl_name)
 				table.insert(lua_code, output_func..'('..string.sub(template, end1 + 2, start2 - 1)..')')
 			end
 		else
-			-- output content between start and end tags as lua
 			table.insert(lua_code, string.sub(template, end1 + 1, start2 - 1))
 		end
-		-- find start tag
 		start1, end1 = string.find(template, start_tag, end2 + 1, true)
 	end
-	-- output remaining content after last end tag was literal
 	table.insert(lua_code, output_func..'('..string.format("%q", string.sub(template, end2 + 1))..')')
 
 	local ret = { name = tmpl_name or '=(slt2.loadstring)' }
