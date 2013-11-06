@@ -66,7 +66,7 @@ local function generate(base)
 	)
 
 	do
-		local dir = utl.path('..','data','img')
+		local dir = utl.path('..','data','class','img')
 		for name in lfs.dir(dir) do
 			local file = utl.path(dir,name)
 			if lfs.attributes(file,'mode') == 'file' then
@@ -79,7 +79,7 @@ local function generate(base)
 		local f = io.open(utl.path(base,'class',class .. '.html'),'w')
 
 		local classData = API.ClassData(class)
-		local description = ParseDescription(utl.path('..','data',class .. '.md'))
+		local description = ParseDescription(utl.path('..','data','class',class .. '.md'))
 		local memberDesc = description.members
 		if memberDesc then
 			for i = 1,#classData.Members do
