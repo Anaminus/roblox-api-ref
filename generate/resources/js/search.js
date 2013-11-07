@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	// Users with javascript disabled wont be able to use the search, so we'll
 	// inject the search form so that it isn't visible to them.
-	$('#header-items').append('<span id="search-form"><label>Search: </label></span>')
+	$('#header-items').append('<span id="search-form"><label>Search: </label></span>');
 	var searchInput = $('<input id="search-input" type="text" placeholder="Class or Member"></input>').appendTo('#search-form > label');
 
 	var boxContent = $("#box-content");
@@ -38,12 +38,12 @@ $(document).ready(function() {
 
 		if (text.length == 0) {
 			// Input field is empty; display normal page content
-			searchResults.css('display', 'none')
-			boxContent.css('display', 'block')
+			searchResults.css('display', 'none');
+			boxContent.css('display', 'block');
 		} else {
 			// User has provided search input; display search results
-			boxContent.css('display', 'none')
-			searchResults.css('display', 'block')
+			boxContent.css('display', 'none');
+			searchResults.css('display', 'block');
 
 			// Do a fuzzy search on the search database
 			var results = fuse.search(text);
@@ -52,12 +52,12 @@ $(document).ready(function() {
 			var max = results.length > 50 ? 50 : results.length;
 
 			for (i = 0; i < max; i++) {
-				var result = results[i]
-				var member = result.m
+				var result = results[i];
+				var member = result.m;
 				// URL can be derived from the class and member name
-				var url = '/api/class/' + result.c + '.html' + (member ? '#member' + member : '')
+				var url = '/api/class/' + result.c + '.html' + (member ? '#member' + member : '');
 				// Database also includes an icon index we can use for prettier results
-				var icon = member ? 'api-member-icon' : 'api-class-icon'
+				var icon = member ? 'api-member-icon' : 'api-class-icon';
 				resultContainer.append('<li><a href="' + url + '"><span class="' + icon + '" style="background-position:' + result.i * -16 + 'px center"></span>' + result.c + (member ? '.' + member : '') + '</a></li>');
 				if (i == 0) {
 					firstResult = url;
@@ -85,4 +85,4 @@ $(document).ready(function() {
 	if (searchInput.val().length > 0) {
 		doSearch();
 	}
-})
+});
