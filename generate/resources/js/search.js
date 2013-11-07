@@ -76,7 +76,18 @@ $(document).ready(function() {
 	// Take the user to the first result if they press enter.
 	searchInput.keydown(function(event) {
 		if (event.which == 13 && firstResult) {
-			window.location.href = firstResult;
+			var parseURL = document.createElement('a');
+			parseURL.href = firstResult;
+			// in case the user searches for an item on the current page
+			if (window.location.pathname == parseURL.pathname) {
+				searchResults.css('display', 'none');
+				boxContent.css('display', 'block');
+				if (parseURL.hash.length > 0) {
+					window.location.hash = parseURL.hash;
+				}
+			} else {
+				window.location.href = firstResult;
+			}
 		}
 	})
 
