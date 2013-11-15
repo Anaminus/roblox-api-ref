@@ -1,17 +1,45 @@
 --[[
 
-FetchAPI
+# FetchAPI
 
-Retrieves Roblox API data from the website.
+This module is used to retrieve Roblox API data directly from the Roblox
+website.
 
-Returns two values: The parsed API dump string, and a table of class names and
-their corresponding explorer image indexes.
+## Usage
 
-Dependencies:
-	- LuaFileSystem
-	- LuaSocket
-	- LuaZip
-	- LexAPI
+The FetchAPI function has two optional arguments: The version hash of
+RobloxPlayer, and the version hash of RobloxStudio. If an argument is omitted,
+then the latest version will be retrieved from the website and used instead.
+
+A version hash takes the form of:
+
+	version-<hash>
+
+where `<hash>` is a 16 digit hexidecimal number.
+
+Returns three values:
+- The unparsed API dump string
+- A table of class names and their corresponding explorer image indexes
+- The path to the RobloxPlayer executable that was used to get the data
+
+Example:
+
+	local FetchAPI = require 'FetchAPI'
+
+	local playerVersion = 'version-01a2b3c4d5e6f789'
+	local studioVersion = 'version-98f7e6d5c4b3a210'
+
+	local dump, explorerIndex, exe = FetchAPI(playerVersion, studioVersion)
+
+## Dependencies
+
+- LuaFileSystem
+- LuaSocket
+- LuaZip
+
+## More Info
+
+https://github.com/Anaminus/roblox-api-dump
 
 ]]
 
@@ -23,6 +51,28 @@ local function path(...)
 		p = p .. '/' .. a[i]
 	end
 	return p:gsub('[\\/]+','/')
+end
+
+-- open a file, creating directories as necessary
+local function dopen(name,...)
+	name = path(name)
+	local list = {}
+	for dir in name:gmatch('[^/]+') do
+		list[#list+1] = dir
+	end
+	local dir = ''
+	for i = 1,#list do
+		local f,m = io.open(name,...)
+		if f then
+			return f
+		elseif m:match('No such file or directory') then
+			dir = dir .. (i==1 and '' or '/') .. list[i]
+			lfs.mkdir(dir)
+		else
+			return nil,m
+		end
+	end
+	return nil,"could not open file"
 end
 
 -- Returns a directory of a Roblox installation.
@@ -101,7 +151,7 @@ local function getLocalSource(rbxPlayerDir,rbxStudioDir)
 		end
 	end
 
-	return require('LexAPI')(apiDump),explorerIndex
+	return apiDump, explorerIndex, path(rbxPlayerDir,'RobloxPlayerBeta.exe')
 end
 
 --[[
@@ -113,6 +163,8 @@ Files required to successfully dump API:
 	Log.dll
 	OgreMain.dll
 	tbb.dll
+	MSVCP110.dll
+	MSVCR110.dll
 	content (directory)
 	ReflectionMetadata.xml
 
@@ -126,6 +178,7 @@ Version hashes:
 Archives:
 	/version-<versionPlayer>-RobloxApp.zip
 	/version-<versionPlayer>-Libraries.zip
+	/version-<versionPlayer>-redist.zip
 	/version-<versionStudio>-RobloxStudio.zip
 
 	Each file is usually a couple MB in size, hence why this is the slowest
@@ -141,7 +194,7 @@ Manual:
 ]]
 
 -- Get data directly from install server
-local function getWebsiteSource()
+local function getWebsiteSource(versionPlayer, versionStudio)
 	local lfs = require 'lfs'
 	local http = require 'socket.http'
 
@@ -153,8 +206,8 @@ local function getWebsiteSource()
 	lfs.mkdir(tmp)
 
 	-- Get latest version hashes of player and studio.
-	local versionPlayer = http.request('http://setup.' .. base .. '/version')
-	local versionStudio = http.request('http://setup.' .. base .. '/versionQTStudio')
+	versionPlayer = versionPlayer or http.request('http://setup.' .. base .. '/version')
+	versionStudio = versionStudio or http.request('http://setup.' .. base .. '/versionQTStudio')
 
 	local playerDir = path(tmp,versionPlayer)
 	local studioDir = path(tmp,versionStudio)
@@ -186,6 +239,7 @@ local function getWebsiteSource()
 
 		zips[#zips+1] = {versionPlayer .. '-RobloxApp.zip', playerDir}
 		zips[#zips+1] = {versionPlayer .. '-Libraries.zip', playerDir}
+		zips[#zips+1] = {versionPlayer .. '-redist.zip', playerDir}
 	end
 
 	-- If studio needs updating
@@ -221,7 +275,7 @@ local function getWebsiteSource()
 				-- If file is not a directory
 					-- Copy file to given folder
 					local zfile = assert(zipfile:open(filename))
-					local file = assert(io.open(path(dir,filename),'wb'))
+					local file = assert(dopen(path(dir,filename),'wb'))
 					file:write(zfile:read('*a'))
 					file:flush()
 					file:close()
@@ -238,9 +292,10 @@ local function getWebsiteSource()
 	return getLocalSource(playerDir,studioDir)
 end
 
-local data = {getWebsiteSource()}
-if data[1] == nil then
-	error(data[2],2)
+return function(playerVersion,studioVersion)
+	local data = {getWebsiteSource(playerVersion,studioVersion)}
+	if data[1] == nil then
+		error(data[2],2)
+	end
+	return unpack(data)
 end
-
-return data

@@ -26,7 +26,7 @@ local slt = require 'slt2'
 local format = require 'format'
 
 local API = require 'API'
-local APIDump,ExplorerIndex = unpack(require 'FetchAPI')
+local APIDump,ExplorerIndex = unpack(require 'APIDump')
 local APIjson = require'APIToJSON'(APIDump,true)
 
 local ParseDescription = require 'ParseDescription'

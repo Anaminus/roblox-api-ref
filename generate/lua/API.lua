@@ -141,7 +141,7 @@ API.MemberIconIndex ( memberStruct )
 
 ]]
 
-local APIDump,ExplorerIndex = unpack(require 'FetchAPI')
+local APIDump,ExplorerIndex = unpack(require 'APIDump')
 
 -- The order in which member types will be displayed
 local MemberTypeOrder = {
