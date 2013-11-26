@@ -10,6 +10,7 @@ Static IDs:
 #search-input               A search input field. Injected into #search-form with JS.
 #search-results             Displays search results. Injected into #ref-box with JS.
 #box-content                Content to be swapped with #search-results when searching.
+#hierarchy-list             A list displying the class hierarchy.
 #hierarchy-nav              Side panel that allows navigation within the class hierarchy.
 #superclasses               List of the superclasses of the class.
 #subclasses                 List of the subclasses of the class.

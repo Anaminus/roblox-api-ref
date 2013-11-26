@@ -28,6 +28,7 @@ h3 {
 ul li {
 	padding-top : 6px;
 	font-size   : 12px;
+	white-space : nowrap;
 }
 
 table {
@@ -55,8 +56,7 @@ table th {
 
 #ref-box {
 	display          : inline-block;
-	width            : 880px;
-	padding          : 16px;
+	width            : 900px;
 	background-color : rgb(255,255,255);
 	color            : rgb(65,85,65);
 	text-align       : left;
@@ -65,7 +65,6 @@ table th {
 }
 
 #header {
-	margin                  : -16px -16px 0px;
 	padding                 : 4px 8px;
 	background-color        : rgb(246,246,246);
 	color                   : rgb(77,100,77);
@@ -90,14 +89,18 @@ table th {
 }
 
 #footer {
-	width            : 880px;
+	width            : 900px;
 	margin           : 8px auto;
-	padding          : 1em 16px;
+	padding          : 1em 0;
 	background-color : rgb(255,255,255);
 	color            : rgb(65,85,65);
 	text-align       : left;
 	border           : 1px solid rgb(218,218,218);
 	border-radius    : 10px;
+}
+
+#footer > * {
+	margin : 0 1em;
 }
 
 #searchMessage {
@@ -124,11 +127,27 @@ table .api-enum-item-icon {
 	list-style-type : disc;
 }
 
+#diff-message {
+	padding       : 1em;
+	font-style    : italic;
+	border-bottom : 1px solid rgb(230,230,230);
+}
+
+#box-content {
+	margin : 1em;
+}
+
+#info {
+	display       : table-cell;
+	width         : 100%;
+	padding-right : 1em;
+}
+
 #hierarchy-nav {
-	float        : right;
-	margin       : 1em;
-	padding-left : 8px;
-	border-left  : 1px solid rgb(230,230,230);
+	display     : table-cell;
+	margin      : 1em;
+	padding     : 0 1em;
+	border-left : 1px solid rgb(230,230,230);
 }
 
 table.member-list th {
@@ -161,4 +180,18 @@ table.member-list .col-return-type {
 #details img,
 #member-descriptions img {
 	max-width : 540px;
+}
+
+#member-descriptions > div > h3 {
+	margin-left : -0.5em;
+	padding     : 0.5em;
+}
+#member-descriptions > div:target > h3 {
+	background-color : rgb(222, 240, 180);
+	border-radius    : 4px;
+}
+
+#member-descriptions .api-member-icon {
+	margin-right : 4px;
+	margin-left  : 4px;
 }

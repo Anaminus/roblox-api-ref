@@ -20,30 +20,6 @@
 				</span>
 			</div>
 			<div id="box-content">
-				<div id="hierarchy-nav">
-				{{ if #class.Superclasses > 0 then }}
-					<div id="superclasses">
-						<p><b>Inherits:</b></p>
-						<ul>
-						{{ for i = 1,#class.Superclasses do }}
-							{{ local super = class.Superclasses[i] }}
-							<li>{{= format.ClassIcon(super.Icon) }}{{= format.ClassName(super.Class) }}</li>
-						{{ end }}
-						</ul>
-					</div>
-				{{ end }}
-				{{ if #class.Subclasses > 0 then }}
-					<div id="subclasses">
-						<p><b>Inherited by:</b></p>
-						<ul>
-						{{ for i = 1,#class.Subclasses do }}
-							{{ local sub = class.Subclasses[i] }}
-							<li>{{= format.ClassIcon(sub.Icon) }}{{= format.ClassName(sub.Class) }}</li>
-						{{ end }}
-						</ul>
-					</div>
-				{{ end }}
-				</div>
 				<div id="info">
 				{{ if description.summary then }}
 					<div id="summary">
@@ -145,6 +121,30 @@
 					{{ end }}
 				{{ end }}
 					</div>
+				</div>
+				<div id="hierarchy-nav">
+				{{ if #class.Superclasses > 0 then }}
+					<div id="superclasses">
+						<p><b>Inherits:</b></p>
+						<ul>
+						{{ for i = 1,#class.Superclasses do }}
+							{{ local super = class.Superclasses[i] }}
+							<li>{{= format.ClassIcon(super.Icon) }}{{= format.ClassName(super.Class) }}</li>
+						{{ end }}
+						</ul>
+					</div>
+				{{ end }}
+				{{ if #class.Subclasses > 0 then }}
+					<div id="subclasses">
+						<p><b>Inherited by:</b></p>
+						<ul>
+						{{ for i = 1,#class.Subclasses do }}
+							{{ local sub = class.Subclasses[i] }}
+							<li>{{= format.ClassIcon(sub.Icon) }}{{= format.ClassName(sub.Class) }}</li>
+						{{ end }}
+						</ul>
+					</div>
+				{{ end }}
 				</div>
 			</div>
 		</div>
