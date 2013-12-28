@@ -28,7 +28,6 @@ h3 {
 ul li {
 	padding-top : 6px;
 	font-size   : 12px;
-	white-space : nowrap;
 }
 
 table {
@@ -148,6 +147,10 @@ table .api-enum-item-icon {
 	margin      : 1em;
 	padding     : 0 1em;
 	border-left : 1px solid rgb(230,230,230);
+}
+
+#hierarchy-nav ul li {
+	white-space : nowrap;
 }
 
 table.member-list th {
