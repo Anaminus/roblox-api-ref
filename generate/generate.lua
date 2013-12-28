@@ -25,13 +25,15 @@ local utl = require 'utl'
 local slt = require 'slt2'
 local format = require 'format'
 
+local APIDiffs = require 'APIDiffs'
 local API = require 'API'
-local APIDump,ExplorerIndex = unpack(require 'APIDump')
+local APIDump = unpack(require 'APIDump')
 local APIjson = require'APIToJSON'(APIDump,true)
 
 local ParseDescription = require 'ParseDescription'
 
 local tmplIndex = slt.loadfile('resources/templates/index.html','{{','}}')
+local tmplDiff = slt.loadfile('resources/templates/diff.html','{{','}}')
 local tmplClass = slt.loadfile('resources/templates/class.html','{{','}}')
 
 local function generate(base)
@@ -56,13 +58,21 @@ local function generate(base)
 
 	utl.write(utl.path(base,'search-db.json'),APIjson)
 
-	-- index.html
 	utl.write(utl.path(base,'index.html'),
 		slt.render(tmplIndex,{
 			format = format;
 			resources = resources;
+			diffs = APIDiffs;
 			tree = API.ClassTree();
-		}) --:gsub('[\r\n\t]*','')
+		})
+	)
+
+	utl.write(utl.path(base,'diff.html'),
+		slt.render(tmplDiff,{
+			format = format;
+			resources = resources;
+			diffs = APIDiffs;
+		})
 	)
 
 	do
@@ -98,7 +108,7 @@ local function generate(base)
 			resources = resources;
 			class = classData;
 			description = description;
-		}) --:gsub('[\r\n\t]*','')
+		})
 		f:write(output)
 		f:flush()
 		f:close()

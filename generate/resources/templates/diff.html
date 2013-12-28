@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Roblox API Differences</title>
+	{{= resources['api.css'] }}
+	{{= resources['ref.css'] }}
+	{{= resources['jquery.js'] }}
+	{{= resources['fuse.js'] }}
+	{{= resources['search.js'] }}
+</head>
+<body>
+	<div id="ref-container">
+		<div id="ref-box">
+			<div id="header">
+				<h1>API Differences</h1>
+				<span id="header-items">
+					<a id="return-link" href="/api">Back to hierarchy{{= format.MemberIcon(3) }}</a>
+				</span>
+			</div>
+			<div id="box-content">
+				This page lists the differences between versions of the ROBLOX Lua API.
+				<ul id="diff-versions">
+				{{ for i = 1,#diffs do }}
+					<li><span class="diff-date">{{= format.Date(diffs[i].Date) }}</span> ( <span class="diff-version">{{= diffs[i].PreviousVersion }}</span> → <span class="diff-version">{{= diffs[i].CurrentVersion }}</span> )
+					{{ local d = diffs[i].Differences }}
+					<ul class="diff-list">
+					{{ for i = 1,#d do }}
+						<li>
+							{{= format.Diff(d[i]) }}
+						</li>
+					{{ end }}
+					</ul>
+				{{ end }}
+				</ul>
+			</div>
+		</div>
+	</div>
+	{{include: 'resources/templates/footer.html' }}
+</body>
+</html>
