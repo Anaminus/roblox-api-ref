@@ -119,7 +119,7 @@ function format.ClassTree(tree)
 end
 
 function format.Date(date)
-	return os.date('!%b %d, %Y',date)
+	return os.date('!%B %d, %Y',date)
 end
 
 do
