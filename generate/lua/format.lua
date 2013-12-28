@@ -54,17 +54,21 @@ function format.EnumItemValue(value)
 	return '<span class="api-enum-item-value">' .. value .. '</span>'
 end
 
+function format.Argument(arg)
+	local out = '<span class="api-argument">'
+	.. format.Type(arg.Type) .. ' ' .. format.ArgumentName(arg.Name)
+	if arg.Default then
+		out = out .. ' = ' .. format.Value(arg.Default)
+	end
+	out = out .. '</span>'
+	return out
+end
+
 function format.Arguments(args)
 	local out = '<span class="api-arguments">( '
 	if #args > 0 then
 		for i = 1,#args do
-			local arg = args[i]
-			out = out .. '<span class="api-argument">'
-			.. format.Type(arg.Type) .. ' ' .. format.ArgumentName(arg.Name)
-			if arg.Default then
-				out = out .. ' = ' .. format.Value(arg.Default)
-			end
-			out = out .. '</span>'
+			out = out .. format.Argument(args[i])
 			if i < #args then out = out .. ', ' end
 		end
 		out = out .. ' '
