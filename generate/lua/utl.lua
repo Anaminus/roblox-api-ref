@@ -52,6 +52,17 @@ function utl.copy(an,bn,bin)
 	b:close()
 end
 
+-- read content from a file in one go.
+function utl.read(file,bin)
+	local f,err = io.open(file,'r' .. (bin and 'b' or ''))
+	if not f then
+		return nil,err
+	end
+	local content = f:read('*a')
+	f:close()
+	return content
+end
+
 -- Writes content to a file in one go. Content may be a table.
 function utl.write(file,content,bin)
 	local f,err = io.open(file,'w' .. (bin and 'b' or ''))
