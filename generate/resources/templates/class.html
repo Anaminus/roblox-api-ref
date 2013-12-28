@@ -98,9 +98,9 @@
 						{{ elseif member.Type == 'YieldFunction' then }}
 							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
 						{{ elseif member.Type == 'Event' then }}
-							<h3>{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Parameters) }}</h3>
+							<h3>{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
 						{{ elseif member.Type == 'Callback' then }}
-							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Parameters) }}</h3>
+							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
 						{{ end }}
 						{{ if member.Tags.preliminary then }}
 							<p><b>Preliminary:</b> This member is preliminary.</p>

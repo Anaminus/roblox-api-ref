@@ -70,7 +70,7 @@ API.ClassData ( className )
 		Icon       MemberIcon      // the member's icon index
 		Name       string          // the name of the member
 		Type       string          // the member type
-		Parameters []Argument      // a list of the event's parameters
+		Arguments  []Argument      // a list of the event's arguments
 		Tags       map[string]bool // tags given to the member
 		TagList    []string        // tags in sorted list form
 	}
@@ -81,12 +81,12 @@ API.ClassData ( className )
 		Name       string          // the name of the member
 		Type       string          // the member type
 		ReturnType string          // the expected return value type of the callback
-		Parameters []Argument      // a list of the callback's parameters
+		Arguments  []Argument      // a list of the callback's arguments
 		Tags       map[string]bool // tags given to the member
 		TagList    []string        // tags in sorted list form
 	}
 
-	// A single argument or parameter
+	// A single argument
 	type Argument struct {
 		Type    string // the argument's value type
 		Name    string // the argument's name
@@ -378,7 +378,7 @@ function API.ClassData(className)
 			end
 		elseif typeName == 'Event' then
 			for i = 1,#list do
-				local args = list[i].Parameters
+				local args = list[i].Arguments
 				for i = 1,#args do
 					local name = args[i].Type
 					if enumLookup[name] then
@@ -393,7 +393,7 @@ function API.ClassData(className)
 					enumSet[name] = enumLookup[name]
 				end
 
-				local args = list[i].Parameters
+				local args = list[i].Arguments
 				for i = 1,#args do
 					local name = args[i].Type
 					if enumLookup[name] then

@@ -9,7 +9,7 @@
 {{ for i = 1,#member.List do }}
 	<tr>
 		<td class="col-icon">{{= format.MemberIcon(member.List[i].Icon) }}</td>
-		<td class="col-name">{{= format.MemberName(member.List[i]) }} {{= format.Arguments(member.List[i].Parameters) }}</td>
+		<td class="col-name">{{= format.MemberName(member.List[i]) }} {{= format.Arguments(member.List[i].Arguments) }}</td>
 	{{ if #member.List[i].TagList > 0 then }}
 		<td class="col-tags">{{= format.Tags(member.List[i].TagList) }}</td>
 	{{ end }}
