@@ -149,6 +149,11 @@ table .api-enum-item-icon {
 	white-space : nowrap;
 }
 
+#superclasses li,
+#subclasses li {
+	margin-left : -2em;
+}
+
 table.member-list th {
 	font-size  : 110%;
 	text-align : left;
