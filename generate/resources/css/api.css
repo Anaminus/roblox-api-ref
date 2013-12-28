@@ -22,7 +22,7 @@
 .api-enum-icon,
 .api-enum-item-icon {
 	display        : inline-block;
-	vertical-align : text-bottom;
+	vertical-align : middle;
 	height         : 16px;
 	width          : 16px;
 	margin-right   : 4px;
