@@ -10,7 +10,9 @@ Static IDs:
 #search-input               A search input field. Injected into #search-form with JS.
 #search-results             Displays search results. Injected into #ref-box with JS.
 #box-content                Content to be swapped with #search-results when searching.
-#hierarchy-list             A list displying the class hierarchy.
+#diff-message               A message indicating that changes have been made to the API.
+#diff-versions              A list of versions and how they have changed.
+#hierarchy-list             A list displaying the class hierarchy.
 #hierarchy-nav              Side panel that allows navigation within the class hierarchy.
 #superclasses               List of the superclasses of the class.
 #subclasses                 List of the subclasses of the class.
@@ -58,3 +60,10 @@ API classes:
 .api-tag                    A single item tag.
 .api-value                  A literal value.
 .api-value-type             A value type.
+
+Diff Classes:
+
+.diff-list                  A list of differences between two API versions.
+.diff-arg-list              A list of changes in an argument list.
+.diff-date                  A date indicating when a difference occured.
+.diff-version               A version number.
