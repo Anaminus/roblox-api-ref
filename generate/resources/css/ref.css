@@ -106,10 +106,6 @@ table th {
 	color : rgb(156,180,156);
 }
 
-#search-results > ul {
-	padding-left : 1em;
-}
-
 table .api-class-icon,
 table .api-member-icon,
 table .api-enum-icon,
