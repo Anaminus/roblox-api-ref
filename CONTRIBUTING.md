@@ -5,9 +5,14 @@ The file is in [Markdown][markdown] format. The contents consist of
 sections delimited by level-1 headers. The following sections are
 detected (case *in*sensitive):
 
-- `summary`: A short and simple description of the class. Displayed at the top of the page.
-- `details`: A long, detailed description of the class. Displayed after member lists.
-- `members`: Descriptions for each member of the class.
+<dl>
+	<dt>summary</dt>
+	<dd>A short and simple description of the class. Displayed at the top of the page.</dd>
+	<dt>details</dt>
+	<dd>A long, detailed description of the class. Displayed after member lists.</dd>
+	<dt>members</dt>
+	<dd>Descriptions for each member of the class.</dd>
+</dl>
 
 The members section is further divided into subsections; one for each
 member of the class. Each subsection is delimited by a level-2 header,
