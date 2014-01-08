@@ -38,3 +38,5 @@ things:
 - Members on the same page: `[text](#member<member-name>)`.
 - Members on other pages: `[text](<class-name>.html#member<member-name>)`.
 - Images in the `img` subfolder: `![text](img/<image-name>)`
+
+[markdown]: http://daringfireball.net/projects/markdown/

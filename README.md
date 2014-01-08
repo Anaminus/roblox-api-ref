@@ -45,4 +45,3 @@ Generates reference pages for the Roblox API.
 [lfs]: http://keplerproject.github.io/luafilesystem/
 [sockets]: http://w3.impa.br/~diego/software/luasocket/
 [zip]: http://www.keplerproject.org/luazip/
-[markdown]: http://daringfireball.net/projects/markdown/
