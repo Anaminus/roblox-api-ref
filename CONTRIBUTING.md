@@ -1,5 +1,6 @@
-Contains user-generated data about classes. To add data for a specific
-class, create a `.md` file with the name of the class.
+The **class** directory, which is within the **data** directory, contains
+user-generated data about classes. To add data for a specific class, create a
+`.md` file with the name of the class.
 
 The file is in [Markdown][markdown] format. The contents consist of
 sections delimited by level-1 headers. The following sections are
