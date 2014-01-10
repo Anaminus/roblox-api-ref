@@ -44,6 +44,8 @@ local function generate(base)
 	utl.makedir(utl.path(base,'js'))
 
 	local resources = utl.resource({
+		{base,'favicon','favicon16.png', 'favicon16', '16x16'};
+
 		{base,'image','icon-explorer.png'};
 		{base,'image','icon-objectbrowser.png'};
 

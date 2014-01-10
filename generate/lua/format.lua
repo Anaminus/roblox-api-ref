@@ -8,6 +8,10 @@ function format.JSLink(name)
 	return '<script type="text/javascript" src="/api/js/' .. name .. '"></script>'
 end
 
+function format.Favicon(name,sizes)
+	return '<link rel="icon" sizes="' .. sizes .. '" href="/api/img/' .. name .. '"></link>'
+end
+
 function format.Tags(tags)
 	local o = ''
 	if #tags > 0 then
