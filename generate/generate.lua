@@ -37,11 +37,11 @@ local tmplDiff = slt.loadfile('resources/templates/diff.html','{{','}}')
 local tmplClass = slt.loadfile('resources/templates/class.html','{{','}}')
 
 local function generate(base)
-	utl.makedir(utl.path(base,'class'))
-	utl.makedir(utl.path(base,'class','img'))
-	utl.makedir(utl.path(base,'img'))
-	utl.makedir(utl.path(base,'css'))
-	utl.makedir(utl.path(base,'js'))
+	utl.makedirs(utl.path(base,'class'))
+	utl.makedirs(utl.path(base,'class','img'))
+	utl.makedirs(utl.path(base,'img'))
+	utl.makedirs(utl.path(base,'css'))
+	utl.makedirs(utl.path(base,'js'))
 
 	local resources = utl.resource({
 		{base,'favicon','favicon16.png', 'favicon16', '16x16'};
