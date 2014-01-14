@@ -56,6 +56,7 @@ local function generate(base)
 		{base,'js','fuse.min.js','fuse.js'};
 
 		{base,'js','search.js'};
+		{base,'js','collapse.js'};
 	})
 
 	utl.write(utl.path(base,'search-db.json'),APIjson)
