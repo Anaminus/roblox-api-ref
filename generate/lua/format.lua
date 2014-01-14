@@ -9,7 +9,7 @@ function format.JSLink(name)
 end
 
 function format.Favicon(name,sizes)
-	return '<link rel="icon" sizes="' .. sizes .. '" href="/api/img/' .. name .. '"></link>'
+	return '<link rel="icon" sizes="' .. sizes .. '" href="/api/img/' .. name .. '">'
 end
 
 function format.Tags(tags)
