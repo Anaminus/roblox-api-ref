@@ -24,15 +24,17 @@
 				This page lists the differences between versions of the ROBLOX Lua API.
 				<ul id="diff-versions">
 				{{ for i = 1,#diffs do }}
-					<li><span class="diff-date">{{= format.Date(diffs[i].Date) }}</span> ( <span class="diff-version">{{= diffs[i].PreviousVersion }}</span> → <span class="diff-version">{{= diffs[i].CurrentVersion }}</span> )
-					{{ local d = diffs[i].Differences }}
-					<ul class="diff-list">
-					{{ for i = 1,#d do }}
-						<li>
-							{{= format.Diff(d[i]) }}
-						</li>
-					{{ end }}
-					</ul>
+					<li{{= i == 1 and ' id="latest"' or ''}}>
+						<span class="diff-date">{{= format.Date(diffs[i].Date) }}</span> ( <span class="diff-version">{{= diffs[i].PreviousVersion }}</span> → <span class="diff-version">{{= diffs[i].CurrentVersion }}</span> )
+						{{ local d = diffs[i].Differences }}
+						<ul class="diff-list">
+						{{ for i = 1,#d do }}
+							<li>
+								{{= format.Diff(d[i]) }}
+							</li>
+						{{ end }}
+						</ul>
+					</li>
 				{{ end }}
 				</ul>
 			</div>
