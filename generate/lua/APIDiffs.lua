@@ -118,6 +118,17 @@ for i = #versions-1,1,-1 do
 			end
 		end
 
+		for i = 1,#d do
+			local diff = d[i]
+			if diff[2] == 'Security' then
+				local t = diff[4]
+				diff[4] = t and (t:match('^(.+)Security$') or t) or 'None'
+
+				local t = diff[5]
+				diff[5] = t and (t:match('^(.+)Security$') or t) or 'None'
+			end
+		end
+
 		diffs[#diffs+1] = {
 			Date = b[2];
 			PreviousVersion = a[1];

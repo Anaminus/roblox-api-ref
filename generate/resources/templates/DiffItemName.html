@@ -1,0 +1,1 @@
+{{ if item.type == 'Class' then }}<a class="api-class-name" href="{{= format.url.class(item.Name) }}">{{= item.Name }}</a>{{ elseif item.type == 'EnumItem' then }}{{= item.Enum }}.{{= item.Name }}{{ elseif item.Class then }}<a href="{{= format.url.member(item.Class,item.Name) }}">{{= item.Class }}.{{= item.Name }}</a>{{ else }}{{= item.Name }}{{ end }}

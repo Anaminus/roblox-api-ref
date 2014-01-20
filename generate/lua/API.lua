@@ -4,8 +4,10 @@ Generates API data structures to be used by templates.
 
 API.ClassData ( className )
 
-	Generates data for a given class. Here is the structure of the returned
-	value, as described by Go syntax (returns Class):
+	Generates data for a given class. The following indicates the structure of
+	the returned value, as described by Go syntax.
+
+	returns Class
 
 	// The entire data structure needed by the class template.
 	type Class struct {
@@ -98,6 +100,7 @@ API.ClassData ( className )
 	type Inherited struct {
 		Class  string // the class inherited from
 		Amount int    // the number of members inherited
+		Member string // a string indicating the member type, displayed as a word
 	}
 
 	// A single enum.
@@ -328,6 +331,7 @@ function API.ClassData(className)
 					table.insert(memberTypes[superTypeName].Inherited,{
 						Class = name;
 						Amount = #superMemberType.List;
+						Member = (#superMemberType.List == 1 and memberTypes[superTypeName].Type or memberTypes[superTypeName].TypePlural):lower();
 					})
 				end
 			end

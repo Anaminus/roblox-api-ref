@@ -1,0 +1,1 @@
+<span class="api-arguments">( {{ if #arguments > 0 then }}{{ for i=1,#arguments do }}{{ local argument = arguments[i] }}{{include: 'resources/templates/Argument.html' }}{{ if i < #arguments then }}, {{ end }}{{ end }} {{ end }})</span>

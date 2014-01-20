@@ -2,16 +2,20 @@
 	<tr>
 		<th class="col-icon"></th>
 		<th class="col-name">Event</th>
-	{{ if member.HasTags then }}
+	{{ if memberType.HasTags then }}
 		<th class="col-tags">Tags</th>
 	{{ end }}
 	</tr>
-{{ for i = 1,#member.List do }}
+{{ for i = 1,#memberType.List do }}
+	{{ local member = memberType.List[i] }}
 	<tr>
-		<td class="col-icon">{{= format.MemberIcon(member.List[i].Icon) }}</td>
-		<td class="col-name">{{= format.MemberName(member.List[i]) }} {{= format.Arguments(member.List[i].Arguments) }}</td>
-	{{ if #member.List[i].TagList > 0 then }}
-		<td class="col-tags">{{= format.Tags(member.List[i].TagList) }}</td>
+	{{ local icon = member.Icon }}
+		<td class="col-icon">{{include: 'resources/templates/MemberIcon.html'}}</td>
+	{{ local arguments = member.Arguments }}
+		<td class="col-name"><a class="api-member-name{{if member.Tags.preliminary then }} api-preliminary{{ end }}{{ if member.Tags.deprecated then }} api-deprecated{{ end }}" href="{{= format.url.member(member.Name) }}">{{= member.Name }}</a> {{include: 'resources/templates/Arguments.html' }}</td>
+	{{ if #member.TagList > 0 then }}
+		{{ local tags = member.TagList }}
+		<td class="col-tags">{{include: 'resources/templates/Tags.html'}}</td>
 	{{ end }}
 	</tr>
 {{ end }}

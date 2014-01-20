@@ -24,6 +24,7 @@ end
 local utl = require 'utl'
 local slt = require 'slt2'
 local format = require 'format'
+local resource = require 'resource'
 
 local APIDiffs = require 'APIDiffs'
 local API = require 'API'
@@ -43,7 +44,7 @@ local function generate(base)
 	utl.makedirs(utl.path(base,'css'))
 	utl.makedirs(utl.path(base,'js'))
 
-	local resources = utl.resource({
+	local resources = resource({
 		{base,'favicon','favicon16.png', 'favicon16', '16x16'};
 
 		{base,'image','icon-explorer.png'};

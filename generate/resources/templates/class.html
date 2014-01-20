@@ -15,9 +15,11 @@
 	<div id="ref-container">
 		<div id="ref-box">
 			<div id="header">
-				{{= format.ClassIcon(class.Icon) }}<h1>{{= class.Name }}</h1>
+			{{ local icon = class.Icon }}
+				{{include: 'resources/templates/ClassIcon.html' }}<h1>{{= class.Name }}</h1>
 				<span id="header-items">
-					<a id="return-link" href="/api">Back to hierarchy{{= format.MemberIcon(3) }}</a>
+				{{ local icon = 3 }}
+					<a id="return-link" href="/api">Back to hierarchy{{include: 'resources/templates/MemberIcon.html' }}</a>
 				</span>
 			</div>
 			<div id="box-content">
@@ -35,37 +37,40 @@
 				{{ end }}
 				{{ if #class.TagList > 0 then }}
 					<p><b>Tags: </b>
-						{{= format.Tags(class.TagList) }}
+						{{ local tags = class.TagList }}
+						{{include: 'resources/templates/Tags.html'}}
 					</p>
 				{{ end }}
 					<div id="members">
 						<h2>Members</h2>
 				{{ for i = 1,#class.Members do }}
-					{{ local member = class.Members[i] }}
-					{{ if #member.List > 0 or #member.Inherited > 0 then }}
-						<div id="section{{= member.TypePlural }}">
-							<h3>{{= member.TypePlural }}</h3>
-					{{ if #member.List > 0 then }}
-						{{ if member.Type == 'Property' then }}
+					{{ local memberType = class.Members[i] }}
+					{{ local inherited = memberType.Inherited }}
+					{{ if #memberType.List > 0 or #inherited > 0 then }}
+						<div id="section{{= memberType.TypePlural }}">
+							<h3>{{= memberType.TypePlural }}</h3>
+					{{ if #memberType.List > 0 then }}
+						{{ if memberType.Type == 'Property' then }}
 							{{include: 'resources/templates/PropertyList.html' }}
-						{{ elseif member.Type == 'Function' then }}
+						{{ elseif memberType.Type == 'Function' then }}
 							{{include: 'resources/templates/FunctionList.html' }}
-						{{ elseif member.Type == 'YieldFunction' then }}
+						{{ elseif memberType.Type == 'YieldFunction' then }}
 							{{include: 'resources/templates/YieldFunctionList.html' }}
-						{{ elseif member.Type == 'Event' then }}
+						{{ elseif memberType.Type == 'Event' then }}
 							{{include: 'resources/templates/EventList.html' }}
-						{{ elseif member.Type == 'Callback' then }}
+						{{ elseif memberType.Type == 'Callback' then }}
 							{{include: 'resources/templates/CallbackList.html' }}
 						{{ end }}
 					{{ end }}
-						{{ if #member.Inherited > 0 then }}
+						{{ if #inherited > 0 then }}
 							<ul>
-							{{ for i = 1,#member.Inherited do }}
-							{{ local n = member.Inherited[i].Amount }}
+						{{ for i = 1,#inherited do }}
+							{{ local n = inherited[i].Amount }}
 							{{ if n > 0 then }}
-								<li>{{= n }} {{= (n == 1 and member.Type or member.TypePlural):lower() }} inherited from {{= format.ClassName(member.Inherited[i].Class,'section' .. member.TypePlural) }}</li>
+								{{ local class = inherited[i].Class }}
+								<li>{{= n }} {{= inherited[i].Member }} inherited from <a class="api-class-name" href="{{= format.url.class(class) }}#section{{= memberType.TypePlural }}">{{= class }}</a></li>
 							{{ end }}
-							{{ end }}
+						{{ end }}
 							</ul>
 						{{ end }}
 						</div>
@@ -92,16 +97,18 @@
 					{{ for i = 1,#members.List do}}
 						{{ local member = members.List[i] }}
 						<div id="member{{= member.Name }}">
+						{{ local icon = member.Icon}}
+						{{ local arguments = member.Arguments }}
 						{{ if member.Type == 'Property' then }}
-							<h3>{{= format.MemberIcon(member.Icon) }}{{= format.Type(member.ValueType) }} {{= member.Class }}.{{= member.Name }}</h3>
+							<h3>{{include: 'resources/templates/MemberIcon.html'}}<a class="api-value-type" href="{{= format.url.type(member.ValueType) }}">{{= member.ValueType }}</a> {{= member.Class }}.{{= member.Name }}</h3>
 						{{ elseif member.Type == 'Function' then }}
-							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
+							<h3><a class="api-value-type" href="{{= format.url.type(member.ReturnType) }}">{{= member.ReturnType }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ elseif member.Type == 'YieldFunction' then }}
-							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
+							<h3><a class="api-value-type" href="{{= format.url.type(member.ReturnType) }}">{{= member.ReturnType }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ elseif member.Type == 'Event' then }}
-							<h3>{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
+							<h3>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ elseif member.Type == 'Callback' then }}
-							<h3>{{= format.Type(member.ReturnType) }}{{= format.MemberIcon(member.Icon) }}{{= member.Class }}.{{= member.Name }} {{= format.Arguments(member.Arguments) }}</h3>
+							<h3><a class="api-value-type" href="{{= format.url.type(member.ReturnType) }}">{{= member.ReturnType }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ end }}
 						{{ if member.Tags.preliminary then }}
 							<p><b>Preliminary:</b> This member is preliminary.</p>
@@ -110,9 +117,8 @@
 							<p><b>Deprecated:</b> This member is deprecated.</p>
 						{{ end }}
 						{{ if #member.TagList > 0 then }}
-							<p><b>Tags: </b>
-								{{= format.Tags(member.TagList) }}
-							</p>
+							{{ local tags = member.TagList }}
+							<p><b>Tags: </b>{{include: 'resources/templates/Tags.html' }}</p>
 						{{ end }}
 						{{ if member.Description then}}
 							{{= member.Description}}
@@ -130,7 +136,8 @@
 						<ul>
 						{{ for i = 1,#class.Superclasses do }}
 							{{ local super = class.Superclasses[i] }}
-							<li>{{= format.ClassIcon(super.Icon) }}{{= format.ClassName(super.Class) }}</li>
+							{{ local icon = super.Icon }}
+							<li>{{include: 'resources/templates/ClassIcon.html' }}<a class="api-class-name" href="{{= format.url.class(super.Class) }}">{{= super.Class }}</a></li>
 						{{ end }}
 						</ul>
 					</div>
@@ -141,7 +148,8 @@
 						<ul>
 						{{ for i = 1,#class.Subclasses do }}
 							{{ local sub = class.Subclasses[i] }}
-							<li>{{= format.ClassIcon(sub.Icon) }}{{= format.ClassName(sub.Class) }}</li>
+							{{ local icon = sub.Icon }}
+							<li>{{include: 'resources/templates/ClassIcon.html' }}<a class="api-class-name" href="{{= format.url.class(sub.Class) }}">{{= sub.Class }}</a></li>
 						{{ end }}
 						</ul>
 					</div>
