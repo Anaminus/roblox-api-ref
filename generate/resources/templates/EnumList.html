@@ -1,16 +1,16 @@
 <div class="enum-list">
 {{ for i = 1,#class.Enums do }}
 	{{ local enum = class.Enums[i] }}
-	<table id="type{{= enum.Name }}" class="enum-item-list">
+	<table id="type{{= html(enum.Name) }}" class="enum-item-list">
 		<tr>
 			<th class="col-icon"><span class="api-enum-icon"></span></th>
-			<th class="col-name" colspan="2">{{= enum.Name }}</th>
+			<th class="col-name" colspan="2">{{= html(enum.Name) }}</th>
 		</tr>
 	{{ for i = 1,#enum.Items do}}
 		<tr>
 			<td class="col-icon"><span class="api-enum-item-icon"></span></td>
-			<td class="col-value"><span class="api-enum-item-value">{{= enum.Items[i].Value }}</span></td>
-			<td class="col-name"><span class="api-enum-item-name">{{= enum.Items[i].Name }}</span></td>
+			<td class="col-value"><span class="api-enum-item-value">{{= html(enum.Items[i].Value) }}</span></td>
+			<td class="col-name"><span class="api-enum-item-name">{{= html(enum.Items[i].Name) }}</span></td>
 		</tr>
 	{{ end }}
 	</table>

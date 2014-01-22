@@ -22,7 +22,7 @@
 			</div>
 			<div id="box-content">
 				<div id="diff-message">
-					<span class="diff-date">{{= format.date(diffs[1].Date) }}</span>: <a href="/api/diff.html">New changes</a> have been made to the API.
+					<span class="diff-date">{{= html(format.date(diffs[1].Date)) }}</span>: <a href="/api/diff.html">New changes</a> have been made to the API.
 				</div>
 				<ul id="hierarchy-list">
 					{{= format.classtree(tree) }}

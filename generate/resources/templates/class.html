@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	{{= resources['favicon16'] }}
 
-	<title>{{= class.Name }} Reference</title>
+	<title>{{= html(class.Name) }} Reference</title>
 	{{= resources['api.css'] }}
 	{{= resources['ref.css'] }}
 	{{= resources['jquery.js'] }}
@@ -16,7 +16,7 @@
 		<div id="ref-box">
 			<div id="header">
 			{{ local icon = class.Icon }}
-				{{include: 'resources/templates/ClassIcon.html' }}<h1>{{= class.Name }}</h1>
+				{{include: 'resources/templates/ClassIcon.html' }}<h1>{{= html(class.Name) }}</h1>
 				<span id="header-items">
 				{{ local icon = 3 }}
 					<a id="return-link" href="/api">Back to hierarchy{{include: 'resources/templates/MemberIcon.html' }}</a>
@@ -47,8 +47,8 @@
 					{{ local memberType = class.Members[i] }}
 					{{ local inherited = memberType.Inherited }}
 					{{ if #memberType.List > 0 or #inherited > 0 then }}
-						<div id="section{{= memberType.TypePlural }}">
-							<h3>{{= memberType.TypePlural }}</h3>
+						<div id="section{{= html(memberType.TypePlural) }}">
+							<h3>{{= html(memberType.TypePlural) }}</h3>
 					{{ if #memberType.List > 0 then }}
 						{{ if memberType.Type == 'Property' then }}
 							{{include: 'resources/templates/PropertyList.html' }}
@@ -68,7 +68,7 @@
 							{{ local n = inherited[i].Amount }}
 							{{ if n > 0 then }}
 								{{ local class = inherited[i].Class }}
-								<li>{{= n }} {{= inherited[i].Member }} inherited from <a class="api-class-name" href="{{= format.url.class(class) }}#section{{= memberType.TypePlural }}">{{= class }}</a></li>
+								<li>{{= html(n) }} {{= html(inherited[i].Member) }} inherited from <a class="api-class-name" href="{{= html(format.url.class(class)) }}#section{{= html(memberType.TypePlural) }}">{{= html(class) }}</a></li>
 							{{ end }}
 						{{ end }}
 							</ul>
@@ -93,22 +93,22 @@
 				{{ for i = 1,#class.Members do }}
 					{{ local members = class.Members[i] }}
 					{{ if #members.List > 0 then }}
-						<h2>{{= members.Type }} Descriptions</h2>
+						<h2>{{= html(members.Type) }} Descriptions</h2>
 					{{ for i = 1,#members.List do}}
 						{{ local member = members.List[i] }}
-						<div id="member{{= member.Name }}">
+						<div id="member{{= html(member.Name) }}">
 						{{ local icon = member.Icon}}
 						{{ local arguments = member.Arguments }}
 						{{ if member.Type == 'Property' then }}
-							<h3>{{include: 'resources/templates/MemberIcon.html'}}<a class="api-value-type" href="{{= format.url.type(member.ValueType) }}">{{= member.ValueType }}</a> {{= member.Class }}.{{= member.Name }}</h3>
+							<h3>{{include: 'resources/templates/MemberIcon.html'}}<a class="api-value-type" href="{{= html(format.url.type(member.ValueType)) }}">{{= html(member.ValueType) }}</a> {{= html(member.Class) }}.{{= html(member.Name) }}</h3>
 						{{ elseif member.Type == 'Function' then }}
-							<h3><a class="api-value-type" href="{{= format.url.type(member.ReturnType) }}">{{= member.ReturnType }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ elseif member.Type == 'YieldFunction' then }}
-							<h3><a class="api-value-type" href="{{= format.url.type(member.ReturnType) }}">{{= member.ReturnType }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ elseif member.Type == 'Event' then }}
-							<h3>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ elseif member.Type == 'Callback' then }}
-							<h3><a class="api-value-type" href="{{= format.url.type(member.ReturnType) }}">{{= member.ReturnType }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= member.Class }}.{{= member.Name }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ end }}
 						{{ if member.Tags.preliminary then }}
 							<p><b>Preliminary:</b> This member is preliminary.</p>
@@ -137,7 +137,7 @@
 						{{ for i = 1,#class.Superclasses do }}
 							{{ local super = class.Superclasses[i] }}
 							{{ local icon = super.Icon }}
-							<li>{{include: 'resources/templates/ClassIcon.html' }}<a class="api-class-name" href="{{= format.url.class(super.Class) }}">{{= super.Class }}</a></li>
+							<li>{{include: 'resources/templates/ClassIcon.html' }}<a class="api-class-name" href="{{= html(format.url.class(super.Class)) }}">{{= html(super.Class) }}</a></li>
 						{{ end }}
 						</ul>
 					</div>
@@ -149,7 +149,7 @@
 						{{ for i = 1,#class.Subclasses do }}
 							{{ local sub = class.Subclasses[i] }}
 							{{ local icon = sub.Icon }}
-							<li>{{include: 'resources/templates/ClassIcon.html' }}<a class="api-class-name" href="{{= format.url.class(sub.Class) }}">{{= sub.Class }}</a></li>
+							<li>{{include: 'resources/templates/ClassIcon.html' }}<a class="api-class-name" href="{{= html(format.url.class(sub.Class)) }}">{{= html(sub.Class) }}</a></li>
 						{{ end }}
 						</ul>
 					</div>
