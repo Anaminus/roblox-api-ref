@@ -15,6 +15,7 @@ end
 local templateCache = {}
 function format.slt(file,data)
 	file = utl.path('resources/templates',file)
+	data.html = format.html
 	if templateCache[file] then
 		return slt.render(templateCache[file],data)
 	else

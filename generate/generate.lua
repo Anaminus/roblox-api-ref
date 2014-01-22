@@ -68,6 +68,7 @@ local function generate(base)
 			resources = resources;
 			diffs = APIDiffs;
 			tree = API.ClassTree();
+			html = format.html;
 		})
 	)
 
@@ -76,6 +77,7 @@ local function generate(base)
 			format = format;
 			resources = resources;
 			diffs = APIDiffs;
+			html = format.html;
 		})
 	)
 
@@ -112,6 +114,7 @@ local function generate(base)
 			resources = resources;
 			class = classData;
 			description = description;
+			html = format.html;
 		})
 		f:write(output)
 		f:flush()
