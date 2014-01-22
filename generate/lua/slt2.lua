@@ -23,7 +23,7 @@ local slt2 = {}
 
 -- indent each line of a string, except the first
 local function indent_string(str, indent)
-	local output = string.gsub(str, '(\r?\n)(.-)', '%1'..indent..'%2')
+	local output = string.gsub(tostring(str), '(\r?\n)(.-)', '%1'..indent..'%2')
 	return output
 end
 

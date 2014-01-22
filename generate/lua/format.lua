@@ -4,7 +4,7 @@ local utl = require 'utl'
 local format = {}
 
 function format.html(str)
-	return str
+	return tostring(str)
 		:gsub('&','&amp;')
 		:gsub("'",'&apos;')
 		:gsub('<','&lt;')
