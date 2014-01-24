@@ -2,7 +2,7 @@
 
 ## Archivable
 
-Determines whether the object can be serialzed. If *false*, then the object
+Determines whether the object can be serialized. If *false*, then the object
 will not be included when saved in a place or model, or when being cloned with
 [Instance.Clone](#memberClone).
 
