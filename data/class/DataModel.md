@@ -42,4 +42,4 @@ This is the version of the current place. It corresponds to the version number g
 
 ## Workspace
 
-This is a reference to the [Workspace](Workspace.html).
+This is a reference to the [Workspace](Workspace.html) service.
