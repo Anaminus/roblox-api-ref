@@ -82,6 +82,10 @@ function format.date(date)
 	return os.date('!%B %d, %Y',date)
 end
 
+function format.difflink(diff)
+	return 'v' .. diff.CurrentVersion:match('^(%d+%.%d+)')
+end
+
 do
 	local ord = {'st','nd','rd','th','th','th','th','th','th',[0] = 'th'}
 	function format.ordinal(n)
