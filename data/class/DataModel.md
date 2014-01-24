@@ -6,8 +6,6 @@ The **DataModel** class represents the root of the game hierarchy and the game i
 
 All instances of ROBLOX games contain a [singleton][Singleton pattern] DataModel object which does not replicate and gives access to all the game services. The DataModel object can be accessed by scripts with the `game` variable or with the `Game` variable. These two variables are part of the global environment. The DataModel object provides many members related to the game itself. Those are particularly useful to get information about the game; examples of such members are the [PlaceId](#memberPlaceId) and [CreatorId](#memberCreatorId) properties.
 
-[Singleton pattern]: https://en.wikipedia.org/wiki/Singleton_pattern
-
 # Members
 
 ## CreatorId
@@ -45,3 +43,5 @@ This is the version of the current place. It corresponds to the version number g
 ## Workspace
 
 This is a reference to the workspace service.
+
+[Singleton pattern]: https://en.wikipedia.org/wiki/Singleton_pattern
