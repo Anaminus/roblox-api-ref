@@ -222,3 +222,7 @@ table.member-list .col-return-type {
 #diff-versions > li:hover > a.permalink {
 	display : inline;
 }
+
+#diff-versions > li:hover > a.permalink:before {
+	content: ' ¶';
+}
