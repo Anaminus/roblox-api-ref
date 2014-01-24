@@ -1,6 +1,6 @@
 # Summary
 
-The **BasePart** is a structural class that represents a physical object. When
+The **BasePart** is an abstract class that represents a physical object. When
 it is in the [Workspace](Workspace.html), it will move and interact with other
 BaseParts.
 
