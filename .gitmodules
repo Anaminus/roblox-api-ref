@@ -1,0 +1,3 @@
+[submodule "roblox-data"]
+	path = roblox-data
+	url = https://github.com/Anaminus/roblox-data.git
