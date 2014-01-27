@@ -1,38 +1,35 @@
 # Summary
 
-The *TestService* can be used for performing unit tests, as well as testing a
-place with various settings.
+The **TestService** can be used for performing unit tests, as well as testing
+a place with various settings.
 
-# Description
+# Details
 
-Each of TestService's methods used for testing allow a *source* and a *line*
-to be supplied as arguments, optionally.
-
-Each method can potentially emit a message to the output. This message begins
-with "TestService", indicating that it was emitted by a TestService method. A
-message may be an error (in red), a warning (in yellow), or a regular message
-(in blue).
+Each method used for testing may emit a message to the output. This message
+begins with "TestService", indicating that it was emitted by a TestService
+method. A message may be an error (in red), a warning (in yellow), or a
+regular message (in blue).
 
 Each test method also allows a *source* and a *line* to be optionally supplied
 as arguments. If they are given, then they are displayed in the message.
 
-The *source* argument indicates a [Script](Script.html) object
+The *source* argument indicates a [script](BaseScript.html) object
 related to the message (such as the script where an error occurred). The
 script's [Name](Instance.html#memberName) is displayed before the
 main description or text of the message. Note that *source* may be any
-instance, not just a Script.
+instance, not just a script.
 
-*line* is a line number in a Script, indicating an exact line in the script
-related to the message. If *source* is given, then the line is displayed after
-the source name. It will not be displayed if the source is not given.
+*line* indicates an exact line in the script related to the message. If
+*source* is given, then the line is displayed after the source name. If not,
+then the line is not displayed.
 
 Example messages:
 
-**Without source:**
+*Without source:*
 
 	TestService: message
 
-**With source (SourceName) and line (123):**
+*With source (SourceName) and line (123):*
 
 	TestService.SourceName(123): message
 
