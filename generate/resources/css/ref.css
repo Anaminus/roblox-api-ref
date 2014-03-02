@@ -224,5 +224,18 @@ table.member-list .col-return-type {
 }
 
 #diff-versions > li:hover > a.permalink:before {
-	content: ' ¶';
+	content : ' ¶';
+}
+
+pre {
+	overflow      : auto;
+	padding       : 6px 10px;
+	background    : rgb(246, 246, 246);
+	word-wrap     : normal;
+	border        : 1px solid rgb(218, 218, 218);
+	border-radius : 4px;
+}
+
+code {
+	font-family : Consolas, monospace;
 }
