@@ -18,7 +18,8 @@ then this will be `TweenStatus.Canceled`.
 
 This function returns whether it was able to begin tweening. If there is
 another tweening function currently modifying the Position, and *override* is
-false, then this will return false.
+false, then this will return false. In this case, *callback* will not be
+called.
 
 If the GuiObject is not the descendant of a [DataModel](DataModel.html), then
 this function will throw the following error:
@@ -43,7 +44,8 @@ then this will be `TweenStatus.Canceled`.
 
 This function returns whether it was able to begin tweening. If there is
 another tweening function currently modifying the Size, and *override* is
-false, then this will return false.
+false, then this will return false. In this case, *callback* will not be
+called.
 
 If the GuiObject is not the descendant of a [DataModel](DataModel.html), then
 this function will throw the following error:
@@ -52,27 +54,16 @@ this function will throw the following error:
 
 ## TweenSizeAndPosition
 
-Interpolates both the [Size](#memberSize) and [Position](#memberPosition)
-properties from their current values to *endSize* and *endPosition*,
-respectively, for the duration of *time* seconds.
+Combines TweenSize and TweenPosition into a single call. This is similar to
+the following:
 
-*easingDirection* indicates the timing function to be used, while
-*easingStyle* indicates the interpolation function to be used.
+	object:TweenSize(size, ...)
+	object:TweenPosition(position, ...)
 
-*override* indicates whether the tween will override another tween that is
-currently running. This only applies to functions that modify either Size or
-the Position.
+This implies that the Size and Position are tweened independently, and so they
+can be overridden independently. The callback function will also be called
+twice, once for each tween.
 
-If *callback* is specified, then it will be called after the tween finishes.
-It receives a TweenStatus enum as its only argument. If the tween successfully
-finished, then this will be `TweenStatus.Completed`. If it was overridden,
-then this will be `TweenStatus.Canceled`.
-
-This function returns whether it was able to begin tweening. If there is
-another tweening function currently modifying the Size or Position, and
-*override* is false, then this will return false.
-
-If the GuiObject is not the descendant of a [DataModel](DataModel.html), then
-this function will throw the following error:
-
-	Can only tween objects in the workspace
+The only difference is that this function will not override the Size or
+Position independently. That is, if one fails to be overridden, then both will
+fail.
