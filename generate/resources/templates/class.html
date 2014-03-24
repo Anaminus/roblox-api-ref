@@ -26,7 +26,9 @@
 				<div id="info">
 				{{ if description.summary then }}
 					<div id="summary">
-						{{= description.summary }}
+						<div class="markdown">
+{{= description.summary }}
+						</div>
 					</div>
 				{{ end }}
 				{{ if class.Tags.preliminary then }}
@@ -86,7 +88,9 @@
 				{{ if description.details then }}
 					<div id="details">
 						<h2>Detailed Description</h2>
-						{{= description.details }}
+						<div class="markdown">
+{{= description.details }}
+						</div>
 					</div>
 				{{ end }}
 					<div id="member-descriptions">
@@ -121,7 +125,9 @@
 							<p><b>Tags: </b>{{include: 'resources/templates/Tags.html' }}</p>
 						{{ end }}
 						{{ if member.Description then}}
-							{{= member.Description}}
+							<div class="markdown">
+{{= member.Description}}
+							</div>
 						{{ end }}
 						</div>
 					{{ end }}
