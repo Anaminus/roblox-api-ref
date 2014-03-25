@@ -1,146 +1,124 @@
---[[API
+--[[
+@module API {
+	ClassData       classData
+	ClassTree       classTree
+	ClassIconIndex  classIconIndex
+	MemberIconIndex memberIconIndex
+}
 
-Generates API data structures to be used by templates.
+@type classData function ( className string ) data Class
+Generates data for a given class.
 
-API.ClassData ( className )
+@type Class {
+	Name         string          -- name of the class
+	Icon         ClassIcon       -- class's icon index
+	Superclasses []ClassIconPair -- list of classes that the class inherits from
+	Subclasses   []ClassIconPair -- sorted by ClassIconPair.Class
+	Tags         [string]bool    -- Tags given to the class
+	TagList      []string        -- sorted; excludes preliminary and deprecated tags
+	Members      []MemberType    -- List of members per member type
+	MemberSet    [string]Member  -- Member names paired with member items
+	Enums        []EnumItem      -- sorted by Enum.Name
+}
 
-	Generates data for a given class. The following indicates the structure of
-	the returned value, as described by Go syntax.
+@type ClassIcon int
+Represents the index of an icon on the explorer icon sheet.
 
-	returns Class
+@type MemberIcon int
+Represents the index of an icon on the object browser icon sheet.
 
-	// The entire data structure needed by the class template.
-	type Class struct {
-		Name         string                 // name of the class
-		Icon         ClassIcon              // class's icon index
-		Superclasses []ClassIconPair        // list of classes that the class inherits from
-		Subclasses   []ClassIconPair        // sorted by ClassIconPair.Class
-		Tags         map[string]bool        // Tags given to the class
-		TagList      []string               // sorted; excludes preliminary and deprecated tags
-		Members      []MemberType           // List of members per member type
-		MemberSet    map[string]interface{} // Member names paired with Property, Function, YieldFunction, Event, or Callback
-		Enums        []Enum                 // sorted by Enum.Name
-	}
+@type ClassIconPair {
+	Class string
+	Icon  ClassIcon
+}
+A class name paired with an icon.
 
-	// Represents the index of an icon on the explorer icon sheet.
-	type ClassIcon int
+@type MemberType {
+	Type       string      -- the member type
+	TypePlural string      -- plural form of the member type
+	List       []Member    -- List of memebers
+	Inherited  []Inherited -- a list of inherited members
+	HasTags    bool        -- whether at least one member has tags
+}
+Represents the members of a class for a single member type.
 
-	// Represents the index of an icon on the object browser icon sheet.
-	type MemberIcon int
+@type Member {}
 
-	// A class name paired with an icon.
-	type ClassIconPair struct {
-		Class string
-		Icon  ClassIcon
-	}
+@type Property Member {
+	Icon      MemberIcon   -- the member's icon index
+	Name      string       -- the name of the member
+	Type      string       -- the member type
+	ValueType string       -- the property's value type
+	Tags      [string]bool -- tags given to the member
+	TagList   []string     -- tags in sorted list form
+}
+A single property member.
 
-	// Represents the members of a class for a single member type.
-	type MemberType struct {
-		Type       string        // the member type
-		TypePlural string        // plural form of the member type
-		List       []interface{} // Property, Function, YieldFunction, Event, Callback
-		Inherited  []Inherited   // a list of inherited members
-		HasTags    bool          // whether at least one member has tags
-	}
+@type Function Member {
+	Icon       MemberIcon           -- the member's icon index
+	Name       string               -- the name of the member
+	Type       string               -- the member type
+	ReturnType string               -- the type returned by the function
+	Arguments  []ParseAPI::Argument -- a list of the function's arguments
+	Tags       [string]bool         -- tags given to the member
+	TagList    []string             -- tags in sorted list form
+}
+A single function member.
 
-	// A single property member.
-	type Property struct {
-		Icon      MemberIcon      // the member's icon index
-		Name      string          // the name of the member
-		Type      string          // the member type
-		ValueType string          // the property's value type
-		Tags      map[string]bool // tags given to the member
-		TagList   []string        // tags in sorted list form
-	}
+@type YieldFunction Function
+A single yield function member.
 
-	// A single function member.
-	type Function struct {
-		Icon       MemberIcon      // the member's icon index
-		Name       string          // the name of the member
-		Type       string          // the member type
-		ReturnType string          // the type returned by the function
-		Arguments  []Argument      // a list of the function's arguments
-		Tags       map[string]bool // tags given to the member
-		TagList    []string        // tags in sorted list form
-	}
+@type Callback Function
+A single callback member.
 
-	// A single yield function member.
-	type YieldFunction Function
+@type Event Member {
+	Icon       MemberIcon           -- the member's icon index
+	Name       string               -- the name of the member
+	Type       string               -- the member type
+	Arguments  []ParseAPI::Argument -- a list of the event's arguments
+	Tags       [string]bool         -- tags given to the member
+	TagList    []string             -- tags in sorted list form
+}
+A single event member.
 
-	// A single event member.
-	type Event struct {
-		Icon       MemberIcon      // the member's icon index
-		Name       string          // the name of the member
-		Type       string          // the member type
-		Arguments  []Argument      // a list of the event's arguments
-		Tags       map[string]bool // tags given to the member
-		TagList    []string        // tags in sorted list form
-	}
+@type Inherited {
+	Class  string -- the class inherited from
+	Amount int    -- the number of members inherited
+	Member string -- a string indicating the member type, displayed as a word
+}
+Represents the amount of members of a given type that a given class
+inherits from the indicated class.
 
-	// A single callback member.
-	type Callback struct {
-		Icon       MemberIcon      // the member's icon index
-		Name       string          // the name of the member
-		Type       string          // the member type
-		ReturnType string          // the expected return value type of the callback
-		Arguments  []Argument      // a list of the callback's arguments
-		Tags       map[string]bool // tags given to the member
-		TagList    []string        // tags in sorted list form
-	}
+@type Enum {
+	Name  string     -- the name of the enum
+	Items []EnumItem -- a list of the enum's items, sorted by value
+}
+A single enum.
 
-	// A single argument
-	type Argument struct {
-		Type    string // the argument's value type
-		Name    string // the argument's name
-		Default string // a string representation of the argument's default value; nullable
-	}
+@type EnumItem {
+	Name  string -- the item's name
+	Value int    -- the item's value
+}
+A single enum item.
 
-	// Represents the amount of members of a given type that a given class
-	// inherits from the indicated class.
-	type Inherited struct {
-		Class  string // the class inherited from
-		Amount int    // the number of members inherited
-		Member string // a string indicating the member type, displayed as a word
-	}
 
-	// A single enum.
-	type Enum struct {
-		Name  string     // the name of the enum
-		Items []EnumItem // a list of the enum's items, sorted by value
-	}
+@type classTree function ( ) list []TreeNode
+Generates a tree representing the inheritance relationship between every
+class.
 
-	// A single enum item.
-	type EnumItem struct {
-		Name  string // the item's name
-		Value int    // the item's value
-	}
+@type TreeNode {
+	Class string     -- the class name
+	Icon  ClassIcon  -- the class icon
+	List  []TreeNode -- a list of classes that inherit the class
+}
+Represents a single node in the tree.
 
-API.ClassTree ( )
+@type classIconIndex function ( className string ) index int
+Returns the icon index for a given class. Returns 0 if an index does not exist
+for the class.
 
-	Generates a tree representing the inheritance relationship between every
-	class. Here is the structure of the returned value, as described by Go
-	syntax (returns TreeNodeList):
-
-	// A list of tree nodes.
-	type TreeNodeList []TreeNode
-
-	// Represents a single node in the tree.
-	type TreeNode struct {
-		Class string       // the class name
-		Icon  ClassIcon    // the class icon
-		List  TreeNodeList // a list of classes that inherit the class
-	}
-
-API.ClassIconIndex ( className )
-
-	Returns the icon index for a given class. Returns 0 if an index does not
-	exist for the class.
-
-API.MemberIconIndex ( memberStruct )
-
-	Returns the icon index for a given member. `memberStruct` requires a
-	`type` field, which is the member type, and a `tags` field, which is a set
-	of strings.
+@type memberIconIndex function ( member Member ) index int
+Returns the icon index for a given member.
 
 ]]
 
