@@ -7,6 +7,7 @@ type Diff struct {
 	PreviousVersion string
 	CurrentVersion  string
 	Differences     table
+	Dump            table
 }
 
 ]]
@@ -44,6 +45,9 @@ if not header then error(err) end
 header:write('schema 1\nroblox.com\nDate\tPlayerHash\tStudioHash\tPlayerVersion\n')
 header:flush()
 
+local superBase
+local enumBase
+
 local versions = {}
 for i = 1,#buildDiffs do
 	local status = buildDiffs[i][1]
@@ -60,8 +64,16 @@ for i = 1,#buildDiffs do
 
 		local dump,err = utl.read(dest)
 		if not dump then error(err) end
+		dump = LexAPI(dump)
 
-		versions[#versions+1] = {build.PlayerVersion,build.Date,LexAPI(dump)}
+		versions[#versions+1] = {build.PlayerVersion,build.Date,dump}
+
+		if build.PlayerVersion:match('^0%.79%.%d+%.%d+$') then
+			superBase = {dump,#versions}
+		elseif build.PlayerVersion:match('^0%.80%.%d+%.%d+$') then
+			enumBase = {dump,#versions}
+		end
+
 		header:write(build.Date,'\t',build.PlayerHash,'\t',build.StudioHash,'\t',build.PlayerVersion,'\n')
 		header:flush()
 	elseif status == 0 then
@@ -76,8 +88,16 @@ for i = 1,#buildDiffs do
 
 		local dump,err = utl.read(dest)
 		if not dump then error(err) end
+		dump = LexAPI(dump)
 
-		versions[#versions+1] = {build.PlayerVersion,build.Date,LexAPI(dump)}
+		versions[#versions+1] = {build.PlayerVersion,build.Date,dump}
+
+		if build.PlayerVersion:match('^0%.79%.%d+%.%d+$') then
+			superBase = {dump,#versions}
+		elseif build.PlayerVersion:match('^0%.80%.%d+%.%d+$') then
+			enumBase = {dump,#versions}
+		end
+
 		header:write(build.Date,'\t',build.PlayerHash,'\t',build.StudioHash,'\t',build.PlayerVersion,'\n')
 		header:flush()
 	elseif status == -1 then
@@ -87,6 +107,59 @@ for i = 1,#buildDiffs do
 end
 header:close()
 
+-- repair superclasses
+if superBase then
+	local exceptions = {
+		['<<<ROOT>>>'] = false;
+		['Instance'] = '<<<ROOT>>>';
+		['Authoring'] = 'Instance';
+		['PseudoPlayer'] = 'Instance';
+	}
+
+	local classes = {}
+	local dump = superBase[1]
+	for i = 1,#dump do
+		local item = dump[i]
+		if item.type == 'Class' then
+			classes[item.Name] = item.Superclass or false
+		end
+	end
+
+	for i = 1,superBase[2]-1 do
+		local dump = versions[i][3]
+		for i = 1,#dump do
+			local item = dump[i]
+			if item.type == 'Class' and not item.Superclass then
+				local super = classes[item.Name] or nil
+				if exceptions[item.Name] ~= nil then
+					super = exceptions[item.Name] or nil
+				end
+				item.Superclass = super
+			end
+		end
+	end
+end
+
+-- repair enums
+if enumBase then
+	local enums = {}
+	local dump = enumBase[1]
+	for i = 1,#dump do
+		local item = dump[i]
+		if item.type == 'Enum' or item.type == 'EnumItem' then
+			enums[#enums+1] = item
+		end
+	end
+
+	for i = 1,enumBase[2]-1 do
+		local dump = versions[i][3]
+		local n = #dump
+		for i = 1,#enums do
+			dump[n+i] = enums[i]
+		end
+	end
+end
+
 local diffs = {}
 for i = #versions-1,1,-1 do
 	local a = versions[i]
@@ -94,30 +167,6 @@ for i = #versions-1,1,-1 do
 
 	local d = DiffAPI(a[3],b[3])
 	if #d > 0 then
-		if b[1]:match('^0%.79%.%d+%.%d+$') then
-			-- ignore superclass changes
-			local i,n = 1,#d
-			while i <= n do
-				if d[i][1] == 0 and d[i][2] == 'Superclass' then
-					table.remove(d,i)
-					n = n - 1
-				else
-					i = i + 1
-				end
-			end
-		elseif b[1]:match('^0%.80%.%d+%.%d+$') then
-			-- ignore enum additions
-			local i,n = 1,#d
-			while i <= n do
-				if d[i][1] == 1 and d[i][2] == 'Enum' then
-					table.remove(d,i)
-					n = n - 1
-				else
-					i = i + 1
-				end
-			end
-		end
-
 		for i = 1,#d do
 			local diff = d[i]
 			if diff[2] == 'Security' then
@@ -134,8 +183,9 @@ for i = #versions-1,1,-1 do
 			PreviousVersion = a[1];
 			CurrentVersion = b[1];
 			Differences = d;
+			Dump = b[3];
 		}
 	end
 end
 
-return diffs
+return {diffs,versions[1][3]}

@@ -26,7 +26,7 @@ local slt = require 'slt2'
 local format = require 'format'
 local resource = require 'resource'
 
-local APIDiffs = require 'APIDiffs'
+local APIDiffs = unpack(require 'APIDiffs')
 local API = require 'API'
 local APIDump = unpack(require 'APIDump')
 local APIjson = require'APIToJSON'(APIDump,true)

@@ -64,15 +64,22 @@ function format.classtree(tree)
 	local rep = string.rep
 	local function r(t,d)
 		for i = 1,#t do
-			local n = #t[i].List > 0
+			local class = t[i]
+			local n = #class.List > 0
 			o[#o+1] = rep('\t',d) .. '<li>'
 			if n then
 				o[#o+1] = '\n' .. rep('\t',d + 1)
 			end
-			o[#o+1] = format.slt('ClassIcon.html',{icon=t[i].Icon}) .. '<a class="api-class-name" href="' .. format.url.class(t[i].Class) .. '">' .. t[i].Class .. '</a>'
+			o[#o+1] = format.slt('ClassIcon.html',{icon=class.Icon}) .. '<a class="api-class-name" href="' .. format.url.class(class.Class) .. '">' .. format.html(class.Class) .. '</a>'
+			if class.Added then
+				o[#o+1] = ' (' .. format.slt('Version.html',{format=format,version=class.Added,added=true}) .. ')'
+			end
+			if class.Removed then
+				o[#o+1] = ' (' .. format.slt('Version.html',{format=format,version=class.Removed,added=false}) .. ')'
+			end
 			if n then
 				o[#o+1] = '\n' .. rep('\t',d + 1) .. '<ul>\n'
-				r(t[i].List,d + 2)
+				r(class.List,d + 2)
 				o[#o+1] = rep('\t',d + 1) .. '</ul>\n'
 				o[#o+1] = rep('\t',d)
 			end

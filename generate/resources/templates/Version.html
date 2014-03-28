@@ -1,0 +1,1 @@
+<a class="api-version version-{{= added and 'added' or 'removed' }}" href="{{= html(format.url.version(version)) }}">{{= (added and '+' or '−') .. version:match('^(%d+%.%d+)') }}</a>

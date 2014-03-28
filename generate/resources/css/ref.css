@@ -212,6 +212,14 @@ table.member-list .col-return-type {
 	font-family : Consolas, "Lucida Console", monospace;
 }
 
+.version-added {
+	color: DarkGreen;
+}
+
+.version-removed {
+	color: DarkRed;
+}
+
 .diff-arg-list .api-argument {
 	padding       : 0px 4px;
 	background    : rgb(246, 246, 246);

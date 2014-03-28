@@ -122,7 +122,8 @@ Returns the icon index for a given member.
 
 ]]
 
-local APIDump,ExplorerIndex = unpack(require 'APIDump')
+local APIDiffs,FirstDump = unpack(require 'APIDiffs')
+local ExplorerIndex = require 'ExplorerImageIndex'
 
 -- The order in which member types will be displayed
 local MemberTypeOrder = {
@@ -184,6 +185,7 @@ function API.ClassData(className)
 	local memberTypeLookup = {}
 	local enumLookup = {}
 
+	local APIDump = APIDiffs[1].Dump
 	for i = 1,#APIDump do
 		local item = APIDump[i]
 
@@ -420,10 +422,59 @@ end
 
 function API.ClassTree()
 	local classes = {}
-	for i = 1,#APIDump do
-		local item = APIDump[i]
+	for i = 1,#FirstDump do
+		local item = FirstDump[i]
 		if item.type == 'Class' then
-			classes[item.Name] = item.Superclass or false
+			local super = item.Superclass
+			if super == nil then
+				if item.Name == 'Instance' then
+					super = '<<<ROOT>>>'
+				elseif item.Name ~= '<<<ROOT>>>' then
+					super = 'Instance'
+				end
+			end
+			classes[item.Name] = {
+				Name = item.Name;
+				Superclass = super;
+			}
+		end
+	end
+
+	for i = #APIDiffs,1,-1 do
+		local d = APIDiffs[i]
+		local diffs = d.Differences
+		for i = 1,#diffs do
+			local diff = diffs[i]
+			local item = diff[3]
+			if item.type == 'Class' then
+				if not classes[item.Name] then
+					local super = item.Superclass
+					if super == nil then
+						if item.Name == 'Instance' then
+							super = '<<<ROOT>>>'
+						elseif item.Name ~= '<<<ROOT>>>' then
+							super = 'Instance'
+						end
+					end
+					classes[item.Name] = {
+						Name = item.Name;
+						Superclass = super;
+					}
+				end
+				if diff[1] == -1 then
+					if diff[2] == 'Class' then
+						classes[item.Name].Removed = d.CurrentVersion
+					end
+				elseif diff[1] == 1 then
+					if diff[2] == 'Class' then
+						classes[item.Name].Added = d.CurrentVersion
+					end
+				elseif diff[1] == 0 then
+					if diff[2] == 'Superclass' then
+						classes[item.Name].Superclass = diff[4]
+					end
+				end
+			end
 		end
 	end
 
@@ -437,19 +488,23 @@ function API.ClassTree()
 
 	local function r(root,t)
 		for i = 1,#sorted do
-			local child = sorted[i]
-			if classes[child] == root then
-				local q = {}
+			local name = sorted[i]
+			local class = classes[name]
+			if class.Superclass == root then
+				local q = {
+					Class = name;
+					Icon = classIconIndex(name);
+					Added = class.Added;
+					Removed = class.Removed;
+					List = {};
+				}
 				t[#t+1] = q
-				q.Class = child
-				q.Icon = classIconIndex(child)
-				q.List = {}
-				r(child,q.List)
+				r(name,q.List)
 			end
 		end
 	end
 
-	r(false,list)
+	r(nil,list)
 
 	return list
 end
