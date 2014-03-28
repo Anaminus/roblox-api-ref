@@ -425,17 +425,9 @@ function API.ClassTree()
 	for i = 1,#FirstDump do
 		local item = FirstDump[i]
 		if item.type == 'Class' then
-			local super = item.Superclass
-			if super == nil then
-				if item.Name == 'Instance' then
-					super = '<<<ROOT>>>'
-				elseif item.Name ~= '<<<ROOT>>>' then
-					super = 'Instance'
-				end
-			end
 			classes[item.Name] = {
 				Name = item.Name;
-				Superclass = super;
+				Superclass = item.Superclass;
 			}
 		end
 	end
@@ -448,17 +440,9 @@ function API.ClassTree()
 			local item = diff[3]
 			if item.type == 'Class' then
 				if not classes[item.Name] then
-					local super = item.Superclass
-					if super == nil then
-						if item.Name == 'Instance' then
-							super = '<<<ROOT>>>'
-						elseif item.Name ~= '<<<ROOT>>>' then
-							super = 'Instance'
-						end
-					end
 					classes[item.Name] = {
 						Name = item.Name;
-						Superclass = super;
+						Superclass = item.Superclass;
 					}
 				end
 				if diff[1] == -1 then
