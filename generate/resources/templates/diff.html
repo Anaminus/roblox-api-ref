@@ -27,8 +27,8 @@
 				<ul id="diff-versions">
 				{{ for i = 1,#diffs do }}
 					<li>
-						<a class="anchor" id="{{= html(format.difflink(diffs[i])) }}"></a>
-						<span class="diff-date">{{= html(format.date(diffs[i].Date)) }}</span> ( <span class="diff-version">{{= html(diffs[i].PreviousVersion) }}</span> → <span class="diff-version">{{= html(diffs[i].CurrentVersion) }}</span> )<a class="permalink" href="#{{= html(format.difflink(diffs[i])) }}"></a>
+						<a class="anchor" id="{{= html(format.url.version(diffs[i].CurrentVersion,true)) }}"></a>
+						<span class="diff-date">{{= html(format.date(diffs[i].Date)) }}</span> ( <span class="diff-version">{{= html(diffs[i].PreviousVersion) }}</span> → <span class="diff-version">{{= html(diffs[i].CurrentVersion) }}</span> )<a class="permalink" href="{{= html(format.url.version(diffs[i].CurrentVersion)) }}"></a>
 					{{ local d = diffs[i].Differences }}
 						<ul class="diff-list">
 					{{ for i = 1,#d do }}

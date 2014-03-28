@@ -50,6 +50,14 @@ function format.url.member(class,member)
 	end
 end
 
+function format.url.version(ver,frag)
+	if frag then
+		return 'v' .. ver:match('^(%d+%.%d+)')
+	else
+		return '/api/diff.html#v' .. ver:match('^(%d+%.%d+)')
+	end
+end
+
 function format.classtree(tree)
 	local o = {}
 
@@ -80,10 +88,6 @@ end
 
 function format.date(date)
 	return os.date('!%B %d, %Y',date)
-end
-
-function format.difflink(diff)
-	return 'v' .. diff.CurrentVersion:match('^(%d+%.%d+)')
 end
 
 do
