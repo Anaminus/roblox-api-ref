@@ -40,6 +40,7 @@ Reference Classes:
 .enum-list                  Contains one or more .enum-item-list tables.
 .enum-item-list             Contains a list of the items of an enum.
 .col-value                  A table column containing the value of an enum.
+.api-version                An API version number.
 
 API classes:
 
@@ -66,4 +67,3 @@ Diff Classes:
 .diff-list                  A list of differences between two API versions.
 .diff-arg-list              A list of changes in an argument list.
 .diff-date                  A date indicating when a difference occured.
-.diff-version               A version number.
