@@ -25,7 +25,7 @@
 			<div id="box-content">
 				This page lists the differences between versions of the ROBLOX Lua API.
 				<ul id="diff-versions">
-				{{ for i = 1,#diffs do }}
+				{{ for i = #diffs,1,-1 do }}
 					<li>
 						<a class="anchor" id="{{= html(format.url.version(diffs[i].CurrentVersion,true)) }}"></a>
 						<span class="diff-date">{{= html(format.date(diffs[i].Date)) }}</span> ( <span class="api-version">{{= html(diffs[i].PreviousVersion) }}</span> → <span class="api-version">{{= html(diffs[i].CurrentVersion) }}</span> )<a class="permalink" href="{{= html(format.url.version(diffs[i].CurrentVersion)) }}"></a>

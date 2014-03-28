@@ -161,7 +161,7 @@ if enumBase then
 end
 
 local diffs = {}
-for i = #versions-1,1,-1 do
+for i = 1,#versions-1 do
 	local a = versions[i]
 	local b = versions[i+1]
 

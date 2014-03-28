@@ -185,7 +185,7 @@ function API.ClassData(className)
 	local memberTypeLookup = {}
 	local enumLookup = {}
 
-	local APIDump = APIDiffs[1].Dump
+	local APIDump = APIDiffs[#APIDiffs].Dump
 	for i = 1,#APIDump do
 		local item = APIDump[i]
 
@@ -432,7 +432,7 @@ function API.ClassTree()
 		end
 	end
 
-	for i = #APIDiffs,1,-1 do
+	for i = 1,#APIDiffs do
 		local d = APIDiffs[i]
 		local diffs = d.Differences
 		for i = 1,#diffs do
