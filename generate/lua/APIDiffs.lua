@@ -113,6 +113,7 @@ if superBase then
 		['<<<ROOT>>>'] = false;
 		['Instance'] = '<<<ROOT>>>';
 		['Authoring'] = 'Instance';
+		['LoadingGui'] = 'Instance';
 		['PseudoPlayer'] = 'Instance';
 	}
 
