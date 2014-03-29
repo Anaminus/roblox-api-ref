@@ -212,6 +212,15 @@ table.member-list .col-return-type {
 	font-family : Consolas, "Lucida Console", monospace;
 }
 
+.version-list {
+	margin-left: 0.5em;
+	font-family : Consolas, "Lucida Console", monospace;
+}
+
+td .version-list {
+	margin-left: 0;
+}
+
 .version-added {
 	color: DarkGreen;
 }

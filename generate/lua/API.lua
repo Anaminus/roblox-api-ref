@@ -224,8 +224,7 @@ function API.ClassData(className)
 					List = {};
 					Inherited = {};
 					HasTags = false;
-					HasAdded = false;
-					HasRemoved = false;
+					HasVersions = false;
 					Type = item.type;
 					TypePlural = MemberTypePlural[item.type];
 				}
@@ -237,11 +236,8 @@ function API.ClassData(className)
 			if #tagList > 0 then
 				memberType.HasTags = true
 			end
-			if new.VersionAdded then
-				memberType.HasAdded = true
-			end
-			if new.VersionRemoved then
-				memberType.HasRemoved = true
+			if #new.Versions > 0 then
+				memberType.HasVersions = true
 			end
 			table.insert(memberType.List,new)
 
@@ -265,6 +261,7 @@ function API.ClassData(className)
 		Icon = classIconIndex(className);
 		Tags = classLookup[className].Tags;
 		TagList = classLookup[className].TagList;
+		Versions = classLookup[className].Versions;
 		Members = {};
 		MemberSet = memberSet;
 		Enums = {};
@@ -452,8 +449,7 @@ function API.ClassTree()
 				local q = {
 					Class = name;
 					Icon = classIconIndex(name);
-					Added = class.VersionAdded;
-					Removed = class.VersionRemoved;
+					Versions = class.Versions;
 					List = {};
 				}
 				t[#t+1] = q

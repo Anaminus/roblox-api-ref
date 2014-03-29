@@ -1,0 +1,1 @@
+{{ if #versions > 0 then }}<span class="version-list">({{ for i = 1,#versions do local version,added=unpack(versions[i]) }}{{ if i > 1 then }}, {{ end }}{{include: 'resources/templates/Version.html' }}{{ end }})</span>{{ end }}

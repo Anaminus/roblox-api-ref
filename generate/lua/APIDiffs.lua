@@ -160,24 +160,6 @@ if enumBase then
 	end
 end
 
-local function setVersion(item,state,ver)
-	if state == 1 then
-		local add = item.VersionAdded
-		if not add then
-			add = {}
-			item.VersionAdded = add
-		end
-		add[#add+1] = ver
-	elseif state == -1 then
-		local remove = item.VersionRemoved
-		if not remove then
-			remove = {}
-			item.VersionRemoved = remove
-		end
-		remove[#remove+1] = ver
-	end
-end
-
 local diffs = {}
 for i = 1,#versions-1 do
 	local a = versions[i]
@@ -206,6 +188,15 @@ for i = 1,#versions-1 do
 	end
 end
 
+local function setVersion(item,ver,state)
+	local vers = item.Versions
+	if not vers then
+		vers = {}
+		item.Versions = vers
+	end
+	vers[#vers+1] = {ver,state == 1}
+end
+
 local function itemName(item)
 	if item.Class then
 		return item.type .. ' ' .. item.Class .. '.' .. item.Name
@@ -231,7 +222,7 @@ for i = 1,#diffs do
 		local type = list[1]
 		local subtype = list[2]
 		local name = itemName(list[3])
-		if not items[name] and type ~= 1 then print("CHECK",name,type) end
+		if not items[name] and type ~= 1 then print("WUT",name,type) end
 		local item = items[name] or list[3]
 
 		if type == 0 then
@@ -245,20 +236,33 @@ for i = 1,#diffs do
 			end
 		else
 			if subtype == 'Item' or subtype == 'Class' or subtype == 'Enum' then
-				setVersion(item,type,ver)
+				setVersion(item,ver,type)
 			end
 			if type == 1 then
-				diffDump[#diffDump+1] = item
+				if not items[name] then
+					diffDump[#diffDump+1] = item
+				end
 				items[name] = item
+
 				if subtype == 'Class' or subtype == 'Enum' then
 					local l = list[4]
 					for i = 1,#l do
-						diffDump[#diffDump+1] = l[i]
-						items[itemName(l[i])] = l[i]
+						local name = itemName(l[i])
+						if not items[name] then
+							diffDump[#diffDump+1] = l[i]
+						end
+						items[name] = l[i]
 					end
 				end
 			end
 		end
+	end
+end
+
+for i = 1,#diffDump do
+	local item = diffDump[i]
+	if not item.Versions then
+		item.Versions = {}
 	end
 end
 
