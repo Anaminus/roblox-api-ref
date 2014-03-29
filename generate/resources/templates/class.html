@@ -45,6 +45,9 @@
 				{{ end }}
 					<div id="members">
 						<h2>Members</h2>
+				{{ if #class.Members == 0 then }}
+						<p>This class has no members.</p>
+				{{ end }}
 				{{ for i = 1,#class.Members do }}
 					{{ local memberType = class.Members[i] }}
 					{{ local inherited = memberType.Inherited }}
@@ -139,6 +142,7 @@
 				{{ end }}
 					</div>
 				</div>
+			{{ if #class.Superclasses > 0 or #class.Subclasses > 0 then }}
 				<div id="hierarchy-nav">
 				{{ if #class.Superclasses > 0 then }}
 					<div id="superclasses">
@@ -165,6 +169,7 @@
 					</div>
 				{{ end }}
 				</div>
+			{{ end }}
 			</div>
 		</div>
 	</div>
