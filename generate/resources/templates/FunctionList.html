@@ -6,6 +6,12 @@
 	{{ if memberType.HasTags then }}
 		<th class="col-tags">Tags</th>
 	{{ end }}
+	{{ if memberType.HasAdded then }}
+		<th class="col-version-added">Added</th>
+	{{ end }}
+	{{ if memberType.HasRemoved then }}
+		<th class="col-version-removed">Removed</th>
+	{{ end }}
 	</tr>
 {{ for i = 1,#memberType.List do }}
 	{{ local member = memberType.List[i] }}
@@ -18,6 +24,30 @@
 	{{ if #member.TagList > 0 then }}
 		{{ local tags = member.TagList }}
 		<td class="col-tags">{{include: 'resources/templates/Tags.html'}}</td>
+	{{ elseif memberType.HasTags then }}
+		<td class="col-tags"></td>
+	{{ end }}
+	{{ if member.VersionAdded then }}
+		<td class="col-version-added">
+		{{ for i = 1,#member.VersionAdded do }}
+			{{ local added = true }}
+			{{ local version = member.VersionAdded[i] }}
+			{{include: 'resources/templates/Version.html'}}
+		{{ end }}
+		</td>
+	{{ elseif memberType.HasAdded then }}
+		<td class="col-version-added"></td>
+	{{ end }}
+	{{ if member.VersionRemoved then }}
+		<td class="col-version-removed">
+		{{ for i = 1,#member.VersionRemoved do }}
+			{{ local added = false }}
+			{{ local version = member.VersionRemoved[i] }}
+			{{include: 'resources/templates/Version.html'}}
+		{{ end }}
+		</td>
+	{{ elseif memberType.HasRemoved then }}
+		<td class="col-version-removed"></td>
 	{{ end }}
 	</tr>
 {{ end }}

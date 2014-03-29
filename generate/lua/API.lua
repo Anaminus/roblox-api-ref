@@ -224,6 +224,8 @@ function API.ClassData(className)
 					List = {};
 					Inherited = {};
 					HasTags = false;
+					HasAdded = false;
+					HasRemoved = false;
 					Type = item.type;
 					TypePlural = MemberTypePlural[item.type];
 				}
@@ -234,6 +236,12 @@ function API.ClassData(className)
 			new.Icon = memberIconIndex(item)
 			if #tagList > 0 then
 				memberType.HasTags = true
+			end
+			if new.VersionAdded then
+				memberType.HasAdded = true
+			end
+			if new.VersionRemoved then
+				memberType.HasRemoved = true
 			end
 			table.insert(memberType.List,new)
 
