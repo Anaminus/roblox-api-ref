@@ -160,6 +160,24 @@ if enumBase then
 	end
 end
 
+local function setVersion(item,state,ver)
+	if state == 1 then
+		local add = item.VersionAdded
+		if not add then
+			add = {}
+			item.VersionAdded = add
+		end
+		add[#add+1] = ver
+	elseif state == -1 then
+		local remove = item.VersionRemoved
+		if not remove then
+			remove = {}
+			item.VersionRemoved = remove
+		end
+		remove[#remove+1] = ver
+	end
+end
+
 local diffs = {}
 for i = 1,#versions-1 do
 	local a = versions[i]
@@ -188,4 +206,60 @@ for i = 1,#versions-1 do
 	end
 end
 
-return {diffs,versions[1][3]}
+local function itemName(item)
+	if item.Class then
+		return item.type .. ' ' .. item.Class .. '.' .. item.Name
+	elseif item.type == 'EnumItem' then
+		return item.type .. ' ' .. item.Enum .. '.' .. item.Name
+	else
+		return item.type .. ' ' .. item.Name
+	end
+end
+
+local diffDump = versions[1][3]
+local items = {}
+for i = 1,#diffDump do
+	local item = diffDump[i]
+	items[itemName(item)] = item
+end
+
+for i = 1,#diffs do
+	local diff = diffs[i].Differences
+	local ver = diffs[i].CurrentVersion
+	for i = 1,#diff do
+		local list = diff[i]
+		local type = list[1]
+		local subtype = list[2]
+		local name = itemName(list[3])
+		if not items[name] and type ~= 1 then print("CHECK",name,type) end
+		local item = items[name] or list[3]
+
+		if type == 0 then
+			if subtype == 'Security' then
+				item.tags[list[4]] = nil
+				item.tags[list[5]] = true
+			elseif subtype == 'Arguments' then
+				item.Arguments = list[3].Arguments
+			else
+				item[subtype] = list[4]
+			end
+		else
+			if subtype == 'Item' or subtype == 'Class' or subtype == 'Enum' then
+				setVersion(item,type,ver)
+			end
+			if type == 1 then
+				diffDump[#diffDump+1] = item
+				items[name] = item
+				if subtype == 'Class' or subtype == 'Enum' then
+					local l = list[4]
+					for i = 1,#l do
+						diffDump[#diffDump+1] = l[i]
+						items[itemName(l[i])] = l[i]
+					end
+				end
+			end
+		end
+	end
+end
+
+return {diffs,diffDump}

@@ -122,7 +122,7 @@ Returns the icon index for a given member.
 
 ]]
 
-local APIDiffs,FirstDump = unpack(require 'APIDiffs')
+local APIDiffs,APIDump = unpack(require 'APIDiffs')
 local ExplorerIndex = require 'ExplorerImageIndex'
 
 -- The order in which member types will be displayed
@@ -185,7 +185,6 @@ function API.ClassData(className)
 	local memberTypeLookup = {}
 	local enumLookup = {}
 
-	local APIDump = APIDiffs[#APIDiffs].Dump
 	for i = 1,#APIDump do
 		local item = APIDump[i]
 
@@ -422,43 +421,10 @@ end
 
 function API.ClassTree()
 	local classes = {}
-	for i = 1,#FirstDump do
-		local item = FirstDump[i]
+	for i = 1,#APIDump do
+		local item = APIDump[i]
 		if item.type == 'Class' then
-			classes[item.Name] = {
-				Name = item.Name;
-				Superclass = item.Superclass;
-			}
-		end
-	end
-
-	for i = 1,#APIDiffs do
-		local d = APIDiffs[i]
-		local diffs = d.Differences
-		for i = 1,#diffs do
-			local diff = diffs[i]
-			local item = diff[3]
-			if item.type == 'Class' then
-				if not classes[item.Name] then
-					classes[item.Name] = {
-						Name = item.Name;
-						Superclass = item.Superclass;
-					}
-				end
-				if diff[1] == -1 then
-					if diff[2] == 'Class' then
-						classes[item.Name].Removed = d.CurrentVersion
-					end
-				elseif diff[1] == 1 then
-					if diff[2] == 'Class' then
-						classes[item.Name].Added = d.CurrentVersion
-					end
-				elseif diff[1] == 0 then
-					if diff[2] == 'Superclass' then
-						classes[item.Name].Superclass = diff[4]
-					end
-				end
-			end
+			classes[item.Name] = item
 		end
 	end
 
@@ -478,8 +444,8 @@ function API.ClassTree()
 				local q = {
 					Class = name;
 					Icon = classIconIndex(name);
-					Added = class.Added;
-					Removed = class.Removed;
+					Added = class.VersionAdded;
+					Removed = class.VersionRemoved;
 					List = {};
 				}
 				t[#t+1] = q

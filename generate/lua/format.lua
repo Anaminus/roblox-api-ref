@@ -71,11 +71,11 @@ function format.classtree(tree)
 				o[#o+1] = '\n' .. rep('\t',d + 1)
 			end
 			o[#o+1] = format.slt('ClassIcon.html',{icon=class.Icon}) .. '<a class="api-class-name" href="' .. format.url.class(class.Class) .. '">' .. format.html(class.Class) .. '</a>'
-			if class.Added then
-				o[#o+1] = ' (' .. format.slt('Version.html',{format=format,version=class.Added,added=true}) .. ')'
+			if class.Added and #class.Added > 0 then
+				o[#o+1] = ' (' .. format.slt('Version.html',{format=format,version=class.Added[1],added=true}) .. ')'
 			end
-			if class.Removed then
-				o[#o+1] = ' (' .. format.slt('Version.html',{format=format,version=class.Removed,added=false}) .. ')'
+			if class.Removed and #class.Removed > 0 then
+				o[#o+1] = ' (' .. format.slt('Version.html',{format=format,version=class.Removed[1],added=false}) .. ')'
 			end
 			if n then
 				o[#o+1] = '\n' .. rep('\t',d + 1) .. '<ul>\n'
