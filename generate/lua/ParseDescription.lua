@@ -29,6 +29,9 @@ be detected.
 
 ]]
 
+local utl = require'utl'
+local format = require'format'
+
 -- find a header and return it's start and end position, and its level and name
 local function findHeader(source,init)
 	-- find atx-style header at beginning
