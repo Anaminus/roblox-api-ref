@@ -45,7 +45,7 @@ end
 
 function format.url.member(class,member)
 	if member then
-		return '/api/class/' .. format.url.raw(format.url.file(class)) .. '.html#member' .. format.url.raw(member)
+		return format.url.class(class) .. '#member' .. format.url.raw(member)
 	else
 		member = class
 		return '#member' .. format.url.raw(member)
