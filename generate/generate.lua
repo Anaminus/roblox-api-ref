@@ -94,25 +94,11 @@ local function generate(base)
 		local f = io.open(utl.path(base,'class',format.url.file(class) .. '.html'),'w')
 
 		local classData = API.ClassData(APIDump,class)
-		local description = ParseDescription(utl.path('..','data','class',format.url.file(class) .. '.md'))
-		local memberDesc = description.members
-		if memberDesc then
-			for i = 1,#classData.Members do
-				local list = classData.Members[i].List
-				for i = 1,#list do
-					local desc = memberDesc[list[i].Name]
-					if desc then
-						list[i].Description = desc
-					end
-				end
-			end
-		end
 
 		local output = slt.render(tmplClass,{
 			format = format;
 			resources = resources;
 			class = classData;
-			description = description;
 			html = format.html;
 		})
 		f:write(output)

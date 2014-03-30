@@ -251,6 +251,7 @@ function API.ClassData(dump,className)
 		Tags = classLookup[className].Tags;
 		TagList = classLookup[className].TagList;
 		Versions = classLookup[className].Versions;
+		Description = classLookup[className].Description;
 		Members = {};
 		MemberSet = memberSet;
 	}

@@ -24,10 +24,10 @@
 			</div>
 			<div id="box-content">
 				<div id="info">
-				{{ if description.summary then }}
+				{{ if class.Description.Summary then }}
 					<div id="summary">
 						<div class="markdown">
-{{= description.summary }}
+{{= class.Description.Summary }}
 						</div>
 					</div>
 				{{ end }}
@@ -82,11 +82,11 @@
 					{{ end }}
 				{{ end }}
 					</div>
-				{{ if description.details then }}
+				{{ if class.Description.Details then }}
 					<div id="details">
 						<h2>Detailed Description</h2>
 						<div class="markdown">
-{{= description.details }}
+{{= class.Description.Details }}
 						</div>
 					</div>
 				{{ end }}
