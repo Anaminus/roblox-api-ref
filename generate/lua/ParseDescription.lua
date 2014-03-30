@@ -78,7 +78,56 @@ local function trim(s)
 	return s:gsub('^%s+',''):gsub('%s+$','')
 end
 
-return function(file)
+local function getHeader(sections,name)
+	local markdown = require 'markdown'
+	local section = trim(markdown(sections[name] or ''))
+	if #section > 0 then
+		return section
+	end
+end
+
+local function getSubheader(sections,name)
+	local section = sections.members
+	if section and #section > 0 then
+		local markdown = require 'markdown'
+		local subs = {}
+
+		local subName
+		local subStart,subEnd
+		local init = 0
+		while true do
+			local headStart,headEnd,level,name = findHeader(section,init + 1)
+			if not headStart then
+				break
+			end
+
+			if level == 2 then
+				if subName then
+					subEnd = headStart - 1
+					local content = trim(markdown(section:sub(subStart,subEnd)))
+					if #content > 0 then
+						subs[subName] = content
+					end
+				end
+				subName = name
+				subStart = headEnd + 1
+			end
+			init = headEnd
+		end
+		if subName then
+			local content = trim(markdown(section:sub(subStart,#section)))
+			if #content > 0 then
+				subs[subName] = content
+			end
+		end
+
+		return subs
+	end
+end
+
+return function(type,name)
+	local file = utl.path('..','data',type,format.url.file(name) .. '.md')
+
 	local source do
 		local f,err = io.open(file)
 		if not f then
@@ -121,55 +170,16 @@ return function(file)
 	end
 
 	-- extract the sections we want and convert them to HTML
-	local markdown = require 'markdown'
-	local descriptions = {}
+	local description = {
+		Summary = getHeader(sections,'summary');
+		Details = getHeader(sections,'details');
+	}
 
-	local summary = trim(markdown(sections.summary or ''))
-	if #summary > 0 then
-		descriptions.summary = summary
+	if type == 'class' then
+		description.Members = getSubheader(sections,'members')
+	elseif type == 'enum' then
+		description.Items = getSubheader(sections,'items')
 	end
 
-	local details = trim(markdown(sections.details or ''))
-	if #details > 0 then
-		descriptions.details = details
-	end
-
-	-- parse out the sub-sections of the member section
-	local memberSection = sections.members
-	if memberSection and #memberSection > 0 then
-		local members = {}
-
-		local memberName
-		local memberStart,memberEnd
-		local init = 0
-		while true do
-			local headStart,headEnd,level,name = findHeader(memberSection,init + 1)
-			if not headStart then
-				break
-			end
-
-			if level == 2 then
-				if memberName then
-					memberEnd = headStart - 1
-					local content = trim(markdown(memberSection:sub(memberStart,memberEnd)))
-					if #content > 0 then
-						members[memberName] = content
-					end
-				end
-				memberName = name
-				memberStart = headEnd + 1
-			end
-			init = headEnd
-		end
-		if memberName then
-			local content = trim(markdown(memberSection:sub(memberStart,#memberSection)))
-			if #content > 0 then
-				members[memberName] = content
-			end
-		end
-
-		descriptions.members = members
-	end
-
-	return descriptions
+	return description
 end

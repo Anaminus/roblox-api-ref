@@ -17,6 +17,7 @@ local ParseVersions = require 'ParseVersions'
 local CompareVersions = require 'CompareVersions'
 local LexAPI = require 'LexAPI'
 local DiffAPI = require 'DiffAPI'
+local ParseDescription = require 'ParseDescription'
 
 local cache = utl.path('../cache')
 if not utl.makedirs(cache) then error("could not make cache folder") end
@@ -260,11 +261,57 @@ for i = 1,#diffs do
 	end
 end
 
+local classDesc = {}
+local enumDesc = {}
+
 for i = 1,#diffDump do
 	local item = diffDump[i]
+
 	if not item.Versions then
 		item.Versions = {}
 	end
+
+	if item.type == 'Class' then
+		local desc = ParseDescription('class',item.Name)
+		classDesc[item.Name] = desc
+
+		item.Description = {
+			Summary = desc.Summary;
+			Details = desc.Details;
+		}
+
+	elseif item.Class then
+		local desc = classDesc[item.Class]
+		if not desc then
+			desc = ParseDescription('class',item.Class)
+			classDesc[item.Class] = desc
+		end
+
+		if desc.Members then
+			item.Description = desc.Members[item.Name]
+		end
+
+	elseif item.type == 'Enum' then
+		local desc = ParseDescription('enum',item.Name)
+		enumDesc[item.Name] = desc
+
+		item.Description = {
+			Summary = desc.Summary;
+			Details = desc.Details;
+		}
+
+	elseif item.type == 'EnumItem' then
+		local desc = enumDesc[item.Enum]
+		if not desc then
+			desc = ParseDescription('class',item.Enum)
+			enumDesc[item.Enum] = desc
+		end
+
+		if desc.Items then
+			item.Description = desc.Items[item.Name]
+		end
+	end
+
 end
 
 return {diffs,diffDump}
