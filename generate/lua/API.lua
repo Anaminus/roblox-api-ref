@@ -122,7 +122,6 @@ Returns the icon index for a given member.
 
 ]]
 
-local APIDiffs,APIDump = unpack(require 'APIDiffs')
 local ExplorerIndex = require 'ExplorerImageIndex'
 
 -- The order in which member types will be displayed
@@ -179,14 +178,14 @@ end
 
 local API = {}
 
-function API.ClassData(className)
+function API.ClassData(dump,className)
 	local classLookup = {}
 	local memberSet = {}
 	local memberTypeLookup = {}
 	local enumLookup = {}
 
-	for i = 1,#APIDump do
-		local item = APIDump[i]
+	for i = 1,#dump do
+		local item = dump[i]
 
 		local tags = {}
 		local tagList = {}
@@ -424,10 +423,10 @@ function API.ClassData(className)
 	return class
 end
 
-function API.ClassTree()
+function API.ClassTree(dump)
 	local classes = {}
-	for i = 1,#APIDump do
-		local item = APIDump[i]
+	for i = 1,#dump do
+		local item = dump[i]
 		if item.type == 'Class' then
 			classes[item.Name] = item
 		end

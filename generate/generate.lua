@@ -66,7 +66,7 @@ local function generate(base)
 			format = format;
 			resources = resources;
 			diffs = APIDiffs;
-			tree = API.ClassTree();
+			tree = API.ClassTree(APIDump);
 			html = format.html;
 		})
 	)
@@ -93,7 +93,7 @@ local function generate(base)
 	local function writeClass(class)
 		local f = io.open(utl.path(base,'class',format.url.file(class) .. '.html'),'w')
 
-		local classData = API.ClassData(class)
+		local classData = API.ClassData(APIDump,class)
 		local description = ParseDescription(utl.path('..','data','class',format.url.file(class) .. '.md'))
 		local memberDesc = description.members
 		if memberDesc then
