@@ -182,7 +182,6 @@ function API.ClassData(dump,className)
 	local classLookup = {}
 	local memberSet = {}
 	local memberTypeLookup = {}
-	local enumLookup = {}
 
 	for i = 1,#dump do
 		local item = dump[i]
@@ -243,15 +242,6 @@ function API.ClassData(dump,className)
 			if item.Class == className then
 				memberSet[item.Name] = new
 			end
-		elseif item.type == 'Enum' then
-			enumLookup[item.Name] = {}
-		elseif item.type == 'EnumItem' then
-			local enum = enumLookup[item.Enum]
-			if not enum then
-				enum = {}
-				enumLookup[item.Name] = enum
-			end
-			enum[#enum+1] = new
 		end
 	end
 
@@ -263,7 +253,6 @@ function API.ClassData(dump,className)
 		Versions = classLookup[className].Versions;
 		Members = {};
 		MemberSet = memberSet;
-		Enums = {};
 	}
 
 	-- add subclasses
@@ -330,84 +319,6 @@ function API.ClassData(dump,className)
 			-- put deprecated items at the end of the list
 			return db
 		end
-	end
-
-	local enums = class.Enums
-	local enumSet = {}
-	for typeName,memberType in pairs(memberTypes) do
-		local list = memberType.List
-
-		-- sort list of members
-		table.sort(list,sort)
-
-		-- gather enums
-		if typeName == 'Property' then
-			for i = 1,#list do
-				local name = list[i].ValueType
-				if enumLookup[name] then
-					enumSet[name] = enumLookup[name]
-				end
-			end
-		elseif typeName == 'Function' or typeName == 'YieldFunction' then
-			for i = 1,#list do
-				local name = list[i].ReturnType
-				if enumLookup[name] then
-					enumSet[name] = enumLookup[name]
-				end
-
-				local args = list[i].Arguments
-				for i = 1,#args do
-					local name = args[i].Type
-					if enumLookup[name] then
-						enumSet[name] = enumLookup[name]
-					end
-				end
-			end
-		elseif typeName == 'Event' then
-			for i = 1,#list do
-				local args = list[i].Arguments
-				for i = 1,#args do
-					local name = args[i].Type
-					if enumLookup[name] then
-						enumSet[name] = enumLookup[name]
-					end
-				end
-			end
-		elseif typeName == 'Callback' then
-			for i = 1,#list do
-				local name = list[i].ReturnType
-				if enumLookup[name] then
-					enumSet[name] = enumLookup[name]
-				end
-
-				local args = list[i].Arguments
-				for i = 1,#args do
-					local name = args[i].Type
-					if enumLookup[name] then
-						enumSet[name] = enumLookup[name]
-					end
-				end
-			end
-		end
-	end
-
-	for name,items in pairs(enumSet) do
-		enums[#enums+1] = {
-			Name = name;
-			Items = items;
-		}
-	end
-
-	-- sort enums by name
-	table.sort(enums,function(a,b)
-		return a.Name < b.Name
-	end)
-
-	for i = 1,#enums do
-		-- sort enum items by value
-		table.sort(enums[i].Items,function(a,b)
-			return a.Value < b.Value
-		end)
 	end
 
 	-- add list of member types
