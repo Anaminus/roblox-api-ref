@@ -201,12 +201,12 @@ table.member-list .col-return-type {
 	font-family : Consolas, "Lucida Console", monospace;
 }
 
-.version-list {
+.history-list {
 	margin-left: 0.5em;
 	font-family : Consolas, "Lucida Console", monospace;
 }
 
-td .version-list {
+td .history-list {
 	margin-left: 0;
 }
 
