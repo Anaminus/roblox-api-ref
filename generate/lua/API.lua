@@ -324,6 +324,7 @@ function API.ClassData(dump,className)
 
 	-- add list of member types
 	for _,memberType in pairs(memberTypes) do
+		table.sort(memberType.List,sort)
 		table.insert(class.Members,memberType)
 	end
 
