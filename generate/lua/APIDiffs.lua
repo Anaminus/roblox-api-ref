@@ -229,8 +229,12 @@ for i = 1,#diffs do
 
 		if type == 0 then
 			if subtype == 'Security' then
-				item.tags[list[4]] = nil
-				item.tags[list[5]] = true
+				if list[4] ~= 'None' then
+					item.tags[list[4] .. 'Security'] = nil
+				end
+				if list[5] ~= 'None' then
+					item.tags[list[5] .. 'Security'] = true
+				end
 			elseif subtype == 'Arguments' then
 				item.Arguments = list[3].Arguments
 			else
@@ -239,6 +243,12 @@ for i = 1,#diffs do
 		else
 			if subtype == 'Item' or subtype == 'Class' or subtype == 'Enum' then
 				setVersion(item,ver,type)
+			elseif subtype == 'Tag' then
+				if type == 1 then
+					item.tags[list[4]] = true
+				elseif type == -1 then
+					item.tags[list[4]] = nil
+				end
 			end
 			if type == 1 then
 				if not items[name] then
