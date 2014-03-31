@@ -36,7 +36,7 @@ end
 format.url.file = format.url.raw
 
 function format.url.type(type)
-	return '#type' .. format.url.raw(type)
+	return '/api/type/' .. format.url.raw(format.url.file(type)) .. '.html'
 end
 
 function format.url.class(class)

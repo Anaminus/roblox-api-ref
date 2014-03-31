@@ -76,7 +76,8 @@ table th {
 	border-top-left-radius  : 10px;
 }
 
-#header .api-class-icon {
+#header .api-class-icon,
+#header .api-enum-icon {
 	vertical-align : baseline;
 	margin         : 0px 8px 0px 2px;
 }
@@ -167,21 +168,9 @@ table.member-list .col-return-type {
 	text-align : right;
 }
 
-.enum-list {
-	display : inline-block;
-}
-
 .enum-item-list {
 	float  : left;
 	margin : 1em;
-}
-
-.enum-item-list th.col-name {
-	text-align : left;
-}
-
-.api-enum-item-value:after {
-	content : ' : ';
 }
 
 #summary img,

@@ -335,6 +335,79 @@ function API.ClassData(dump,className)
 	return class
 end
 
+function API.EnumData(dump,enumName)
+	local enum
+	local items = {}
+	local classes = {}
+
+	local function addMember(item)
+		local class = classes[item.Class]
+		if not class then
+			class = {
+				Name = item.Class;
+				Members = {};
+			}
+			classes[item.Class] = class
+		end
+		class.Members[#class.Members+1] = {
+			Class = item.Class;
+			Name = item.Name;
+			Icon = memberIconIndex(item);
+		}
+	end
+
+	local hasHistory = false
+	for i = 1,#dump do
+		local item = dump[i]
+		if item.type == 'Enum' and item.Name == enumName then
+			enum = item
+		elseif item.type == 'EnumItem' and item.Enum == enumName then
+			items[#items+1] = item
+			if #item.Versions > 0 then
+				hasHistory = true
+			end
+		elseif item.ValueType == enumName or item.ReturnType == enumName then
+			addMember(item)
+		elseif item.Arguments then
+			for i = 1,#item.Arguments do
+				if item.Arguments[i].Type == enumName then
+					addMember(item)
+					break
+				end
+			end
+		end
+	end
+
+	if not enum then
+		error('invalid enum `' .. tostring(enumName)..'`',2)
+	end
+
+	table.sort(items,function(a,b)
+		return a.Value < b.Value
+	end)
+
+	local function sort(a,b)
+		return a.Name < b.Name
+	end
+
+	local usage = {}
+	for _,class in pairs(classes) do
+		usage[#usage+1] = class
+		table.sort(class.Members,sort)
+	end
+
+	table.sort(usage,sort)
+
+	return {
+		Name = enum.Name;
+		Versions = enum.Versions;
+		Description = enum.Description;
+		HasHistory = hasHistory;
+		Items = items;
+		Usage = usage;
+	}
+end
+
 function API.ClassTree(dump)
 	local classes = {}
 	for i = 1,#dump do

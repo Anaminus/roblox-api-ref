@@ -35,10 +35,13 @@ local ParseDescription = require 'ParseDescription'
 local tmplIndex = slt.loadfile('resources/templates/index.html','{{','}}')
 local tmplDiff = slt.loadfile('resources/templates/diff.html','{{','}}')
 local tmplClass = slt.loadfile('resources/templates/class.html','{{','}}')
+local tmplEnum = slt.loadfile('resources/templates/enum.html','{{','}}')
 
 local function generate(base)
 	utl.makedirs(utl.path(base,'class'))
 	utl.makedirs(utl.path(base,'class','img'))
+	utl.makedirs(utl.path(base,'type'))
+	utl.makedirs(utl.path(base,'type','img'))
 	utl.makedirs(utl.path(base,'img'))
 	utl.makedirs(utl.path(base,'css'))
 	utl.makedirs(utl.path(base,'js'))
@@ -90,17 +93,40 @@ local function generate(base)
 		end
 	end
 
+	do
+		local dir = utl.path('..','data','type','img')
+		for name in lfs.dir(dir) do
+			local file = utl.path(dir,name)
+			if lfs.attributes(file,'mode') == 'file' then
+				utl.copy(file,utl.path(base,'type','img',name),true)
+			end
+		end
+	end
+
 	local function writeClass(class)
 		local f = io.open(utl.path(base,'class',format.url.file(class) .. '.html'),'w')
-
-		local classData = API.ClassData(APIDump,class)
 
 		local output = slt.render(tmplClass,{
 			format = format;
 			resources = resources;
-			class = classData;
+			class = API.ClassData(APIDump,class);
 			html = format.html;
 		})
+		f:write(output)
+		f:flush()
+		f:close()
+	end
+
+	local function writeEnum(enum)
+		local f = io.open(utl.path(base,'type',format.url.file(enum) .. '.html'),'w')
+
+		local output = slt.render(tmplEnum,{
+			format = format;
+			resources = resources;
+			enum = API.EnumData(APIDump,enum);
+			html = format.html;
+		})
+
 		f:write(output)
 		f:flush()
 		f:close()
@@ -109,6 +135,8 @@ local function generate(base)
 	for i = 1,#APIDump do
 		if APIDump[i].type == 'Class' then
 			writeClass(APIDump[i].Name)
+		elseif APIDump[i].type == 'Enum' then
+			writeEnum(APIDump[i].Name)
 		end
 	end
 end
