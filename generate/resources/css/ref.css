@@ -42,6 +42,10 @@ table {
 	border-radius    : 7px;
 }
 
+table th {
+    background-color : rgb(230, 230, 230);
+}
+
 table td,
 table th {
 	vertical-align : top;
