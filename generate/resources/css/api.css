@@ -12,7 +12,8 @@
 	color : rgb(110, 165, 10);
 }
 
-.api-member-name {
+.api-member-name,
+.api-enum-name {
 	font-weight : bold;
 	color       : rgb(65,85,65);
 }

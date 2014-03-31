@@ -82,6 +82,13 @@
 					{{ end }}
 				{{ end }}
 					</div>
+				{{ if #class.Enums.List > 0 then }}
+					<div id="sectionEnums">
+						<h2>Enums</h2>
+						{{ local enums = class.Enums }}
+						{{include: 'resources/templates/EnumList.html'}}
+					</div>
+				{{ end }}
 				{{ if class.Description.Details then }}
 					<div id="details">
 						<h2>Detailed Description</h2>

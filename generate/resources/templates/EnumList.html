@@ -1,18 +1,20 @@
-<div class="enum-list">
-{{ for i = 1,#class.Enums do }}
-	{{ local enum = class.Enums[i] }}
-	<table id="type{{= html(enum.Name) }}" class="enum-item-list">
-		<tr>
-			<th class="col-icon"><span class="api-enum-icon"></span></th>
-			<th class="col-name" colspan="2">{{= html(enum.Name) }}</th>
-		</tr>
-	{{ for i = 1,#enum.Items do}}
-		<tr>
-			<td class="col-icon"><span class="api-enum-item-icon"></span></td>
-			<td class="col-value"><span class="api-enum-item-value">{{= html(enum.Items[i].Value) }}</span></td>
-			<td class="col-name"><span class="api-enum-item-name">{{= html(enum.Items[i].Name) }}</span></td>
-		</tr>
+<table class="enum-list">
+	<tr>
+		<th class="col-icon"></th>
+		<th class="col-name">Enum</th>
+	{{ if enums.HasHistory then }}
+		<th class="col-history">History</th>
 	{{ end }}
-	</table>
+	</tr>
+{{ for i = 1,#enums.List do}}
+	{{local enum = enums.List[i] }}
+	<tr>
+		<td class="col-icon"><span class="api-enum-icon"></span></td>
+		<td class="col-value"><a class="api-enum-name" href="{{= format.url.type(enum.Name) }}">{{= html(enum.Name) }}</a></td>
+	{{ if enums.HasHistory then }}
+		{{ local history = enum.History }}
+		<td class="col-history">{{include: 'resources/templates/HistoryList.html'}}</td>
+	{{ end }}
+	</tr>
 {{ end }}
-</div>
+</table>

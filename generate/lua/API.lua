@@ -182,6 +182,8 @@ function API.ClassData(dump,className)
 	local classLookup = {}
 	local memberSet = {}
 	local memberTypeLookup = {}
+	local types = {}
+	local enums = {}
 
 	for i = 1,#dump do
 		local item = dump[i]
@@ -241,8 +243,41 @@ function API.ClassData(dump,className)
 
 			if item.Class == className then
 				memberSet[item.Name] = new
+
+				if item.ValueType then
+					types[item.ValueType] = true
+				elseif item.ReturnType then
+					types[item.ReturnType] = true
+				elseif item.Arguments then
+					for i = 1,#item.Arguments do
+						types[item.Arguments[i].Type] = true
+					end
+				end
+			end
+		elseif item.type == 'Enum' then
+			enums[#enums+1] = item
+		end
+	end
+
+	local enumsHaveHistory = false
+	do
+		local i = 1
+		local n = #enums
+		while i <= n do
+			if types[enums[i].Name] then
+				if #enums[i].History > 0 then
+					enumsHaveHistory = true
+				end
+				i = i + 1
+			else
+				table.remove(enums,i)
+				n = n - 1
 			end
 		end
+
+		table.sort(enums,function(a,b)
+			return a.Name < b.Name
+		end)
 	end
 
 	local class = {
@@ -254,6 +289,7 @@ function API.ClassData(dump,className)
 		Description = classLookup[className].Description;
 		Members = {};
 		MemberSet = memberSet;
+		Enums = {List=enums,HasHistory=enumsHaveHistory};
 	}
 
 	-- add subclasses
