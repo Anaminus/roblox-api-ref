@@ -246,9 +246,11 @@ function API.ClassData(dump,className)
 
 				if item.ValueType then
 					types[item.ValueType] = true
-				elseif item.ReturnType then
+				end
+				if item.ReturnType then
 					types[item.ReturnType] = true
-				elseif item.Arguments then
+				end
+				if item.Arguments then
 					for i = 1,#item.Arguments do
 						types[item.Arguments[i].Type] = true
 					end
