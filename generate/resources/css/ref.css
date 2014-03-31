@@ -168,11 +168,6 @@ table.member-list .col-return-type {
 	text-align : right;
 }
 
-.enum-item-list {
-	float  : left;
-	margin : 1em;
-}
-
 #summary img,
 #details img,
 #member-descriptions img {
