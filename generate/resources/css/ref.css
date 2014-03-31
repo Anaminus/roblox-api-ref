@@ -202,8 +202,9 @@ table.member-list .col-return-type {
 }
 
 .history-list {
-	margin-left: 0.5em;
+	margin-left : 0.5em;
 	font-family : Consolas, "Lucida Console", monospace;
+	white-space : nowrap;
 }
 
 td .history-list {
