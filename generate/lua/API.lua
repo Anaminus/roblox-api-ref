@@ -346,6 +346,7 @@ function API.EnumData(dump,enumName)
 		if not class then
 			class = {
 				Name = item.Class;
+				Icon = classIconIndex(item.Class);
 				Members = {};
 			}
 			classes[item.Class] = class

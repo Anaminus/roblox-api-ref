@@ -123,7 +123,8 @@ table .api-enum-item-icon {
 	list-style-type : disc;
 }
 
-#hierarchy-list ul {
+#hierarchy-list ul,
+#member-usage-list ul {
 	list-style-type : disc;
 }
 

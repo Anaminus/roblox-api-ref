@@ -67,6 +67,26 @@
 						</table>
 					{{ end }}
 					</div>
+				{{ if #enum.Usage > 0 then }}
+					<div id="relevant-members">
+						<h2>Relevant Members</h2>
+						<ul id="member-usage-list">
+					{{ for i = 1,#enum.Usage do }}
+						{{ local class = enum.Usage[i] }}
+						{{ local icon = class.Icon }}
+							<li>{{include: 'resources/templates/ClassIcon.html' }}<a class="api-class-name" href="{{= format.url.class(class.Name) }}">{{= html(class.Name) }}</a>
+								<ul>
+								{{ for i = 1,#class.Members do }}
+									{{ local member = class.Members[i] }}
+									{{ local icon = member.Icon }}
+									<li>{{include: 'resources/templates/MemberIcon.html' }}<a href="{{= format.url.member(class.Name,member.Name) }}">{{= class.Name }}.{{= member.Name }}</a></li>
+								{{ end }}
+								</ul>
+							</li>
+					{{ end }}
+						</ul>
+					</div>
+				{{ end }}
 				</div>
 			</div>
 		</div>
