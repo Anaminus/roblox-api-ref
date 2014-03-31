@@ -3,7 +3,7 @@
 		<th class="col-return-type">Returns</th>
 		<th class="col-icon"></th>
 		<th class="col-name">YieldFunction</th>
-	{{ if memberType.HasVersions then }}
+	{{ if memberType.HasHistory then }}
 		<th class="col-history">History</th>
 	{{ end }}
 	</tr>
@@ -15,9 +15,9 @@
 		<td class="col-icon">{{include: 'resources/templates/MemberIcon.html'}}</td>
 	{{ local arguments = member.Arguments }}
 		<td class="col-name"><a class="api-member-name{{if member.Tags.preliminary then }} api-preliminary{{ end }}{{ if member.Tags.deprecated then }} api-deprecated{{ end }}" href="{{= html(format.url.member(member.Name)) }}">{{= html(member.Name) }}</a> {{include: 'resources/templates/Arguments.html' }}</td>
-	{{ if memberType.HasVersions then }}
-		{{ local versions = member.Versions }}
-		<td class="col-versions">{{include: 'resources/templates/VersionList.html'}}</td>
+	{{ if memberType.HasHistory then }}
+		{{ local history = member.History }}
+		<td class="col-history">{{include: 'resources/templates/HistoryList.html'}}</td>
 	{{ end }}
 	</tr>
 {{ end }}

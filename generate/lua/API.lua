@@ -222,7 +222,7 @@ function API.ClassData(dump,className)
 					List = {};
 					Inherited = {};
 					HasTags = false;
-					HasVersions = false;
+					HasHistory = false;
 					Type = item.type;
 					TypePlural = MemberTypePlural[item.type];
 				}
@@ -234,8 +234,8 @@ function API.ClassData(dump,className)
 			if #tagList > 0 then
 				memberType.HasTags = true
 			end
-			if #new.Versions > 0 then
-				memberType.HasVersions = true
+			if #new.History > 0 then
+				memberType.HasHistory = true
 			end
 			table.insert(memberType.List,new)
 
@@ -250,7 +250,7 @@ function API.ClassData(dump,className)
 		Icon = classIconIndex(className);
 		Tags = classLookup[className].Tags;
 		TagList = classLookup[className].TagList;
-		Versions = classLookup[className].Versions;
+		History = classLookup[className].History;
 		Description = classLookup[className].Description;
 		Members = {};
 		MemberSet = memberSet;
@@ -365,7 +365,7 @@ function API.EnumData(dump,enumName)
 			enum = item
 		elseif item.type == 'EnumItem' and item.Enum == enumName then
 			items[#items+1] = item
-			if #item.Versions > 0 then
+			if #item.History > 0 then
 				hasHistory = true
 			end
 		elseif item.ValueType == enumName or item.ReturnType == enumName then
@@ -402,7 +402,7 @@ function API.EnumData(dump,enumName)
 
 	return {
 		Name = enum.Name;
-		Versions = enum.Versions;
+		History = enum.History;
 		Description = enum.Description;
 		HasHistory = hasHistory;
 		Items = items;
@@ -435,7 +435,7 @@ function API.ClassTree(dump)
 				local q = {
 					Class = name;
 					Icon = classIconIndex(name);
-					Versions = class.Versions;
+					History = class.History;
 					List = {};
 				}
 				t[#t+1] = q

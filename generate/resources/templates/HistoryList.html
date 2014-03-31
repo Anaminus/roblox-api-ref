@@ -1,0 +1,1 @@
+{{ if #history > 0 then }}<span class="history-list">({{ for i = 1,#history do local version,added=unpack(history[i]) }}{{ if i > 1 then }}, {{ end }}{{include: 'resources/templates/Version.html' }}{{ end }})</span>{{ end }}

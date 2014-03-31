@@ -16,7 +16,7 @@
 		<div id="ref-box">
 			<div id="header">
 			{{ local icon = class.Icon }}
-				{{include: 'resources/templates/ClassIcon.html' }}<h1>{{= html(class.Name) }}</h1>{{local versions=class.Versions}}{{include: 'resources/templates/VersionList.html' }}
+				{{include: 'resources/templates/ClassIcon.html' }}<h1>{{= html(class.Name) }}</h1>{{local history=class.History}}{{include: 'resources/templates/HistoryList.html' }}
 				<span id="header-items">
 				{{ local icon = 3 }}
 					<a id="return-link" href="/api">Back to hierarchy{{include: 'resources/templates/MemberIcon.html' }}</a>
@@ -111,9 +111,9 @@
 						{{ elseif member.Type == 'Callback' then }}
 							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
 						{{ end }}
-						{{ if #member.Versions > 0 then }}
-							{{ local versions = member.Versions }}
-							<p><b>Version History:</b>{{include: 'resources/templates/VersionList.html' }}</p>
+						{{ if #member.History > 0 then }}
+							{{ local history = member.History }}
+							<p><b>Version History:</b>{{include: 'resources/templates/HistoryList.html' }}</p>
 						{{ end }}
 						{{ if member.Tags.preliminary then }}
 							<p><b>Preliminary:</b> This member is preliminary.</p>

@@ -190,13 +190,13 @@ for i = 1,#versions-1 do
 	end
 end
 
-local function setVersion(item,ver,state)
-	local vers = item.Versions
-	if not vers then
-		vers = {}
-		item.Versions = vers
+local function setHistory(item,ver,state)
+	local hist = item.History
+	if not hist then
+		hist = {}
+		item.History = hist
 	end
-	vers[#vers+1] = {ver,state == 1}
+	hist[#hist+1] = {ver,state == 1}
 end
 
 local function itemName(item)
@@ -242,7 +242,7 @@ for i = 1,#diffs do
 			end
 		else
 			if subtype == 'Item' or subtype == 'Class' or subtype == 'Enum' then
-				setVersion(item,ver,type)
+				setHistory(item,ver,type)
 			elseif subtype == 'Tag' then
 				if type == 1 then
 					item.tags[list[4]] = true
@@ -277,8 +277,8 @@ local enumDesc = {}
 for i = 1,#diffDump do
 	local item = diffDump[i]
 
-	if not item.Versions then
-		item.Versions = {}
+	if not item.History then
+		item.History = {}
 	end
 
 	if item.type == 'Class' then
