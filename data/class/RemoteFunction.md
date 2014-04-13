@@ -94,7 +94,7 @@ InvokeClient will throw the following error:
 
 	Player <player name> disconnected during remote call to <RemoteFunction name>
 
-An orphaned error (error without a location) will also be thrown, displaying
+Right after this error, another sourceless error will be thrown, displaying
 the the last extra argument passed to InvokeClient. If no extra arguments were
 given, then an unspecified error message will be displayed instead. This is
 likely a bug.
