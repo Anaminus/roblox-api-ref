@@ -81,9 +81,23 @@ client.
 passed to OnClientInvoke. The values returned by OnClientInvoke will be
 replicated back to the server, and then returned by InvokeClient.
 
-InvokeClient will yield until OnClientInvoke returns. If OnClientInvoke was
+InvokeClient will yield until OnClientInvoke returns. <s>If OnClientInvoke was
 not defined after InvokeClient was called, then the RemoteFunction will wait
-until it is defined, and then call it as usual.
+until it is defined, and then call it as usual.</s> This only works when the
+current peer is also the recipient peer (e.g. the Studio's Play Solo mode acts
+as both a server and a client). If onClientInvoke was not defined on the
+target client, then InvokeClient will yield forever (or rather, until the
+client disconnects, which throws an error). This is likely a bug.
+
+If the target client disconnects before the call could be completed,
+InvokeClient will throw the following error:
+
+	Player <player name> disconnected during remote call to <RemoteFunction name>
+
+An orphaned error (error without a location) will also be thrown, displaying
+the the last extra argument passed to InvokeClient. If no extra arguments were
+given, then an unspecified error message will be displayed instead. This is
+likely a bug.
 
 If OnClientInvoke throws an error, that error will be replicated back, and
 thrown by InvokeClient. Note that this includes the entire error message, with
@@ -131,7 +145,7 @@ InvokeClient to target the server.
 
 ## OnServerInvoke
 OnServerInvoke is called after [InvokeServer](#memberInvokeServer) is called
-from a client. **player** indicates a [Player](Player.html) object that
+from a client. *player* indicates a [Player](Player.html) object that
 corresponds to the client.
 
 *arguments* are the values that were passed to InvokeServer, and then
