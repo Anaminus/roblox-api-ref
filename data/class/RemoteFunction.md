@@ -136,8 +136,10 @@ on the server, with the current client as its target.
 replicated to the client. The values returned by OnClientInvoke will be
 replicated back to the server, and then returned by InvokeClient.
 
-If OnClientInvoke is defined sometime after InvokeClient was called, then
-OnClientInvoke will be called immediately. OnClientInvoke is allowed to yield.
+<s>If OnClientInvoke is defined sometime after InvokeClient was called, then
+OnClientInvoke will be called immediately.</s> OnClientInvoke will not be
+called if InvokeClient is waiting on it. This is likely a bug. OnClientInvoke
+is allowed to yield.
 
 The server is allowed to set this callback. However, it will never be called,
 since InvokeClient cannot be called from a client, and there are no means for
