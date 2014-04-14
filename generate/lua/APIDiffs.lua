@@ -222,11 +222,11 @@ local function copy(t)
 	return c
 end
 
-local diffDump = versions[1][3]
+local diffDump = copy(versions[1][3])
 local items = {}
 for i = 1,#diffDump do
 	local item = diffDump[i]
-	items[itemName(item)] = copy(item)
+	items[itemName(item)] = item
 end
 
 for i = 1,#diffs do
@@ -273,10 +273,11 @@ for i = 1,#diffs do
 					local l = list[4]
 					for i = 1,#l do
 						local name = itemName(l[i])
+						local m = copy(l[i])
 						if not items[name] then
-							diffDump[#diffDump+1] = l[i]
+							diffDump[#diffDump+1] = m
 						end
-						items[name] = l[i]
+						items[name] = m
 					end
 				end
 			end
