@@ -219,7 +219,7 @@ td .history-list {
 	color: DarkRed;
 }
 
-.diff-arg-list .api-argument {
+.diff-arg-list .api-arguments {
 	padding       : 0px 4px;
 	background    : rgb(246, 246, 246);
 	border        : 1px solid rgb(218, 218, 218);

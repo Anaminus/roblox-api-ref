@@ -209,11 +209,24 @@ local function itemName(item)
 	end
 end
 
+local function copy(t)
+	local c = {}
+	for k,v in pairs(t) do
+		if type(v) == 'table' then
+			c[k] = copy(v)
+		else
+			c[k] = v
+		end
+	end
+
+	return c
+end
+
 local diffDump = versions[1][3]
 local items = {}
 for i = 1,#diffDump do
 	local item = diffDump[i]
-	items[itemName(item)] = item
+	items[itemName(item)] = copy(item)
 end
 
 for i = 1,#diffs do
@@ -225,7 +238,7 @@ for i = 1,#diffs do
 		local subtype = list[2]
 		local name = itemName(list[3])
 		if not items[name] and type ~= 1 then print("WUT",name,type) end
-		local item = items[name] or list[3]
+		local item = items[name] or copy(list[3])
 
 		if type == 0 then
 			if subtype == 'Security' then
@@ -236,21 +249,7 @@ for i = 1,#diffs do
 					item.tags[list[5] .. 'Security'] = true
 				end
 			elseif subtype == 'Arguments' then
-				local args = item.Arguments
-				local argdiffs = list[4]
-				for i = 1,#argdiffs do
-					local argdiff = argdiffs[i]
-					local type = argdiff[1]
-					if type == 1 then
-						table.insert(args,argdiff[2],argdiff[3])
-					elseif type == 2 then
-						table.remove(args,argdiff[2])
-					elseif type == 3 then
-						args[argdiff[2]],args[argdiff[3]] = args[argdiff[3]],args[argdiff[2]]
-					elseif type == 4 then
-						args[argdiff[2]] = argdiff[3]
-					end
-				end
+				item.Arguments = list[4]
 			else
 				item[subtype] = list[4]
 			end
