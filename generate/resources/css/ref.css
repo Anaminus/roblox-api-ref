@@ -25,6 +25,11 @@ h3 {
 	font-weight : bold;
 }
 
+ul {
+	margin-left  : 0;
+	padding-left : 40px;
+}
+
 ul li {
 	padding-top : 6px;
 	font-size   : 12px;
@@ -208,22 +213,34 @@ table.member-list .col-return-type {
 }
 
 td .history-list {
-	margin-left: 0;
+	margin-left : 0;
 }
 
 .version-added {
-	color: DarkGreen;
+	color : DarkGreen;
 }
 
 .version-removed {
-	color: DarkRed;
+	color : DarkRed;
 }
 
-.diff-arg-list .api-arguments {
-	padding       : 0px 4px;
-	background    : rgb(246, 246, 246);
-	border        : 1px solid rgb(218, 218, 218);
-	border-radius : 4px;
+.diff-arg-list {
+	display      : table;
+	padding-left : 40px;
+}
+
+.diff-arg-list > div {
+	display : table-row;
+}
+
+.diff-arg-list > div > span {
+	display       : table-cell;
+	padding-top   : 6px;
+	padding-right : 6px;
+}
+
+.diff-arg-list > div > span:first-child {
+	text-align : right;
 }
 
 #diff-versions > li > a.permalink {

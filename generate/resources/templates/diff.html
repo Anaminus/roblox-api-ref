@@ -78,12 +78,13 @@
 							{{ elseif subtype == 'ReturnType' then }}
 								Changed return type of {{include: 'resources/templates/DiffItemName.html'}} from <a class="api-value-type" href="{{= html(format.url.type(item.ReturnType)) }}">{{= html(item.ReturnType) }}</a> to <a class="api-value-type" href="{{= html(format.url.type(arg)) }}">{{= html(arg) }}</a>
 							{{ elseif subtype == 'Arguments' then }}
-								{{ local arguments = item.Arguments }}
-								Changed arguments of {{include: 'resources/templates/DiffItemName.html'}} {{include: 'resources/templates/Arguments.html'}}
-								<ul class="diff-arg-list">
+								Changed arguments of {{include: 'resources/templates/DiffItemName.html'}}
+								<div class="diff-arg-list">
+									{{ local arguments = item.Arguments }}
+									<div><span>from</span><span>{{include: 'resources/templates/Arguments.html'}}</span></div>
 									{{ local arguments = arg }}
-									<li>Changed to {{include: 'resources/templates/Arguments.html'}}</li>
-								</ul>
+									<div><span>to</span><span>{{include: 'resources/templates/Arguments.html'}}</span></div>
+								</div>
 							{{ elseif subtype == 'Value' then }}
 								Changed value of enum item {{include: 'resources/templates/DiffItemName.html'}} from {{= html(item.Value) }} to {{= html(arg) }}
 							{{ elseif subtype == 'Security' then }}
