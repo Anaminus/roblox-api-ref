@@ -251,7 +251,7 @@ td .history-list {
 	display : inline;
 }
 
-#diff-versions > li:hover > a.permalink:before {
+*:hover > a.permalink:before {
 	content : ' ¶';
 }
 
