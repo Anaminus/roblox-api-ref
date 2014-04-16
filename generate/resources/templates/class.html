@@ -108,15 +108,15 @@
 						{{ local icon = member.Icon}}
 						{{ local arguments = member.Arguments }}
 						{{ if member.Type == 'Property' then }}
-							<h3>{{include: 'resources/templates/MemberIcon.html'}}<a class="api-value-type" href="{{= html(format.url.type(member.ValueType)) }}">{{= html(member.ValueType) }}</a> {{= html(member.Class) }}.{{= html(member.Name) }}</h3>
+							<h3>{{include: 'resources/templates/MemberIcon.html'}}<a class="api-value-type" href="{{= html(format.url.type(member.ValueType)) }}">{{= html(member.ValueType) }}</a> {{= html(member.Class) }}.{{= html(member.Name) }}<a class="permalink" href="{{= html(format.url.member(member.Name)) }}"></a></h3>
 						{{ elseif member.Type == 'Function' then }}
-							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}<a class="permalink" href="{{= html(format.url.member(member.Name)) }}"></a></h3>
 						{{ elseif member.Type == 'YieldFunction' then }}
-							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}<a class="permalink" href="{{= html(format.url.member(member.Name)) }}"></a></h3>
 						{{ elseif member.Type == 'Event' then }}
-							<h3>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}<a class="permalink" href="{{= html(format.url.member(member.Name)) }}"></a></h3>
 						{{ elseif member.Type == 'Callback' then }}
-							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}</h3>
+							<h3><a class="api-value-type" href="{{= html(format.url.type(member.ReturnType)) }}">{{= html(member.ReturnType) }}</a>{{include: 'resources/templates/MemberIcon.html'}}{{= html(member.Class) }}.{{= html(member.Name) }} {{include: 'resources/templates/Arguments.html' }}<a class="permalink" href="{{= html(format.url.member(member.Name)) }}"></a></h3>
 						{{ end }}
 						{{ if #member.History > 0 then }}
 							{{ local history = member.History }}
