@@ -52,7 +52,6 @@ local function generate(base)
 		{base,'image','icon-explorer.png'};
 		{base,'image','icon-objectbrowser.png'};
 
-		{base,'css','api.css'};
 		{base,'css','ref.css'};
 
 		{base,'js','jquery-1.10.2.min.js','jquery.js'};
