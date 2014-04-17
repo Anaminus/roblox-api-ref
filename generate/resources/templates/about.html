@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	{{= resources['favicon16'] }}
+
+	<title>ROBLOX API Reference</title>
+	{{= resources['ref.css'] }}
+</head>
+<body>
+	<div id="ref-container">
+		<div id="ref-box">
+			<div id="header">
+				<h1>About</h1>
+				<span id="header-items">
+				{{ local icon = 3 }}
+					<a id="return-link" href="/api">Back to hierarchy{{include: 'resources/templates/MemberIcon.html' }}</a>
+				</span>
+			</div>
+			<div id="box-content">
+				<div id="about">
+					<p>
+						The ROBLOX API Reference is a project that aims to
+						document ROBLOX's Lua API as thoroughly as possible.
+					</p>
+					<p>
+						Almost all of the pages on this site are generated
+						from ROBLOX's "API dumps". These are files generated
+						by the ROBLOX client, containing information about the
+						<a href="http://www.lua.org/">Lua</a> API. This
+						project parses the API dump for each version of
+						ROBLOX, and automatically displays human- readable
+						information about the API's classes, class members,
+						enums, types, and more.
+					</p>
+					<p>
+						This project is open source. The repository that
+						generates this site is available <a href="https://github.com/Anaminus/roblox-api-ref">
+						here, on GitHub</a>. You are free to fork and modify it
+						to your heart's content.
+					</p>
+					<p>
+						What this project can't do automatically is provide
+						documentation for each API item. While I am slowly adding
+						descriptions here and there, you can also help out. Check
+						out the <a href="/api/contribute.html">Contribute</a> page
+						for more information.
+					</p>
+					<h2>ROBLOX</h2>
+					<p>
+						<a href="http://www.roblox.com/">ROBLOX</a> is an
+						online virtual playground and workshop — where kids of
+						all ages can safely interact, create, have fun, and
+						learn. It's unique in that practically everything in
+						this infinite playground is designed and constructed
+						by individual members of the ROBLOX community.
+					</p>
+					<p>
+						This site is not affiliated with <a href="http://corp.roblox.com/">ROBLOX Corporation</a>.
+					</p>
+				</div>
+				<div id="who">
+					<h2>Who?</h2>
+					<ul>
+						<li>
+							Anaminus
+							<ul>
+								<li><a href="http://www.roblox.com/User.aspx?ID=9201">on ROBLOX</a></li>
+								<li><a href="https://github.com/Anaminus">on GitHub</a></li>
+								<li><a href="https://twitter.com/Anaminus">on Twitter</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{include: 'resources/templates/footer.html' }}
+</body>
+</html>

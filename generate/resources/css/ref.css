@@ -57,6 +57,15 @@ table th {
 	padding        : 3px;
 }
 
+dt {
+    font-size : 117%;
+    font-weight : bold;
+}
+
+dd {
+    margin: 1em;
+}
+
 #ref-container {
 	margin     : 0px auto;
 	text-align : center;
@@ -343,4 +352,22 @@ code {
 
 #footer > *:first-child {
     width:100%;
+}
+
+/* about page */
+#about {
+	display       : table-cell;
+	padding-right : 1em;
+}
+
+#who {
+	display     : table-cell;
+	padding     : 0 1em;
+	border-left : 1px solid rgb(222,222,222);
+}
+
+#who ul {
+	margin-left  : 0;
+	padding-left : 20px;
+    white-space  : nowrap;
 }

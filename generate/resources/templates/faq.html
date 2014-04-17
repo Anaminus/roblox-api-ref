@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	{{= resources['favicon16'] }}
+
+	<title>ROBLOX API Reference</title>
+	{{= resources['ref.css'] }}
+</head>
+<body>
+	<div id="ref-container">
+		<div id="ref-box">
+			<div id="header">
+				<h1>FAQ</h1>
+				<span id="header-items">
+				{{ local icon = 3 }}
+					<a id="return-link" href="/api">Back to hierarchy{{include: 'resources/templates/MemberIcon.html' }}</a>
+				</span>
+			</div>
+			<div id="box-content">
+				<dl>
+					<dt>Why isn't there a description for X?</dt>
+					<dd>Descriptions are just about the one thing that can't be automated. They have to be written manually.</dd>
+
+					<dt>Can I help?</dt>
+					<dd>Sure! You can contribute by forking and submitting a <a href="https://github.com/Anaminus/roblox-api-ref/pulls">pull request</a> to this project's repository. See the <a href="https://github.com/Anaminus/roblox-api-ref/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> file for information on how to write descriptions.</dd>
+
+					<dt>Is the information provided here accurate?</dt>
+					<dd>
+						<p>It is as accurate as I can make it. When writing up or reviewing the description for a particular API item, I research the item to make sure it is described as correctly and thoroughly as possible (this is apart of why there are so few descriptions).</p>
+						<p>If you find a piece of information that is incorrect or out of date, let me know by <a href="https://github.com/Anaminus/roblox-api-ref/issues/new">submitting an issue</a>.</p>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	{{include: 'resources/templates/footer.html' }}
+</body>
+</html>

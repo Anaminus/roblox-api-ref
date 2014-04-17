@@ -36,6 +36,8 @@ local tmplIndex = slt.loadfile('resources/templates/index.html','{{','}}')
 local tmplDiff = slt.loadfile('resources/templates/diff.html','{{','}}')
 local tmplClass = slt.loadfile('resources/templates/class.html','{{','}}')
 local tmplEnum = slt.loadfile('resources/templates/enum.html','{{','}}')
+local tmplAbout = slt.loadfile('resources/templates/about.html','{{','}}')
+local tmplFAQ = slt.loadfile('resources/templates/faq.html','{{','}}')
 
 local function generate(base)
 	utl.makedirs(utl.path(base,'class'))
@@ -78,6 +80,22 @@ local function generate(base)
 			format = format;
 			resources = resources;
 			diffs = APIDiffs;
+			html = format.html;
+		})
+	)
+
+	utl.write(utl.path(base,'about.html'),
+		slt.render(tmplAbout,{
+			format = format;
+			resources = resources;
+			html = format.html;
+		})
+	)
+
+	utl.write(utl.path(base,'faq.html'),
+		slt.render(tmplFAQ,{
+			format = format;
+			resources = resources;
 			html = format.html;
 		})
 	)
