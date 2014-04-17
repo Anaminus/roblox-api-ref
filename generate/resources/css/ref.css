@@ -96,9 +96,13 @@ dd {
 	margin         : 0px 8px 0px 2px;
 }
 
+#header-items {
+	float : right;
+}
+
 #header-items > * {
-	float  : right;
-	margin : 4px 0px 0px 8px;
+	display : inline-block;
+	margin  : 4px 0px 0px 8px;
 }
 
 #return-link .api-member-icon {
