@@ -24,7 +24,14 @@ if not utl.makedirs(cache) then error("could not make cache folder") end
 
 local buildDiffs do
 	local header,err = utl.request('http://anaminus.github.io/rbx/raw/header.txt')
-	if not header then error(err) end
+	if not header then
+		header = utl.read(utl.path('../cache/header.txt'))
+		if header then
+			print('could not get latest version of header; using cached version')
+		else
+			error(err)
+		end
+	end
 
 	local latest,err = ParseVersions(header)
 	if not latest then error(err) end
