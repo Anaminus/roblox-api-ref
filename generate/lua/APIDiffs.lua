@@ -180,10 +180,10 @@ for i = 1,#versions-1 do
 			local diff = d[i]
 			if diff[2] == 'Security' then
 				local t = diff[4]
-				diff[4] = t and (t:match('^(.+)Security$') or t) or 'None'
+				diff[4] = t or 'None'
 
 				local t = diff[5]
-				diff[5] = t and (t:match('^(.+)Security$') or t) or 'None'
+				diff[5] = t or 'None'
 			end
 		end
 
@@ -250,10 +250,10 @@ for i = 1,#diffs do
 		if type == 0 then
 			if subtype == 'Security' then
 				if list[4] ~= 'None' then
-					item.tags[list[4] .. 'Security'] = nil
+					item.tags[list[4]] = nil
 				end
 				if list[5] ~= 'None' then
-					item.tags[list[5] .. 'Security'] = true
+					item.tags[list[5]] = true
 				end
 			elseif subtype == 'Arguments' then
 				item.Arguments = list[4]
