@@ -159,6 +159,7 @@ local MemberTagState = {
 	WritePlayerSecurity  = 2; -- Protected
 	RobloxScriptSecurity = 2; -- Protected
 	RobloxSecurity       = 2; -- Protected
+	security1            = 2; -- Protected
 }
 
 local function classIconIndex(class)
