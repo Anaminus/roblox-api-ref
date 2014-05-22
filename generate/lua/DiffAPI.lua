@@ -174,6 +174,7 @@ return function(a,b)
 		['RobloxScriptSecurity'] = true;
 		['WritePlayerSecurity'] = true;
 		['security1'] = true;
+		['PluginSecurity'] = true;
 	}
 
 	for name,item in pairs(bref) do
