@@ -57,7 +57,6 @@ local function generate(base)
 		{base,'css','ref.css'};
 
 		{base,'js','jquery-1.10.2.min.js','jquery.js'};
-		{base,'js','fuse.min.js','fuse.js'};
 
 		{base,'js','search.js'};
 		{base,'js','collapse.js'};

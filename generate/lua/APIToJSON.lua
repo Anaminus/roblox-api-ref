@@ -1,6 +1,6 @@
 local API = require 'API'
 
--- Converts API dump table to JSON format that will be handled by fuse.js.
+-- Converts API dump table to JSON format that will be handled by fuzzy search.
 -- Returns an array of objects, each containing the following fields:
 
 -- c: Class name;
