@@ -57,7 +57,7 @@
 								<td class="col-value"><span class="api-enum-item-value">{{= html(enum.Items[i].Value) }}</span></td>
 								<td class="col-name"><span class="api-enum-item-name">{{= html(enum.Items[i].Name) }}</span></td>
 							{{ if enum.HasHistory then }}
-								<td class="col-history">{{local history=enum.History}}{{include: 'resources/templates/HistoryList.html' }}</td>
+								<td class="col-history">{{local history=enum.Items[i].History}}{{include: 'resources/templates/HistoryList.html' }}</td>
 							{{ end }}
 								<td class="col-description">{{= enum.Items[i].Description or 'No description' }}</td>
 							</tr>
