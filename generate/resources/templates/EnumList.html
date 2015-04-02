@@ -10,7 +10,7 @@
 	{{local enum = enums.List[i] }}
 	<tr>
 		<td class="col-icon"><span class="api-enum-icon"></span></td>
-		<td class="col-value"><a class="api-enum-name" href="{{= format.url.type(enum.Name) }}">{{= html(enum.Name) }}</a></td>
+		<td class="col-name"><a class="api-enum-name{{if enum.Tags.preliminary then }} api-preliminary{{ end }}{{ if enum.Tags.deprecated then }} api-deprecated{{ end }}" href="{{= format.url.type(enum.Name) }}">{{= html(enum.Name) }}</a></td>
 	{{ if enums.HasHistory then }}
 		{{ local history = enum.History }}
 		<td class="col-history">{{include: 'resources/templates/HistoryList.html'}}</td>

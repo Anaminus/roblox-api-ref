@@ -28,6 +28,18 @@
 						</div>
 					</div>
 				{{ end }}
+				{{ if enum.Tags.preliminary then }}
+					<p><b>Preliminary:</b> This enum is preliminary.</p>
+				{{ end }}
+				{{ if enum.Tags.deprecated then }}
+					<p><b>Deprecated:</b> This enum is deprecated.</p>
+				{{ end }}
+				{{ if #enum.TagList > 0 then }}
+					<p><b>Tags: </b>
+						{{ local tags = enum.TagList }}
+						{{include: 'resources/templates/Tags.html'}}
+					</p>
+				{{ end }}
 				{{ if enum.Description.Details then }}
 					<div id="details">
 						<h2>Detailed Description</h2>
@@ -49,15 +61,21 @@
 							{{ if enum.HasHistory then }}
 								<th class="col-history">History</th>
 							{{ end }}
+							{{ if #enum.TagList > 0 then }}
+								<th class="col-tags">Tags</th>
+							{{ end }}
 								<th class="col-description">Description</th>
 							</tr>
 						{{ for i = 1,#enum.Items do}}
 							<tr>
 								<td class="col-icon"><span class="api-enum-item-icon"></span></td>
 								<td class="col-value"><span class="api-enum-item-value">{{= html(enum.Items[i].Value) }}</span></td>
-								<td class="col-name"><span class="api-enum-item-name">{{= html(enum.Items[i].Name) }}</span></td>
+								<td class="col-name"><span class="api-enum-item-name{{if enum.Items[i].Tags.preliminary then }} api-preliminary{{ end }}{{ if enum.Items[i].Tags.deprecated then }} api-deprecated{{ end }}">{{= html(enum.Items[i].Name) }}</span></td>
 							{{ if enum.HasHistory then }}
 								<td class="col-history">{{local history=enum.Items[i].History}}{{include: 'resources/templates/HistoryList.html' }}</td>
+							{{ end }}
+							{{ if #enum.TagList > 0 then }}
+								<td class="col-tags">{{local tags=enum.Items[i].TagList}}{{include: 'resources/templates/Tags.html' }}</td>
 							{{ end }}
 								<td class="col-description">{{= enum.Items[i].Description or 'No description' }}</td>
 							</tr>

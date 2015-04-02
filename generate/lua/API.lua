@@ -90,14 +90,18 @@ Represents the amount of members of a given type that a given class
 inherits from the indicated class.
 
 @type Enum {
-	Name  string     -- the name of the enum
-	Items []EnumItem -- a list of the enum's items, sorted by value
+	Name    string       -- the name of the enum
+	Items   []EnumItem   -- a list of the enum's items, sorted by value
+	Tags    [string]bool -- Tags given to the enum
+	TagList []string     -- sorted; excludes preliminary and deprecated tags
 }
 A single enum.
 
 @type EnumItem {
-	Name  string -- the item's name
-	Value int    -- the item's value
+	Name    string        -- the item's name
+	Value   int           -- the item's value
+	Tags     [string]bool -- Tags given to the enum item
+	TagList  []string     -- sorted; excludes preliminary and deprecated tags
 }
 A single enum item.
 
@@ -259,7 +263,7 @@ function API.ClassData(dump,className)
 				end
 			end
 		elseif item.type == 'Enum' then
-			enums[#enums+1] = item
+			enums[#enums+1] = new
 		end
 	end
 
@@ -401,10 +405,30 @@ function API.EnumData(dump,enumName)
 	local hasHistory = false
 	for i = 1,#dump do
 		local item = dump[i]
+
+		local new
+		if item.type == 'Enum' or item.type == 'EnumItem' then
+			local tags = {}
+			local tagList = {}
+			for tag in pairs(item.tags) do
+				tags[tag] = true
+				tagList[#tagList+1] = tag
+			end
+			table.sort(tagList)
+			new = {}
+			new.Tags = tags
+			new.TagList = tagList
+			for k,v in pairs(item) do
+				if k ~= 'tags' and k ~= 'type' then
+					new[k] = v
+				end
+			end
+		end
+
 		if item.type == 'Enum' and item.Name == enumName then
-			enum = item
+			enum = new
 		elseif item.type == 'EnumItem' and item.Enum == enumName then
-			items[#items+1] = item
+			items[#items+1] = new
 			if #item.History > 0 then
 				hasHistory = true
 			end
@@ -442,6 +466,8 @@ function API.EnumData(dump,enumName)
 
 	return {
 		Name = enum.Name;
+		Tags = enum.Tags;
+		TagList = enum.TagList;
 		History = enum.History;
 		Description = enum.Description;
 		HasHistory = hasHistory;
